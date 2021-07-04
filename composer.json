@@ -1,0 +1,27 @@
+{
+  "name": "thbighead/wordless",
+  "description": "A headless WordPress CMS for developers sick of WordPress",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Wordless\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Thales Nathan",
+      "email": "thcmatias@gmail.com"
+    }
+  ],
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "symfony/console": "^5.3"
+  }
+}
