@@ -1,0 +1,20 @@
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+
+// Autoloading Commands
+foreach (scandir(realpath('src/Commands')) as $command_filename) {
+    if (!str_ends_with($command_filename, '.php')) {
+        continue;
+    }
+
+    $command_class_namespace = 'Wordless\Commands\\' . substr($command_filename, 0, -4);
+
+    $application->add(new $command_class_namespace);
+}
+
+//$application->run();
