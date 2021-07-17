@@ -19,6 +19,16 @@
     "preferred-install": "dist",
     "sort-packages": true
   },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
+    },
+    {
+      "type": "composer",
+      "url": "https://packagist.org"
+    }
+  ],
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
@@ -29,5 +39,12 @@
   "require-dev": {
     "psy/psysh": "^0.10.8",
     "symfony/var-dumper": "^5.3"
+  },
+  "extra": {
+    "installer-paths": {
+      "public_html/wp-cms/wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
+      "public_html/wp-cms/wp-content/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
+      "public_html/wp-cms/wp-content/themes/{$name}/": ["type:wordpress-theme"]
+    }
   }
 }
