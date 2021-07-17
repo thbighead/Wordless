@@ -4,6 +4,8 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
 
+const ROOT_PROJECT_PATH = __DIR__;
+
 $application = new Application();
 
 // Autoloading Commands
@@ -17,4 +19,4 @@ foreach (scandir(realpath('src/Commands')) as $command_filename) {
     $application->add(new $command_class_namespace);
 }
 
-//$application->run();
+$application->run();
