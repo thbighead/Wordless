@@ -1,12 +1,15 @@
 <?php
 
+const ROOT_PROJECT_PATH = __DIR__;
+
 require __DIR__ . '/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
-
-const ROOT_PROJECT_PATH = __DIR__;
+use Symfony\Component\Dotenv\Dotenv;
+use Wordless\Helpers\ProjectPath;
 
 $application = new Application();
+(new Dotenv())->load(ProjectPath::root('.env'));
 
 // Autoloading Commands
 foreach (scandir(realpath('src/Commands')) as $command_filename) {

@@ -11,9 +11,10 @@ use Wordless\Helpers\ProjectPath;
 
 class WpCliCaller extends WordlessCommand
 {
-    private const WP_CLI_FULL_COMMAND_STRING_ARGUMENT_NAME = 'wp_cli_full_command_string';
+    public const COMMAND_NAME = 'wp:run';
+    public const WP_CLI_FULL_COMMAND_STRING_ARGUMENT_NAME = 'wp_cli_full_command_string';
 
-    protected static $defaultName = 'wp:run';
+    protected static $defaultName = self::COMMAND_NAME;
 
     protected function arguments(): array
     {
@@ -42,11 +43,13 @@ class WpCliCaller extends WordlessCommand
     {
         $wp_cli_full_command_string = $input->getArgument(self::WP_CLI_FULL_COMMAND_STRING_ARGUMENT_NAME);
         $wp_cli_filepath = $this->chooseWpCliScriptByOperationalSystem();
+        $full_command = "$wp_cli_filepath $wp_cli_full_command_string --path=public_html/wp-cms/wp-core";
 
-        passthru(
-            "$wp_cli_filepath $wp_cli_full_command_string --path=public_html/wp-cms/wp-core",
-            $return_var
-        );
+        if ($output->isVerbose()) {
+            $output->writeln("Executing $full_command...");
+        }
+
+        passthru($full_command, $return_var);
 
         return $return_var;
     }
