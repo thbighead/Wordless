@@ -6,10 +6,17 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Dotenv\Dotenv;
+use Wordless\Exception\PathNotFoundException;
 use Wordless\Helpers\ProjectPath;
 
+try {
+    (new Dotenv())->load(ProjectPath::root('.env'));
+    define('DOT_ENV_NOT_LOADED', false);
+} catch (PathNotFoundException $exception) {
+    define('DOT_ENV_NOT_LOADED', true);
+}
+
 $application = new Application();
-(new Dotenv())->load(ProjectPath::root('.env'));
 
 // Autoloading Commands
 foreach (scandir(realpath('src/Commands')) as $command_filename) {

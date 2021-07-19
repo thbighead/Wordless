@@ -1,0 +1,5 @@
+User-agent: * 
+Allow: / 
+Disallow: /wp-cms/wp-core/wp-admin/
+Disallow: /wp-admin/ 
+Sitemap: {APP_URL}/sitemap.xml

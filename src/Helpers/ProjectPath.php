@@ -19,6 +19,20 @@ class ProjectPath
     }
 
     /**
+     * @param string $full_path
+     * @return string
+     * @throws PathNotFoundException
+     */
+    public static function realpath(string $full_path): string
+    {
+        if (($real_path = realpath($full_path)) === false) {
+            throw new PathNotFoundException($full_path);
+        }
+
+        return $real_path;
+    }
+
+    /**
      * @param string $additional_path
      * @return string
      * @throws PathNotFoundException
@@ -85,12 +99,6 @@ class ProjectPath
      */
     private static function full(string $path = ''): string
     {
-        $path = ROOT_PROJECT_PATH . self::SLASH . trim($path, self::SLASH);
-
-        if (($real_path = realpath($path)) === false) {
-            throw new PathNotFoundException($path);
-        }
-
-        return $real_path;
+        return self::realpath(ROOT_PROJECT_PATH . self::SLASH . trim($path, self::SLASH));
     }
 }
