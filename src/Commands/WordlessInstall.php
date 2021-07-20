@@ -17,6 +17,7 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Wordless\Adapters\WordlessCommand;
 use Wordless\Exception\FailedToCopyDotEnvExampleIntoNewDotEnv;
+use Wordless\Exception\FailedToCopyStub;
 use Wordless\Exception\FailedToRewriteDotEnvFile;
 use Wordless\Exception\PathNotFoundException;
 use Wordless\Helpers\Environment;
@@ -28,7 +29,17 @@ class WordlessInstall extends WordlessCommand
     protected static $defaultName = 'wordless:install';
     private const FORCE_MODE = 'force';
     private const NO_ASK_MODE = 'no-ask';
-    private const WORDPRESS_SALT_FILLABLE_VALUE = '$WORDPRESS_SALT_AUTO_GENERATE';
+    private const WORDPRESS_SALT_FILLABLE_VALUES = [
+        '$AUTH_KEY',
+        '$SECURE_AUTH_KEY',
+        '$LOGGED_IN_KEY',
+        '$NONCE_KEY',
+        '$AUTH_SALT',
+        '$SECURE_AUTH_SALT',
+        '$LOGGED_IN_SALT',
+        '$NONCE_SALT',
+    ];
+    private const WORDPRESS_SALT_URL_GETTER = 'https://api.wordpress.org/secret-key/1.1/salt/';
 
     private QuestionHelper $questionHelper;
     private InputInterface $input;
@@ -57,7 +68,7 @@ class WordlessInstall extends WordlessCommand
      * @return int
      * @throws ClientExceptionInterface
      * @throws Exception
-     * @throws FailedToCopyDotEnvExampleIntoNewDotEnv
+     * @throws FailedToCopyStub
      * @throws FailedToRewriteDotEnvFile
      * @throws PathNotFoundException
      * @throws RedirectionExceptionInterface
@@ -68,10 +79,13 @@ class WordlessInstall extends WordlessCommand
     {
         $this->setup($input, $output);
 
+        $this->resolveForceMode();
+
         $this->resolveDotEnv();
 
         $this->downloadWpCore();
         $this->createWpConfigFromStub();
+        $this->createRobotsTxtFromStub();
         $this->createWpDatabase();
         $this->installWpCore();
         $this->installWpCorePtBrLanguage();
@@ -119,21 +133,68 @@ class WordlessInstall extends WordlessCommand
     }
 
     /**
-     * @throws FailedToCopyDotEnvExampleIntoNewDotEnv
+     * @throws PathNotFoundException
+     */
+    private function createRobotsTxtFromStub()
+    {
+        $filename = 'robots.txt';
+        $new_robots_txt_filepath = ProjectPath::publicHtml() . "/$filename";
+
+        if (($supposed_already_existing_robots_txt_filepath = realpath($new_robots_txt_filepath)) !== false) {
+            if ($this->output->isVerbose()) {
+                $this->output->writeln(
+                    "$supposed_already_existing_robots_txt_filepath already exists, skipping."
+                );
+            }
+            return;
+        }
+
+        $robots_txt_content = file_get_contents(ProjectPath::stubs($filename));
+
+        preg_match_all('/{(\S+)}/', $robots_txt_content, $replaceable_values_regex_result);
+        $env_variables_to_replace_into_robots_txt_stub = $replaceable_values_regex_result[1] ?? [];
+
+        if (empty($env_variables_to_replace_into_robots_txt_stub)) {
+            file_put_contents($new_robots_txt_filepath, $robots_txt_content);
+            return;
+        }
+
+        $robots_txt_content = str_replace(
+            $replaceable_values_regex_result[0] ?? [],
+            array_map(function ($env_variable_name) {
+                $env_variable_value = Environment::get($env_variable_name, '');
+
+                return str_contains($env_variable_name, 'URL') ?
+                    Str::finishWith($env_variable_value, '/') : $env_variable_value;
+            }, $env_variables_to_replace_into_robots_txt_stub),
+            $robots_txt_content
+        );
+
+        file_put_contents($new_robots_txt_filepath, $robots_txt_content);
+    }
+
+    /**
+     * @throws FailedToCopyStub
      * @throws PathNotFoundException
      */
     private function createWpConfigFromStub()
     {
         $filename = 'wp-config.php';
+        $new_wp_config_filepath = ProjectPath::wpCore() . "/$filename";
 
-        if (!copy(
-            $wp_config_stub_filepath = ProjectPath::root("stubs/$filename"),
-            $new_wp_config_filepath = ProjectPath::wpCore() . "/$filename"
-        )) {
-            throw new FailedToCopyDotEnvExampleIntoNewDotEnv(
-                $wp_config_stub_filepath,
-                $new_wp_config_filepath
-            );
+        if ((($supposed_already_existing_wp_config_filepath = realpath($new_wp_config_filepath)) !== false)
+            && str_contains(file_get_contents($new_wp_config_filepath), '@author Wordless')) {
+            if ($this->output->isVerbose()) {
+                $this->output->writeln(
+                    "Wordless seems to already have created a config file at $supposed_already_existing_wp_config_filepath, skipping."
+                );
+            }
+
+            return;
+        }
+
+        if (!copy($wp_config_stub_filepath = ProjectPath::stubs($filename), $new_wp_config_filepath)) {
+            throw new FailedToCopyStub($wp_config_stub_filepath, $new_wp_config_filepath);
         }
     }
 
@@ -145,6 +206,17 @@ class WordlessInstall extends WordlessCommand
         $database_username = Environment::get('DB_USER');
         $database_password = Environment::get('DB_PASSWORD');
 
+        if ($this->runWpCliCommand(
+                "db check --dbuser=$database_username --dbpass=$database_password",
+                true
+            ) == 0) {
+            if ($this->output->isVerbose()) {
+                $this->output->writeln('WordPress Database already created, skipping.');
+            }
+
+            return;
+        }
+
         $this->runWpCliCommand("db create --dbuser=$database_username --dbpass=$database_password");
     }
 
@@ -153,6 +225,14 @@ class WordlessInstall extends WordlessCommand
      */
     private function downloadWpCore()
     {
+        if ($this->runWpCliCommand("core version --extra", true) == 0) {
+            if ($this->output->isVerbose()) {
+                $this->output->writeln('WordPress Core already downloaded, skipping.');
+            }
+
+            return;
+        }
+
         $wp_version = Environment::get('WP_VERSION', 'latest');
 
         $this->runWpCliCommand("core download --version=$wp_version --allow-root --skip-content");
@@ -168,9 +248,7 @@ class WordlessInstall extends WordlessCommand
      */
     private function fillDotEnv(string $dot_env_filepath)
     {
-        $dot_env_content = file_get_contents($dot_env_filepath);
-
-        $dot_env_content = $this->guessAndResolveDotEnvWpSaltVariables($dot_env_content);
+        $dot_env_content = $this->guessAndResolveDotEnvWpSaltVariables(file_get_contents($dot_env_filepath));
 
         if (empty($not_filled_variables = $this->getDotEnvNotFilledVariables($dot_env_content))) {
             return;
@@ -208,6 +286,7 @@ class WordlessInstall extends WordlessCommand
     }
 
     /**
+     * @return string
      * @throws FailedToCopyDotEnvExampleIntoNewDotEnv
      * @throws PathNotFoundException
      */
@@ -240,14 +319,22 @@ class WordlessInstall extends WordlessCommand
      */
     private function guessAndResolveDotEnvWpSaltVariables(string $dot_env_content): string
     {
-        if (!str_contains($dot_env_content, self::WORDPRESS_SALT_FILLABLE_VALUE)) {
+        if (!Str::contains($dot_env_content, self::WORDPRESS_SALT_FILLABLE_VALUES)) {
             return $dot_env_content;
+        }
+
+        if ($this->output->isVerbose()) {
+            $this->output->write('Retrieving WP SALTS at ' . self::WORDPRESS_SALT_URL_GETTER . '... ');
         }
 
         $wp_salt_response = HttpClient::create()->request(
             'GET',
-            'https://api.wordpress.org/secret-key/1.1/salt/'
+            self::WORDPRESS_SALT_URL_GETTER
         )->getContent();
+
+        if ($this->output->isVerbose()) {
+            $this->output->writeln('Done!');
+        }
 
         preg_match_all(
             '/define\(\'(.+)\',.+\'(.+)\'\);/',
@@ -275,9 +362,12 @@ class WordlessInstall extends WordlessCommand
         }
 
         $variable_name = substr($variable_marked_as_not_filled, 1); // removing '$'
+        $variable_default = $_ENV[$variable_marked_as_not_filled] ??
+            Environment::COMMONLY_DOT_ENV_DEFAULT_VALUES[$variable_name] ??
+            '';
 
         return $this->ask(
-            "What should be $variable_name value? [$variable_default]",
+            "What should be $variable_name value? [$variable_default] ",
             $variable_default
         );
     }
@@ -287,6 +377,14 @@ class WordlessInstall extends WordlessCommand
      */
     private function installWpCore()
     {
+        if ($this->runWpCliCommand("core is-installed", true) == 0) {
+            if ($this->output->isVerbose()) {
+                $this->output->writeln('WordPress Core already installed, skipping.');
+            }
+
+            return;
+        }
+
         $app_url = Str::finishWith($_ENV['APP_URL'], '/');
         $app_name = Environment::get('APP_NAME', 'Wordless App');
         $wp_admin_email = Environment::get('WP_ADMIN_EMAIL', 'php-team@infobase.com.br');
@@ -294,7 +392,7 @@ class WordlessInstall extends WordlessCommand
         $wp_admin_user = Environment::get('WP_ADMIN_USER', 'infobase');
 
         $this->runWpCliCommand(
-            "core install --url=$app_url --title=$app_name --admin_user=$wp_admin_user --admin_password=$wp_admin_password --admin_email=$wp_admin_email"
+            "core install --url=$app_url --title=\"$app_name\" --admin_user=$wp_admin_user --admin_password=$wp_admin_password --admin_email=$wp_admin_email"
         );
         $this->runWpCliCommand("option update siteurl {$app_url}wp-cms/wp-core/");
     }
@@ -338,7 +436,7 @@ class WordlessInstall extends WordlessCommand
                 continue;
             }
 
-            $filler_dictionary[$variable] = $variable_value;
+            $filler_dictionary[$variable] = "\"$variable_value\"";
         }
 
         return $filler_dictionary;
@@ -358,17 +456,26 @@ class WordlessInstall extends WordlessCommand
         $this->fillDotEnv($this->getOrCreateDotEnvFilepath());
     }
 
+    private function resolveForceMode()
+    {
+
+    }
+
     /**
      * @param string $command
+     * @param bool $return_script_code
+     * @return int
      * @throws Exception
      */
-    private function runWpCliCommand(string $command)
+    private function runWpCliCommand(string $command, bool $return_script_code = false): int
     {
-        if ($return_var = $this->wpCliCommand->run(new ArrayInput([
-            WpCliCaller::WP_CLI_FULL_COMMAND_STRING_ARGUMENT_NAME => $command,
-        ]), $this->output)) {
+        if (($return_var = $this->wpCliCommand->run(new ArrayInput([
+                WpCliCaller::WP_CLI_FULL_COMMAND_STRING_ARGUMENT_NAME => $command,
+            ]), $this->output)) && !$return_script_code) {
             exit($return_var);
         }
+
+        return $return_var;
     }
 
     private function setup(InputInterface $input, OutputInterface $output)

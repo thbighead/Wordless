@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * The base configuration for WordPress
  *
@@ -18,7 +18,24 @@
  * @package WordPress
  */
 
+/**
+ * Customized wp-config.php. DO NOT CHANGE THIS COMMENT!
+ * @author Wordless
+ */
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
+use Symfony\Component\Dotenv\Dotenv;
 use Wordless\Helpers\Environment;
+use Wordless\Helpers\Str;
+
+(new Dotenv())->load(__DIR__ . '/../../../.env');
+
+// https://wordpress.org/support/article/editing-wp-config-php/#require-ssl-for-admin-and-logins
+const DISALLOW_FILE_MODS = true;
+// https://wordpress.org/support/article/editing-wp-config-php/#disable-wordpress-auto-updates
+const AUTOMATIC_UPDATER_DISABLED = true;
+// https://wordpress.org/support/article/editing-wp-config-php/#disable-wordpress-core-updates
+const WP_AUTO_UPDATE_CORE = false;
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
@@ -80,7 +97,35 @@ $table_prefix = Environment::get('DB_TABLE_PREFIX', 'wp_');
  *
  * @link https://wordpress.org/support/article/debugging-in-wordpress/
  */
-define('WP_DEBUG', Environment::get('WP_DEBUG', false));
+define('WP_DEBUG', $debug = Environment::get('WP_DEBUG', false));
+// https://wordpress.org/support/article/editing-wp-config-php/#configure-error-logging
+define('WP_DEBUG_LOG', $debug);
+define('WP_DISABLE_FATAL_ERROR_HANDLER', $debug);
+
+// https://wordpress.org/support/article/editing-wp-config-php/#disable-wordpress-auto-updates
+define('COOKIE_DOMAIN', Str::after($site_url = Environment::get('APP_URL'), '://'));
+
+// https://wordpress.org/support/article/editing-wp-config-php/#blog-address-url
+define('WP_HOME', $site_url);
+
+// https://wordpress.org/support/article/editing-wp-config-php/#wp_siteurl
+$site_url = Str::finishWith($site_url, '/');
+define('WP_SITEURL', "{$site_url}wp-cms/wp-core");
+
+// https://wordpress.org/support/article/editing-wp-config-php/#moving-wp-content-folder
+define('WP_CONTENT_DIR', realpath(__DIR__ . '/../wp-content'));
+define('WP_CONTENT_URL', "{$site_url}wp-content");
+
+// https://wordpress.org/support/article/editing-wp-config-php/#wp_environment_type
+define('WP_ENVIRONMENT_TYPE', $environment = Environment::get('APP_ENV', Environment::LOCAL));
+
+// https://wordpress.org/support/article/editing-wp-config-php/#require-ssl-for-admin-and-logins
+define('FORCE_SSL_ADMIN', $environment === Environment::PRODUCTION);
+
+// https://wordpress.org/support/article/editing-wp-config-php/#block-external-url-requests
+const WP_HTTP_BLOCK_EXTERNAL = true;
+$additional_allowed_hosts = Environment::get('WP_ACCESSIBLE_HOSTS', '*.wordpress.org');
+if (!empty($additional_allowed_hosts)) define('WP_ACCESSIBLE_HOSTS', $additional_allowed_hosts);
 
 /* That's all, stop editing! Happy publishing. */
 

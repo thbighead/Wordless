@@ -45,7 +45,6 @@
   "extra": {
     "installer-paths": {
       "public_html/wp-cms/wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
-      "public_html/wp-cms/wp-content/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
       "public_html/wp-cms/wp-content/themes/{$name}/": ["type:wordpress-theme"]
     }
   }

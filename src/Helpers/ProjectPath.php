@@ -57,6 +57,16 @@ class ProjectPath
      * @return string
      * @throws PathNotFoundException
      */
+    public static function stubs(string $additional_path = ''): string
+    {
+        return self::src("stubs/$additional_path");
+    }
+
+    /**
+     * @param string $additional_path
+     * @return string
+     * @throws PathNotFoundException
+     */
     public static function vendor(string $additional_path = ''): string
     {
         return self::root("vendor/$additional_path");

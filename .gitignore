@@ -1,3 +1,4 @@
 .idea
 /vendor/
 .env
+public_html/wp-cms/robots.txt
