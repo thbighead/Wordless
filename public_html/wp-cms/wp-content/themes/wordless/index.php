@@ -2,7 +2,7 @@
 
 use Wordless\Helpers\Environment;
 
-$front_end_url = Environment::get('FRONT_END_URL', Environment::get('APP_URL'));
+$front_end_url = Environment::get('FRONT_END_URL');
 ?>
 
 <meta content="0; URL='<?= $front_end_url ?>''" http-equiv="refresh">

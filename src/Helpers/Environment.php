@@ -8,6 +8,7 @@ class Environment
         'APP_NAME' => 'Wordless App',
         'APP_ENV' => 'local',
         'APP_URL' => 'http://wordless-app.dev.br',
+        'FRONT_END_URL' => 'http://wordless-front.dev.br',
         'DB_NAME' => 'wordless',
         'DB_USER' => 'root',
         'DB_HOST' => '127.0.0.1',

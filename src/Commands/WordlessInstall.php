@@ -18,8 +18,10 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Wordless\Adapters\WordlessCommand;
 use Wordless\Exception\FailedToCopyDotEnvExampleIntoNewDotEnv;
 use Wordless\Exception\FailedToCopyStub;
+use Wordless\Exception\FailedToDeletePath;
 use Wordless\Exception\FailedToRewriteDotEnvFile;
 use Wordless\Exception\PathNotFoundException;
+use Wordless\Helpers\DirectoryFiles;
 use Wordless\Helpers\Environment;
 use Wordless\Helpers\ProjectPath;
 use Wordless\Helpers\Str;
@@ -88,11 +90,14 @@ class WordlessInstall extends WordlessCommand
         $this->createRobotsTxtFromStub();
         $this->createWpDatabase();
         $this->installWpCore();
-        $this->installWpCorePtBrLanguage();
         $this->flushWpRewriteRules();
         $this->activateWpPlugins();
         $this->installWpPluginsPtBrLanguage();
+        $this->installWpCorePtBrLanguage();
         $this->makeWpBlogPublic();
+        $this->switchingMaintenanceMode(false);
+
+        $this->resolveWpConfigChmod();
 
         return Command::SUCCESS;
     }
@@ -379,7 +384,13 @@ class WordlessInstall extends WordlessCommand
     {
         if ($this->runWpCliCommand("core is-installed", true) == 0) {
             if ($this->output->isVerbose()) {
-                $this->output->writeln('WordPress Core already installed, skipping.');
+                $this->output->writeln('WordPress Core already installed, minor updating.');
+            }
+
+            $this->switchingMaintenanceMode(true);
+
+            if (Environment::get('WP_VERSION', 'latest') === 'latest') {
+                $this->runWpCliCommand('core update --minor --allow-root');
             }
 
             return;
@@ -394,6 +405,7 @@ class WordlessInstall extends WordlessCommand
         $this->runWpCliCommand(
             "core install --url=$app_url --title=\"$app_name\" --admin_user=$wp_admin_user --admin_password=$wp_admin_password --admin_email=$wp_admin_email"
         );
+        $this->switchingMaintenanceMode(true);
         $this->runWpCliCommand("option update siteurl {$app_url}wp-cms/wp-core/");
     }
 
@@ -402,6 +414,17 @@ class WordlessInstall extends WordlessCommand
      */
     private function installWpCorePtBrLanguage()
     {
+        if ($this->runWpCliCommand("language core is-installed pt_BR", true) == 0) {
+            if ($this->output->isVerbose()) {
+                $this->output->writeln('WordPress Core Language pt_BR already installed, updating.');
+            }
+
+            $this->runWpCliCommand('language core update pt_BR', true);
+            $this->runWpCliCommand('language core activate pt_BR', true);
+
+            return;
+        }
+
         $this->runWpCliCommand('language core install pt_BR --activate');
     }
 
@@ -410,7 +433,8 @@ class WordlessInstall extends WordlessCommand
      */
     private function installWpPluginsPtBrLanguage()
     {
-        $this->runWpCliCommand('language plugin install pt_BR --all --allow-root');
+        $this->runWpCliCommand('language plugin install pt_BR --all --allow-root', true);
+        $this->runWpCliCommand('language plugin update pt_BR --all --allow-root', true);
     }
 
     /**
@@ -456,9 +480,31 @@ class WordlessInstall extends WordlessCommand
         $this->fillDotEnv($this->getOrCreateDotEnvFilepath());
     }
 
+    /**
+     * @throws PathNotFoundException
+     * @throws FailedToDeletePath
+     */
     private function resolveForceMode()
     {
+        if ($this->input->getOption('force')) {
+            DirectoryFiles::recursiveDelete(
+                ProjectPath::wpCore(),
+                [ProjectPath::wpCore('.gitignore')],
+                false
+            );
 
+            DirectoryFiles::delete(ProjectPath::publicHtml('robots.txt'));
+        }
+    }
+
+    /**
+     * @throws PathNotFoundException
+     */
+    private function resolveWpConfigChmod()
+    {
+        if (Environment::get('APP_ENV') === Environment::PRODUCTION) {
+            chmod(ProjectPath::wpCore('wp-config.php'), 660);
+        }
     }
 
     /**
@@ -488,5 +534,16 @@ class WordlessInstall extends WordlessCommand
         $this->input = $input;
         $this->output = $output;
         $this->wpCliCommand = $this->getApplication()->find(WpCliCaller::COMMAND_NAME);
+    }
+
+    /**
+     * @param bool $switch
+     * @throws Exception
+     */
+    private function switchingMaintenanceMode(bool $switch)
+    {
+        $switch = $switch ? 'activate' : 'deactivate';
+
+        $this->runWpCliCommand("maintenance-mode $switch");
     }
 }
