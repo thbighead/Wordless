@@ -1,10 +1,1 @@
-languages
-languages/*
-!languages/.gitkeep
-plugins
-plugins/*
-!plugins/.gitkeep
-uploads
-uploads/*
-!uploads/.gitkeep
 debug.log
