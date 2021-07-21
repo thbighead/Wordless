@@ -91,6 +91,7 @@ class WordlessInstall extends WordlessCommand
         $this->createWpDatabase();
         $this->installWpCore();
         $this->flushWpRewriteRules();
+        $this->activateWpTheme();
         $this->activateWpPlugins();
         $this->installWpPluginsPtBrLanguage();
         $this->installWpCorePtBrLanguage();
@@ -122,6 +123,11 @@ class WordlessInstall extends WordlessCommand
                 self::OPTION_DESCRIPTION_FIELD => 'Don\'t ask for any input while running.',
             ],
         ];
+    }
+
+    private function activateWpTheme()
+    {
+        $this->runWpCliCommand('theme activate ' . Environment::get('WP_THEME', 'wordless'));
     }
 
     /**
@@ -280,6 +286,8 @@ class WordlessInstall extends WordlessCommand
      */
     private function flushWpRewriteRules()
     {
+        $permalink_structure = '/%postname%/';
+        $this->runWpCliCommand("rewrite structure $permalink_structure --hard");
         $this->runWpCliCommand('rewrite flush --hard');
     }
 
@@ -419,7 +427,7 @@ class WordlessInstall extends WordlessCommand
                 $this->output->writeln('WordPress Core Language pt_BR already installed, updating.');
             }
 
-            $this->runWpCliCommand('language core update pt_BR', true);
+            $this->runWpCliCommand('language core update', true);
             $this->runWpCliCommand('language core activate pt_BR', true);
 
             return;

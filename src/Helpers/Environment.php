@@ -16,6 +16,8 @@ class Environment
         'DB_COLLATE' => 'null',
         'DB_TABLE_PREFIX' => 'null',
         'WP_VERSION' => 'null',
+        'WP_THEME' => 'null',
+        'WP_PERMALINK' => 'null',
         'WP_DEBUG' => 'true',
         'WP_ADMIN_EMAIL' => 'admin@mail.com',
         'WP_ADMIN_PASSWORD' => 'wordless_admin',
