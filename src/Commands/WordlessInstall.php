@@ -286,7 +286,7 @@ class WordlessInstall extends WordlessCommand
      */
     private function flushWpRewriteRules()
     {
-        $permalink_structure = '/%postname%/';
+        $permalink_structure = Environment::get('WP_PERMALINK', '/%postname%/');
         $this->runWpCliCommand("rewrite structure $permalink_structure --hard");
         $this->runWpCliCommand('rewrite flush --hard');
     }
