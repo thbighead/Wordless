@@ -45,9 +45,6 @@
   "scripts": {
     "post-autoload-dump": [
       "@php console mup:loader"
-    ],
-    "post-create-project-cmd": [
-      "@php console wordless:install"
     ]
   },
   "extra": {
