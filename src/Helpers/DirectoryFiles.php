@@ -2,13 +2,14 @@
 
 namespace Wordless\Helpers;
 
+use Generator;
 use Wordless\Exception\FailedToDeletePath;
 use Wordless\Exception\PathNotFoundException;
 
 class DirectoryFiles
 {
     /**
-     * @param string $path
+     * @param string $real_path
      * @param string[] $except
      * @param bool $delete_root
      * @throws FailedToDeletePath
@@ -16,35 +17,59 @@ class DirectoryFiles
      */
     public static function recursiveDelete(string $path, array $except = [], bool $delete_root = true)
     {
-        if (($path = realpath($path)) === false) {
+        if (($real_path = realpath($path)) === false) {
             throw new PathNotFoundException($path);
         }
 
-        if ($except[$path] ?? in_array($path, $except)) {
+        if ($except[$real_path] ?? in_array($real_path, $except)) {
             return;
         }
 
-        if (is_dir($path)) {
-            $files = array_diff(scandir($path), ['.', '..']);
+        if (is_dir($real_path)) {
+            $files = array_diff(scandir($real_path), ['.', '..']);
 
             foreach ($files as $file) {
-                self::recursiveDelete(realpath("$path/$file"), $except);
+                self::recursiveDelete("$real_path/$file", $except);
             }
 
             if (!$delete_root) {
                 return;
             }
 
-            if (!rmdir($path)) {
-                throw new FailedToDeletePath($path);
+            if (!rmdir($real_path)) {
+                throw new FailedToDeletePath($real_path);
             }
 
             return;
         }
 
-        if (!unlink($path)) {
-            throw new FailedToDeletePath($path);
+        if (!unlink($real_path)) {
+            throw new FailedToDeletePath($real_path);
         }
+    }
+
+    /**
+     * @param string $path
+     * @return Generator|void
+     * @throws PathNotFoundException
+     */
+    public static function recursiveRead(string $path)
+    {
+        if (($real_path = realpath($path)) === false) {
+            throw new PathNotFoundException($path);
+        }
+
+        if (is_dir($real_path)) {
+            $files = array_diff(scandir($real_path), ['.', '..']);
+
+            foreach ($files as $file) {
+                self::recursiveRead("$real_path/$file");
+            }
+
+            return;
+        }
+
+        yield $real_path;
     }
 
     /**

@@ -209,3 +209,9 @@ RewriteRule . /index.php [L]
 </IfModule>
 
 # END WordPress
+
+# Protect xmlrpc for pingback exploit: https://perishablepress.com/wordpress-xmlrpc-pingback-vulnerability/#alt-method
+<Files xmlrpc.php>
+	Order Deny,Allow
+	Deny from all
+</Files>
