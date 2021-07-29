@@ -42,6 +42,14 @@
     "psy/psysh": "^0.10.8",
     "symfony/var-dumper": "^5.3"
   },
+  "scripts": {
+    "post-autoload-dump": [
+      "@php console mup:loader"
+    ],
+    "post-create-project-cmd": [
+      "@php console wordless:install"
+    ]
+  },
   "extra": {
     "installer-paths": {
       "public_html/wp-cms/wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
