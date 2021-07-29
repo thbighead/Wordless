@@ -89,7 +89,7 @@ solution, just get a normal WordPress installation and be happy)*
 |  |  |  | uploads (For built-in WordPress filesystem. Everything inside is ignored by Git)
 |  |  |  |>debug.log (WordPress log file)
 |  |  | wp-core (WordPress core files (anything but wp-content))
-|  |>.htaccess (Just like WordPress)
+|  |>.htaccess (Customized against Pingback Exploit and more)
 |  |>index.php (Just like WordPress)
 |  |>robots.txt (auto-generated after wordless:install)
 | src
@@ -122,7 +122,7 @@ prompted to fill `.env` file values marked as `VALUE_NAME=$VALUE_NAME` (even if 
 > **IMPORTANT:** if you need to avoid console prompt you may define default values into PHP `$_ENV` superglobal (in
 > whatever way you want) or `Wordless\Helpers\Environment::COMMONLY_DOT_ENV_DEFAULT_VALUES` constant (`$_ENV` takes
 > priority and should be keyed just like for this constant). Also, you may use the option `--no-ask` which will only
-> try to find values defined into `$_ENV` or leave then as it is.
+> try to find values defined into `$_ENV` or leave them as it is.
 
 `.env` is a file used to keep values that maybe different on each environment your project is running (for example if
 you have a product, local and staging environments to your app). For this reason **IT SHOULD NEVER BE VERSIONED BY GIT**
