@@ -27,7 +27,7 @@ class Str
     {
         $contains = true;
 
-        foreach ((array) $needles as $needle) {
+        foreach ((array)$needles as $needle) {
             if (($contains &= ($needle !== '' && mb_strpos($haystack, $needle) !== false)) && $any) {
                 return true;
             }
@@ -40,10 +40,22 @@ class Str
         return $contains;
     }
 
+    public static function endsWith(string $string, string $substring): bool
+    {
+        return substr($string, -strlen($substring)) === $substring;
+    }
+
     public static function finishWith(string $string, string $finish_with): string
     {
         $quoted = preg_quote($finish_with, '/');
 
         return preg_replace('/(?:' . $quoted . ')+$/u', '', $string) . $finish_with;
+    }
+
+    public static function startWith(string $string, string $start_with): string
+    {
+        $quoted = preg_quote($start_with, '/');
+
+        return $start_with . preg_replace('/^(?:' . $quoted . ')+/u', '', $string);
     }
 }

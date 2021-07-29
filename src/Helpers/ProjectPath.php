@@ -103,6 +103,16 @@ class ProjectPath
     }
 
     /**
+     * @param string $additional_path
+     * @return string
+     * @throws PathNotFoundException
+     */
+    public static function wpMustUsePlugins(string $additional_path = ''): string
+    {
+        return self::wpContent("mu-plugins/$additional_path");
+    }
+
+    /**
      * @param string $path
      * @return string
      * @throws PathNotFoundException
