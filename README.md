@@ -184,6 +184,13 @@ Activates the theme from `WP_THEME` `.env` variable. The default is our blank th
 
 Then, activates all plugins.
 
+##### Installing WordPress Languages
+
+Wordless will try to `explode` the `WP_LANGUAGES` through `,` character and install them to plugins and core.
+
+All Languages are installed for plugins, but for WordPress Core only the first one shall be installed, so **be sure to
+choose carefully what language will be listed into it**. If `WP_LANGUAGES` is empty this procedure will be skipped.
+
 ##### Make WordPress Blog Public
 
 If your `.env` variable `APP_ENV` goes for `production` we set `blog_public` database value to `true`, otherwise we set

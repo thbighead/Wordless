@@ -22,6 +22,7 @@ class Environment
         'WP_ADMIN_EMAIL' => 'admin@mail.com',
         'WP_ADMIN_PASSWORD' => 'wordless_admin',
         'WP_ADMIN_USER' => 'admin',
+        'WP_LANGUAGES' => 'null',
     ];
     public const LOCAL = 'local';
     public const PRODUCTION = 'production';

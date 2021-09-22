@@ -48,10 +48,12 @@ class WordlessInstall extends WordlessCommand
     private array $modes;
     private OutputInterface $output;
     private Command $wpCliCommand;
+    private array $wp_languages;
 
     public function __construct(string $name = null)
     {
         parent::__construct($name);
+        $this->wp_languages = explode(',', Environment::get('WP_LANGUAGES', ''));
     }
 
     protected function arguments(): array
@@ -93,8 +95,7 @@ class WordlessInstall extends WordlessCommand
         $this->flushWpRewriteRules();
         $this->activateWpTheme();
         $this->activateWpPlugins();
-        $this->installWpPluginsPtBrLanguage();
-        $this->installWpCorePtBrLanguage();
+        $this->installWpLanguages();
         $this->makeWpBlogPublic();
         $this->switchingMaintenanceMode(false);
 
@@ -125,6 +126,9 @@ class WordlessInstall extends WordlessCommand
         ];
     }
 
+    /**
+     * @throws Exception
+     */
     private function activateWpTheme()
     {
         $this->runWpCliCommand('theme activate ' . Environment::get('WP_THEME', 'wordless'));
@@ -418,31 +422,52 @@ class WordlessInstall extends WordlessCommand
     }
 
     /**
+     * @param string $language
      * @throws Exception
      */
-    private function installWpCorePtBrLanguage()
+    private function installWpCoreLanguage(string $language)
     {
-        if ($this->runWpCliCommand("language core is-installed pt_BR", true) == 0) {
+        if ($this->runWpCliCommand("language core is-installed $language", true) == 0) {
             if ($this->output->isVerbose()) {
-                $this->output->writeln('WordPress Core Language pt_BR already installed, updating.');
+                $this->output->writeln("WordPress Core Language $language already installed, updating.");
             }
 
             $this->runWpCliCommand('language core update', true);
-            $this->runWpCliCommand('language core activate pt_BR', true);
+            $this->runWpCliCommand("language core activate $language", true);
 
             return;
         }
 
-        $this->runWpCliCommand('language core install pt_BR --activate');
+        $this->runWpCliCommand("language core install $language --activate");
     }
 
     /**
      * @throws Exception
      */
-    private function installWpPluginsPtBrLanguage()
+    private function installWpLanguages()
     {
-        $this->runWpCliCommand('language plugin install pt_BR --all --allow-root', true);
-        $this->runWpCliCommand('language plugin update pt_BR --all --allow-root', true);
+        if (empty($this->wp_languages)) {
+            $this->output->writeln(
+                'Environment variable WP_LANGUAGES has no value. Skipping language install.'
+            );
+            return;
+        }
+
+        $this->installWpCoreLanguage($this->wp_languages[0]);
+
+        foreach ($this->wp_languages as $language) {
+            $this->installWpPluginsLanguage($language);
+        }
+    }
+
+    /**
+     * @param string $language
+     * @throws Exception
+     */
+    private function installWpPluginsLanguage(string $language)
+    {
+        $this->runWpCliCommand("language plugin install $language --all --allow-root", true);
+        $this->runWpCliCommand("language plugin update $language --all --allow-root", true);
     }
 
     /**
