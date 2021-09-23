@@ -4,15 +4,16 @@ const ROOT_PROJECT_PATH = __DIR__;
 
 require __DIR__ . '/vendor/autoload.php';
 
+use Dotenv\Dotenv;
+use Dotenv\Exception\InvalidPathException;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Dotenv\Dotenv;
 use Wordless\Exception\PathNotFoundException;
 use Wordless\Helpers\ProjectPath;
 
 try {
-    (new Dotenv())->load(ProjectPath::root('.env'));
+    Dotenv::createImmutable(ProjectPath::root())->load();
     define('DOT_ENV_NOT_LOADED', false);
-} catch (PathNotFoundException $exception) {
+} catch (PathNotFoundException | InvalidPathException $exception) {
     define('DOT_ENV_NOT_LOADED', true);
 }
 
