@@ -28,12 +28,12 @@ if (!defined('ROOT_PROJECT_PATH')) {
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
-use Symfony\Component\Dotenv\Dotenv;
+use Dotenv\Dotenv;
 use Wordless\Helpers\Environment;
 use Wordless\Helpers\ProjectPath;
 use Wordless\Helpers\Str;
 
-(new Dotenv())->load(ProjectPath::root('.env'));
+Dotenv::createImmutable(ProjectPath::root())->load();
 
 // https://wordpress.org/support/article/editing-wp-config-php/#require-ssl-for-admin-and-logins
 const DISALLOW_FILE_MODS = true;

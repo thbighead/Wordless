@@ -196,11 +196,12 @@
     RewriteRule ^wp-content/?(.*)?$ /wp-cms/wp-content/$1 [L,QSA]
 </IfModule>
 # BEGIN WordPress
-# As diretrizes (linhas) entre `BEGIN WordPress` e` END WordPress` são
-# geradas dinamicamente e só devem ser modificadas através de filtros do WordPress.
-# Quaisquer alterações nas diretivas entre esses marcadores serão sobrescritas.
+# The directives (lines) between "BEGIN WordPress" and "END WordPress" are
+# dynamically generated, and should only be modified via WordPress filters.
+# Any changes to the directives between these markers will be overwritten.
 <IfModule mod_rewrite.c>
 RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 RewriteBase /
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
