@@ -33,7 +33,7 @@ use Wordless\Helpers\Environment;
 use Wordless\Helpers\ProjectPath;
 use Wordless\Helpers\Str;
 
-(new Dotenv())->load(ProjectPath::root('.env'));
+(new Dotenv)->load(ProjectPath::root('.env'));
 
 // https://wordpress.org/support/article/editing-wp-config-php/#require-ssl-for-admin-and-logins
 const DISALLOW_FILE_MODS = true;

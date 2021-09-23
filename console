@@ -10,7 +10,7 @@ use Wordless\Exception\PathNotFoundException;
 use Wordless\Helpers\ProjectPath;
 
 try {
-    (new Dotenv())->load(ProjectPath::root('.env'));
+    (new Dotenv)->load(ProjectPath::root('.env'));
     define('DOT_ENV_NOT_LOADED', false);
 } catch (PathNotFoundException $exception) {
     define('DOT_ENV_NOT_LOADED', true);
