@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -510,7 +511,12 @@ class WordlessInstall extends WordlessCommand
      */
     private function resolveDotEnv()
     {
-        $this->fillDotEnv($this->getOrCreateDotEnvFilepath());
+        $this->fillDotEnv($dot_env_filepath = $this->getOrCreateDotEnvFilepath());
+
+        if (!DOT_ENV_NOT_LOADED) {
+            (new Dotenv)->load($dot_env_filepath); // loading fresh new .env
+            define('DOT_ENV_NOT_LOADED', false);
+        }
     }
 
     /**
