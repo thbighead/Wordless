@@ -34,8 +34,8 @@
   "require": {
     "php": "^7.4",
     "symfony/console": "^5.3",
+    "symfony/dotenv": "^5.3",
     "symfony/http-client": "^5.3",
-    "vlucas/phpdotenv": "^5.3",
     "wp-cli/wp-cli-bundle": "^2.5"
   },
   "require-dev": {
