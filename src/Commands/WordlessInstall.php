@@ -44,17 +44,18 @@ class WordlessInstall extends WordlessCommand
     ];
     private const WORDPRESS_SALT_URL_GETTER = 'https://api.wordpress.org/secret-key/1.1/salt/';
 
-    private QuestionHelper $questionHelper;
+    private array $fresh_new_env_content;
     private InputInterface $input;
     private array $modes;
     private OutputInterface $output;
+    private QuestionHelper $questionHelper;
     private Command $wpCliCommand;
     private array $wp_languages;
 
     public function __construct(string $name = null)
     {
         parent::__construct($name);
-        $this->wp_languages = explode(',', Environment::get('WP_LANGUAGES', ''));
+        $this->wp_languages = explode(',', $this->getEnvVariableByKey('WP_LANGUAGES', ''));
     }
 
     protected function arguments(): array
@@ -132,7 +133,9 @@ class WordlessInstall extends WordlessCommand
      */
     private function activateWpTheme()
     {
-        $this->runWpCliCommand('theme activate ' . Environment::get('WP_THEME', 'wordless'));
+        $this->runWpCliCommand(
+            "theme activate {$this->getEnvVariableByKey('WP_THEME', 'wordless')}"
+        );
     }
 
     /**
@@ -178,7 +181,7 @@ class WordlessInstall extends WordlessCommand
         $robots_txt_content = str_replace(
             $replaceable_values_regex_result[0] ?? [],
             array_map(function ($env_variable_name) {
-                $env_variable_value = Environment::get($env_variable_name, '');
+                $env_variable_value = $this->getEnvVariableByKey($env_variable_name, '');
 
                 return str_contains($env_variable_name, 'URL') ?
                     Str::finishWith($env_variable_value, '/') : $env_variable_value;
@@ -219,8 +222,8 @@ class WordlessInstall extends WordlessCommand
      */
     private function createWpDatabase()
     {
-        $database_username = Environment::get('DB_USER');
-        $database_password = Environment::get('DB_PASSWORD');
+        $database_username = $this->getEnvVariableByKey('DB_USER');
+        $database_password = $this->getEnvVariableByKey('DB_PASSWORD');
 
         if ($this->runWpCliCommand(
                 "db check --dbuser=$database_username --dbpass=$database_password",
@@ -249,7 +252,7 @@ class WordlessInstall extends WordlessCommand
             return;
         }
 
-        $wp_version = Environment::get('WP_VERSION', 'latest');
+        $wp_version = $this->getEnvVariableByKey('WP_VERSION', 'latest');
 
         $this->runWpCliCommand("core download --version=$wp_version --allow-root --skip-content");
     }
@@ -284,6 +287,9 @@ class WordlessInstall extends WordlessCommand
         if (file_put_contents($dot_env_filepath, $dot_env_content) === false) {
             throw new FailedToRewriteDotEnvFile($dot_env_filepath, $dot_env_content);
         }
+
+        // populates an internal array with env variables freshly new.
+        $this->fresh_new_env_content = (new Dotenv)->parse($dot_env_content);
     }
 
     /**
@@ -291,7 +297,7 @@ class WordlessInstall extends WordlessCommand
      */
     private function flushWpRewriteRules()
     {
-        $permalink_structure = Environment::get('WP_PERMALINK', '/%postname%/');
+        $permalink_structure = $this->getEnvVariableByKey('WP_PERMALINK', '/%postname%/');
         $this->runWpCliCommand("rewrite structure $permalink_structure --hard");
         $this->runWpCliCommand('rewrite flush --hard');
     }
@@ -301,6 +307,11 @@ class WordlessInstall extends WordlessCommand
         preg_match_all('/.+=(\$[^\W]+)\W/', $dot_env_content, $not_filled_variables_regex_result);
         // Getting Regex result (\$[^\W]+) group or leading to an empty array
         return $not_filled_variables_regex_result[1] ?? [];
+    }
+
+    private function getEnvVariableByKey(string $key, $default = null)
+    {
+        return $this->fresh_new_env_content[$key] ?? Environment::get($key, $default);
     }
 
     /**
@@ -395,25 +406,25 @@ class WordlessInstall extends WordlessCommand
      */
     private function installWpCore()
     {
-        if ($this->runWpCliCommand("core is-installed", true) == 0) {
+        if ($this->runWpCliCommand('core is-installed', true) == 0) {
             if ($this->output->isVerbose()) {
                 $this->output->writeln('WordPress Core already installed, minor updating.');
             }
 
             $this->switchingMaintenanceMode(true);
 
-            if (Environment::get('WP_VERSION', 'latest') === 'latest') {
+            if ($this->getEnvVariableByKey('WP_VERSION', 'latest') === 'latest') {
                 $this->runWpCliCommand('core update --minor --allow-root');
             }
 
             return;
         }
 
-        $app_url = Str::finishWith($_ENV['APP_URL'], '/');
-        $app_name = Environment::get('APP_NAME', 'Wordless App');
-        $wp_admin_email = Environment::get('WP_ADMIN_EMAIL', 'php-team@infobase.com.br');
-        $wp_admin_password = Environment::get('WP_ADMIN_PASSWORD', 'infobase123');
-        $wp_admin_user = Environment::get('WP_ADMIN_USER', 'infobase');
+        $app_url = Str::finishWith($this->getEnvVariableByKey('APP_URL'), '/');
+        $app_name = $this->getEnvVariableByKey('APP_NAME', 'Wordless App');
+        $wp_admin_email = $this->getEnvVariableByKey('WP_ADMIN_EMAIL', 'php-team@infobase.com.br');
+        $wp_admin_password = $this->getEnvVariableByKey('WP_ADMIN_PASSWORD', 'infobase123');
+        $wp_admin_user = $this->getEnvVariableByKey('WP_ADMIN_USER', 'infobase');
 
         $this->runWpCliCommand(
             "core install --url=$app_url --title=\"$app_name\" --admin_user=$wp_admin_user --admin_password=$wp_admin_password --admin_email=$wp_admin_email"
@@ -476,7 +487,7 @@ class WordlessInstall extends WordlessCommand
      */
     private function makeWpBlogPublic()
     {
-        $blog_public = Environment::get('APP_ENV') === Environment::PRODUCTION ? '1' : '0';
+        $blog_public = $this->getEnvVariableByKey('APP_ENV') === Environment::PRODUCTION ? '1' : '0';
 
         $this->runWpCliCommand("option update blog_public $blog_public");
     }
@@ -511,12 +522,7 @@ class WordlessInstall extends WordlessCommand
      */
     private function resolveDotEnv()
     {
-        $this->fillDotEnv($dot_env_filepath = $this->getOrCreateDotEnvFilepath());
-
-        if (!DOT_ENV_NOT_LOADED) {
-            (new Dotenv)->load($dot_env_filepath); // loading fresh new .env
-            define('DOT_ENV_NOT_LOADED', false);
-        }
+        $this->fillDotEnv($this->getOrCreateDotEnvFilepath());
     }
 
     /**
@@ -541,7 +547,7 @@ class WordlessInstall extends WordlessCommand
      */
     private function resolveWpConfigChmod()
     {
-        if (Environment::get('APP_ENV') === Environment::PRODUCTION) {
+        if ($this->getEnvVariableByKey('APP_ENV') === Environment::PRODUCTION) {
             chmod(ProjectPath::wpCore('wp-config.php'), 660);
         }
     }
