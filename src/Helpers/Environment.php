@@ -30,6 +30,22 @@ class Environment
 
     public static function get(string $key, $default = null)
     {
-        return $_ENV[$key] ?? $default;
+        if (($value = getenv($key)) === false) {
+            $value = $_ENV[$key] ?? $default;
+        }
+
+        switch ($value) {
+            case 'true':
+            case 'TRUE':
+                return true;
+            case 'false':
+            case 'FALSE':
+                return false;
+            case 'null':
+            case 'NULL':
+                return null;
+        }
+
+        return $value;
     }
 }
