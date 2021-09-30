@@ -58,4 +58,9 @@ class Str
 
         return $start_with . preg_replace('/^(?:' . $quoted . ')+/u', '', $string);
     }
+
+    public static function titleCase(string $string)
+    {
+        return mb_convert_case($string, MB_CASE_TITLE, 'UTF-8');
+    }
 }
