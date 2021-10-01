@@ -17,6 +17,24 @@ class Str
         return $substring !== false ? $substring : $string;
     }
 
+    public static function afterLast(string $string, string $delimiter)
+    {
+        $substring_position = strrpos($string, $delimiter);
+
+        if ($substring_position === false) {
+            return $string;
+        }
+
+        return substr($string, $substring_position + strlen($delimiter));
+    }
+
+    public static function before(string $string, string $delimiter): string
+    {
+        $result = strstr($string, $delimiter, true);
+
+        return $result === false ? $string : $result;
+    }
+
     /**
      * @param string $haystack
      * @param string|string[] $needles
@@ -50,6 +68,28 @@ class Str
         $quoted = preg_quote($finish_with, '/');
 
         return preg_replace('/(?:' . $quoted . ')+$/u', '', $string) . $finish_with;
+    }
+
+    public static function snakeCase(string $string, string $delimiter = '_'): string
+    {
+        return ltrim(
+            mb_strtolower(
+                preg_replace(
+                    '/([A-z])([0-9])/',
+                    '$1_$2',
+                    preg_replace(
+                        '/([A-Z])/',
+                        '_$1',
+                        preg_replace(
+                            '/\W+/',
+                            $delimiter,
+                            trim($string)
+                        )
+                    )
+                )
+            ),
+            $delimiter
+        );
     }
 
     public static function startWith(string $string, string $start_with): string
