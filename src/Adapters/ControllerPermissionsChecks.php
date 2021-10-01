@@ -5,45 +5,51 @@ namespace Wordless\Adapters;
 use Wordless\Exception\WordPressFailedToCreateRole;
 use Wordless\Helpers\Str;
 use WP_Error;
+use WP_REST_Request;
 
 trait ControllerPermissionsChecks
 {
     /**
+     * @param WP_REST_Request $request
      * @return bool|WP_Error
      */
-    public function create_item_permissions_check()
+    public function create_item_permissions_check($request)
     {
         return $this->resolvePermission($this->createPermissionName());
     }
 
     /**
+     * @param WP_REST_Request $request
      * @return bool|WP_Error
      */
-    public function delete_item_permissions_check()
+    public function delete_item_permissions_check($request)
     {
         return $this->resolvePermission($this->deletePermissionName());
     }
 
     /**
+     * @param WP_REST_Request $request
      * @return bool|WP_Error
      */
-    public function get_item_permissions_check()
+    public function get_item_permissions_check($request)
     {
         return $this->resolvePermission($this->getItemPermissionName());
     }
 
     /**
+     * @param WP_REST_Request $request
      * @return bool|WP_Error
      */
-    public function get_items_permissions_check()
+    public function get_items_permissions_check($request)
     {
         return $this->resolvePermission($this->getItemsPermissionName());
     }
 
     /**
+     * @param WP_REST_Request $request
      * @return bool|WP_Error
      */
-    public function update_item_permissions_check()
+    public function update_item_permissions_check($request)
     {
         return $this->resolvePermission($this->updatePermissionName());
     }
