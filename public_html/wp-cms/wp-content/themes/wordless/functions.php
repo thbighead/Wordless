@@ -20,16 +20,21 @@ function boot_controllers()
             continue;
         }
 
-        if (Str::endsWith(
-            $controller_filename = Str::after($controller_path, $controllers_directory_path),
-            'Controller'
-        )) {
+        if (Str::endsWith($controller_path, 'Controller.php')) {
+            $controller_relative_filepath_without_extension = trim(Str::after(
+                substr($controller_path, 0, -4), // Removes '.php'
+                $controllers_directory_path
+            ), DIRECTORY_SEPARATOR);
             $controller_full_namespace = '\\Controllers';
 
-            foreach (explode(DIRECTORY_SEPARATOR, $controller_filename) as $controller_pathing) {
+            foreach (explode(
+                         DIRECTORY_SEPARATOR,
+                         $controller_relative_filepath_without_extension
+                     ) as $controller_pathing) {
                 $controller_full_namespace .= "\\$controller_pathing";
             }
 
+            require_once $controller_path;
             /** @var WordlessController $controller */
             $controller = new $controller_full_namespace;
 
