@@ -28,11 +28,13 @@ abstract class WordlessController extends WP_REST_Controller
 
     abstract protected function namespace(): string;
 
-    abstract protected function version(): string;
+    abstract protected function version(): ?string;
 
     public function __construct()
     {
-        $this->namespace = "/{$this->namespace()}/{$this->version()}";
+        $this->namespace = empty($this->version()) ?
+            "/{$this->namespace()}" :
+            "/{$this->namespace()}/{$this->version()}";
         $this->rest_base = $this->resourceName();
         $this->user = new User;
 
