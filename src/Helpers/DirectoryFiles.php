@@ -9,7 +9,7 @@ use Wordless\Exception\PathNotFoundException;
 class DirectoryFiles
 {
     /**
-     * @param string $real_path
+     * @param string $path
      * @param string[] $except
      * @param bool $delete_root
      * @throws FailedToDeletePath
@@ -63,7 +63,7 @@ class DirectoryFiles
             $files = array_diff(scandir($real_path), ['.', '..']);
 
             foreach ($files as $file) {
-                self::recursiveRead("$real_path/$file");
+                yield from static::recursiveRead("$real_path/$file");
             }
 
             return;
