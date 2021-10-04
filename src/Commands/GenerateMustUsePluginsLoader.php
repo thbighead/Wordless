@@ -5,6 +5,7 @@ namespace Wordless\Commands;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Wordless\Abstractions\StubMounters\WpLoadMuPluginsStubMounter;
 use Wordless\Adapters\WordlessCommand;
 use Wordless\Exception\FailedToCopyStub;
 use Wordless\Exception\PathNotFoundException;
@@ -64,15 +65,9 @@ class GenerateMustUsePluginsLoader extends WordlessCommand
             }
         }
 
-        if (file_put_contents(
-            $wp_load_mu_plugins_destiny_path,
-            $this->mountLoaderContentFromStub($include_files_script)
-        ) === false) {
-            throw new FailedToCopyStub(
-                ProjectPath::stubs(self::WP_LOAD_MU_PLUGINS_FILENAME),
-                $wp_load_mu_plugins_destiny_path
-            );
-        }
+        (new WpLoadMuPluginsStubMounter($wp_load_mu_plugins_destiny_path))->setReplaceContentDictionary([
+            '// {include plugins script}' => $include_files_script,
+        ])->mountNewFile();
 
         $output->writeln(' Done!');
 
@@ -87,21 +82,5 @@ class GenerateMustUsePluginsLoader extends WordlessCommand
     protected function options(): array
     {
         return [];
-    }
-
-    /**
-     * @param string $include_files_script
-     * @return string
-     * @throws PathNotFoundException
-     */
-    private function mountLoaderContentFromStub(string $include_files_script): string
-    {
-        $loader_content = file_get_contents(ProjectPath::stubs(self::WP_LOAD_MU_PLUGINS_FILENAME));
-
-        return str_replace(
-            '// {include plugins script}',
-            $include_files_script,
-            $loader_content
-        );
     }
 }

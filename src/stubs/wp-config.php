@@ -29,9 +29,12 @@ if (!defined('ROOT_PROJECT_PATH')) {
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
 use Symfony\Component\Dotenv\Dotenv;
+use Wordless\Abstractions\InternalCache;
 use Wordless\Helpers\Environment;
 use Wordless\Helpers\ProjectPath;
 use Wordless\Helpers\Str;
+
+InternalCache::load();
 
 (new Dotenv)->load(ProjectPath::root('.env'));
 
