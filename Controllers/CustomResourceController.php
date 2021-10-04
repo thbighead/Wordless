@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace Wordless\Controllers;
 
 use Wordless\Adapters\WordlessController;
 use Wordless\Contracts\ControllerGuesser;
