@@ -1,6 +1,6 @@
 <?php
 
-namespace Wordless\Adapters;
+namespace Wordless\Contracts;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use WP_Error;

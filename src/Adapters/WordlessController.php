@@ -2,6 +2,9 @@
 
 namespace Wordless\Adapters;
 
+use Wordless\Contracts\ControllerErrorHandling;
+use Wordless\Contracts\ControllerPermissionsChecks;
+use Wordless\Contracts\ControllerRouting;
 use WP_REST_Controller;
 
 abstract class WordlessController extends WP_REST_Controller

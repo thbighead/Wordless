@@ -1,6 +1,6 @@
 <?php
 
-namespace Wordless\Adapters;
+namespace Wordless\Contracts;
 
 use Wordless\Exception\WordPressFailedToCreateRole;
 use Wordless\Helpers\Str;

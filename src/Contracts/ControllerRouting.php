@@ -1,6 +1,8 @@
 <?php
 
-namespace Wordless\Adapters;
+namespace Wordless\Contracts;
+
+use Wordless\Adapters\Request;
 
 trait ControllerRouting
 {
