@@ -3,6 +3,12 @@
   "description": "A headless WordPress CMS for developers sick of WordPress",
   "type": "project",
   "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Wordless\\Commands\\": "Commands/",
+      "Wordless\\Controllers\\": "Controllers/"
+    }
+  },
   "authors": [
     {
       "name": "Thales Nathan",
