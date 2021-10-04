@@ -19,7 +19,10 @@ try {
 $application = new Application();
 
 // Autoloading Commands
-foreach (scandir(realpath('src/Commands')) as $command_filename) {
+foreach (array_merge(
+             scandir(ProjectPath::commands()),
+             scandir(ProjectPath::root('Commands'))
+         ) as $command_filename) {
     if (!str_ends_with($command_filename, '.php')) {
         continue;
     }
