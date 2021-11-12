@@ -79,6 +79,7 @@ solution, just get a normal WordPress installation and be happy)*
 ```
 | cache (Internal cache files)
 | Commands (Custom project commands to run through console)
+| config (Published project configuration files)
 | Controllers (Custom project Controllers to add routes to API)
 | public_html (Websystem entrypoint)
 | \

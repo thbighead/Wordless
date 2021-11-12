@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f9796762c68de61dcb31a2dae23dc4b",
+    "content-hash": "80ed39c5bd0e7a27dbd1b568802f8bef",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -84,16 +84,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.1.11",
+            "version": "2.1.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "ddc81bb4718747cc93330ccf832e6be8a6c1d015"
+                "reference": "6e3c2b122e0ec41a7e885fcaf19fa15e2e0819a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/ddc81bb4718747cc93330ccf832e6be8a6c1d015",
-                "reference": "ddc81bb4718747cc93330ccf832e6be8a6c1d015",
+                "url": "https://api.github.com/repos/composer/composer/zipball/6e3c2b122e0ec41a7e885fcaf19fa15e2e0819a0",
+                "reference": "6e3c2b122e0ec41a7e885fcaf19fa15e2e0819a0",
                 "shasum": ""
             },
             "require": {
@@ -162,7 +162,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.1.11"
+                "source": "https://github.com/composer/composer/tree/2.1.12"
             },
             "funding": [
                 {
@@ -178,7 +178,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-02T11:10:26+00:00"
+            "time": "2021-11-09T15:02:04+00:00"
         },
         {
             "name": "composer/metadata-minifier",
@@ -556,16 +556,16 @@
         },
         {
             "name": "gettext/languages",
-            "version": "2.8.1",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-gettext/Languages.git",
-                "reference": "4ad818b6341e177b7c508ec4c37e18932a7b788a"
+                "reference": "ed56dd2c7f4024cc953ed180d25f02f2640e3ffa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-gettext/Languages/zipball/4ad818b6341e177b7c508ec4c37e18932a7b788a",
-                "reference": "4ad818b6341e177b7c508ec4c37e18932a7b788a",
+                "url": "https://api.github.com/repos/php-gettext/Languages/zipball/ed56dd2c7f4024cc953ed180d25f02f2640e3ffa",
+                "reference": "ed56dd2c7f4024cc953ed180d25f02f2640e3ffa",
                 "shasum": ""
             },
             "require": {
@@ -614,7 +614,7 @@
             ],
             "support": {
                 "issues": "https://github.com/php-gettext/Languages/issues",
-                "source": "https://github.com/php-gettext/Languages/tree/2.8.1"
+                "source": "https://github.com/php-gettext/Languages/tree/2.9.0"
             },
             "funding": [
                 {
@@ -626,7 +626,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-07-14T15:03:58+00:00"
+            "time": "2021-11-11T17:30:39+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -2472,16 +2472,16 @@
         },
         {
             "name": "thbighead/wordless-framework",
-            "version": "v0.1.13",
+            "version": "v0.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "53330db7a16320eac87de50972de056cf51d90f4"
+                "reference": "9e69ed497433135eefcdc45e5a39effb3af0a09e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/53330db7a16320eac87de50972de056cf51d90f4",
-                "reference": "53330db7a16320eac87de50972de056cf51d90f4",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/9e69ed497433135eefcdc45e5a39effb3af0a09e",
+                "reference": "9e69ed497433135eefcdc45e5a39effb3af0a09e",
                 "shasum": ""
             },
             "require": {
@@ -2516,9 +2516,9 @@
             "description": "Wordless Framework.",
             "support": {
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
-                "source": "https://github.com/thbighead/wordless-framework/tree/v0.1.13"
+                "source": "https://github.com/thbighead/wordless-framework/tree/v0.2.5"
             },
-            "time": "2021-11-05T18:05:36+00:00"
+            "time": "2021-11-12T21:07:32+00:00"
         },
         {
             "name": "wp-cli/cache-command",
@@ -4429,12 +4429,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "aa182a8d99ede7a54772b640ba8971828177587e"
+                "reference": "f2294a4a9d03c631d7830e71c88dddc14d2e627a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/aa182a8d99ede7a54772b640ba8971828177587e",
-                "reference": "aa182a8d99ede7a54772b640ba8971828177587e",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/f2294a4a9d03c631d7830e71c88dddc14d2e627a",
+                "reference": "f2294a4a9d03c631d7830e71c88dddc14d2e627a",
                 "shasum": ""
             },
             "require": {
@@ -4493,7 +4493,7 @@
                 "issues": "https://github.com/wp-cli/wp-cli/issues",
                 "source": "https://github.com/wp-cli/wp-cli"
             },
-            "time": "2021-11-05T06:20:45+00:00"
+            "time": "2021-11-11T15:26:51+00:00"
         },
         {
             "name": "wp-cli/wp-cli-bundle",
