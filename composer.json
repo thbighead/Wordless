@@ -34,7 +34,7 @@
   "prefer-stable": true,
   "require": {
     "php": "^7.4",
-    "thbighead/wordless-framework": "^0.1"
+    "thbighead/wordless-framework": "^0.2"
   },
   "require-dev": {
     "psy/psysh": "^0.10.8",
@@ -42,7 +42,8 @@
   },
   "scripts": {
     "post-autoload-dump": [
-      "@php console mup:loader"
+      "@php console mup:loader",
+      "@php console publish:config"
     ]
   },
   "extra": {
