@@ -1,2 +1,8 @@
+#https://make.wordpress.org/cli/handbook/references/config/#global-parameters
+
 apache_modules:
   - mod_rewrite
+
+path: public_html/wp-cms/wp-core
+
+#skip-plugins:
