@@ -247,4 +247,13 @@ dot ("."), every PHP script inside `1st-plugin` will be loaded in alphabetical o
 `my-awesome-modification-to-advanced-custom-fields-homemade-plugin` will load only `this-file-first.php` and
 `advanced/something/and-that-file-next.php` in that specific order. Any other PHP files will be ignored. Also,
 everything defined in `mu-plugins.json` are loaded after all other PHP files found automatically reading `mu-plugins`
-directory. 
+directory.
+
+### WordPress Admin Panel
+
+#### Diagnostics widget
+
+This panel maybe annoying users who log in into admin panel with information like "auto updating disabled" or
+"missing default theme". Those messages are useful for users that are managing their own site without developers, but
+for Wordless case it's just annoying or not important. So you may manage what user roles are able to see this widget
+through `config/admin.php`, adding or removing user roles slugs from `show_diagnostics_only_to` array key.
