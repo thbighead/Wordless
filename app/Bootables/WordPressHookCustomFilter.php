@@ -1,6 +1,6 @@
 <?php
 
-namespace Wordless\Bootables;
+namespace App\Bootables;
 
 use Wordless\Abstractions\AbstractBootable;
 
