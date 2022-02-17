@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Bootables;
+namespace App\Hookers;
 
-use Wordless\Abstractions\AbstractBootable;
+use Wordless\Abstractions\AbstractHooker;
 
-class WordPressHookCustomFilter extends AbstractBootable
+class WordPressHookCustomFilter extends AbstractHooker
 {
     /**
      * WordPress action|filter number of arguments accepted by function

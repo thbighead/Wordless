@@ -3,9 +3,9 @@
 namespace App\Controllers;
 
 use Wordless\Adapters\WordlessController;
-use Wordless\Contracts\ControllerGuesser;
+use Wordless\Contracts\Controller\Guesser;
 
 class CustomResourceController extends WordlessController
 {
-    use ControllerGuesser;
+    use Guesser;
 }
