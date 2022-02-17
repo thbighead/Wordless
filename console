@@ -19,17 +19,32 @@ try {
 $application = new Application();
 
 // Autoloading Commands
-foreach (array_merge(
-             scandir(ProjectPath::commands()),
-             scandir(ProjectPath::root('Commands'))
-         ) as $command_filename) {
-    if (!str_ends_with($command_filename, '.php')) {
-        continue;
+function applicationAutoloadCommandsFromDirectoryIntoNamespace(
+    Application $application,
+    string      $directory_path,
+    string      $namespace
+)
+{
+    foreach (scandir($directory_path) as $command_filename) {
+        if (!str_ends_with($command_filename, '.php')) {
+            continue;
+        }
+
+        $command_class_namespace = $namespace . substr($command_filename, 0, -4);
+
+        $application->add(new $command_class_namespace);
     }
-
-    $command_class_namespace = 'Wordless\Commands\\' . substr($command_filename, 0, -4);
-
-    $application->add(new $command_class_namespace);
 }
+
+applicationAutoloadCommandsFromDirectoryIntoNamespace(
+    $application,
+    ProjectPath::app('Commands'),
+    'App\Commands\\'
+);
+applicationAutoloadCommandsFromDirectoryIntoNamespace(
+    $application,
+    ProjectPath::commands(),
+    'Wordless\Commands\\'
+);
 
 $application->run();

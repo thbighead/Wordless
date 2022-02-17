@@ -5,9 +5,7 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "Wordless\\Bootables\\": "Bootables/",
-      "Wordless\\Commands\\": "Commands/",
-      "Wordless\\Controllers\\": "Controllers/"
+      "App\\": "app/"
     }
   },
   "authors": [
