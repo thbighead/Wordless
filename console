@@ -7,6 +7,7 @@ require __DIR__ . '/vendor/autoload.php';
 use Symfony\Component\Console\Application;
 use Symfony\Component\Dotenv\Dotenv;
 use Wordless\Exception\PathNotFoundException;
+use Wordless\Helpers\DirectoryFiles;
 use Wordless\Helpers\ProjectPath;
 
 try {
@@ -25,7 +26,7 @@ function applicationAutoloadCommandsFromDirectoryIntoNamespace(
     string      $namespace
 )
 {
-    foreach (scandir($directory_path) as $command_filename) {
+    foreach (DirectoryFiles::listFromDirectory($directory_path) as $command_filename) {
         if (!str_ends_with($command_filename, '.php')) {
             continue;
         }
