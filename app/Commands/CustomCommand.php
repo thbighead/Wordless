@@ -1,10 +1,8 @@
 <?php
 
-namespace Wordless\Commands;
+namespace App\Commands;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Wordless\Adapters\WordlessCommand;
 
 class CustomCommand extends WordlessCommand
@@ -31,12 +29,12 @@ class CustomCommand extends WordlessCommand
         return [];
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function runIt(): int
     {
-        $output->write('Your input arguments: ');
-        dump($input->getArguments());
-        $output->write('Your input options: ');
-        dump($input->getOptions());
+        $this->output->write('Your input arguments: ');
+        dump($this->input->getArguments());
+        $this->output->write('Your input options: ');
+        dump($this->input->getOptions());
 
         return Command::SUCCESS;
     }
