@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dcc56f2a6f5cea02f52168feea2d597b",
+    "content-hash": "fef7a7310b414f26609a0ce4def647fa",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2590,20 +2590,21 @@
         },
         {
             "name": "thbighead/wordless-framework",
-            "version": "v0.5.5",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "fac697bc4dbca7e190ba5436337b70fd35c2f016"
+                "reference": "8ea0e3b53986e6f2542da2b1962bf01c4fba6b06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/fac697bc4dbca7e190ba5436337b70fd35c2f016",
-                "reference": "fac697bc4dbca7e190ba5436337b70fd35c2f016",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/8ea0e3b53986e6f2542da2b1962bf01c4fba6b06",
+                "reference": "8ea0e3b53986e6f2542da2b1962bf01c4fba6b06",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
+                "ext-openssl": "*",
                 "php": "^7.4",
                 "symfony/console": "^5.3",
                 "symfony/dotenv": "^5.3",
@@ -2634,9 +2635,9 @@
             "description": "Wordless Framework.",
             "support": {
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
-                "source": "https://github.com/thbighead/wordless-framework/tree/v0.5.5"
+                "source": "https://github.com/thbighead/wordless-framework/tree/v1.0.2"
             },
-            "time": "2022-02-11T23:08:10+00:00"
+            "time": "2022-02-22T20:55:49+00:00"
         },
         {
             "name": "wp-cli/cache-command",
@@ -2888,12 +2889,12 @@
                 ]
             },
             "autoload": {
-                "psr-4": {
-                    "": "src/"
-                },
                 "files": [
                     "core-command.php"
-                ]
+                ],
+                "psr-4": {
+                    "": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -3591,12 +3592,12 @@
                 ]
             },
             "autoload": {
-                "psr-4": {
-                    "WP_CLI\\I18n\\": "src/"
-                },
                 "files": [
                     "i18n-command.php"
-                ]
+                ],
+                "psr-4": {
+                    "WP_CLI\\I18n\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -4013,12 +4014,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "cli": "lib/"
-                },
                 "files": [
                     "lib/cli/cli.php"
-                ]
+                ],
+                "psr-0": {
+                    "cli": "lib/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
