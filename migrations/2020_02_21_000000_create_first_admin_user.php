@@ -2,12 +2,22 @@
 
 use Wordless\Abstractions\Migrations\Script;
 use Wordless\Commands\WordlessInstall;
+use Wordless\Exception\PathNotFoundException;
+use Wordless\Helpers\ProjectPath;
 
-class CreateFirstAdminUser implements Script
+final class CreateFirstAdminUser implements Script
 {
     private const USERNAME = 'admin';
     private const PASSWORD = 'wordless_admin';
     private const EMAIL = 'admin@mail.com';
+
+    /**
+     * @throws PathNotFoundException
+     */
+    public function __construct()
+    {
+        require_once ProjectPath::wpCore('wp-admin/includes/user.php');
+    }
 
     public function up(): void
     {
