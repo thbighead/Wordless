@@ -6,7 +6,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Dotenv\Dotenv;
-use Wordless\Exception\PathNotFoundException;
+use Wordless\Exceptions\PathNotFoundException;
 use Wordless\Helpers\DirectoryFiles;
 use Wordless\Helpers\ProjectPath;
 

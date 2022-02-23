@@ -33,7 +33,7 @@
   "prefer-stable": true,
   "require": {
     "php": "^7.4",
-    "thbighead/wordless-framework": "^1.0"
+    "thbighead/wordless-framework": "^1.1"
   },
   "require-dev": {
     "psy/psysh": "^0.10.8",
