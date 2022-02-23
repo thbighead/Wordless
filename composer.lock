@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fef7a7310b414f26609a0ce4def647fa",
+    "content-hash": "e93230b8d5b1afd14c80b51dc70bbc7b",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2590,16 +2590,16 @@
         },
         {
             "name": "thbighead/wordless-framework",
-            "version": "v1.0.11",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "af513ab76bb02830a404821a8873b0d3042fa5d4"
+                "reference": "7f04bcb513a1a08c1cf34223fb459f326452f6c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/af513ab76bb02830a404821a8873b0d3042fa5d4",
-                "reference": "af513ab76bb02830a404821a8873b0d3042fa5d4",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/7f04bcb513a1a08c1cf34223fb459f326452f6c1",
+                "reference": "7f04bcb513a1a08c1cf34223fb459f326452f6c1",
                 "shasum": ""
             },
             "require": {
@@ -2635,9 +2635,9 @@
             "description": "Wordless Framework.",
             "support": {
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
-                "source": "https://github.com/thbighead/wordless-framework/tree/v1.0.11"
+                "source": "https://github.com/thbighead/wordless-framework/tree/v1.1.1"
             },
-            "time": "2022-02-23T18:40:06+00:00"
+            "time": "2022-02-23T19:51:36+00:00"
         },
         {
             "name": "wp-cli/cache-command",
