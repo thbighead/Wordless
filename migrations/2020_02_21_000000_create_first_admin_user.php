@@ -2,7 +2,7 @@
 
 use Wordless\Abstractions\Migrations\Script;
 use Wordless\Commands\WordlessInstall;
-use Wordless\Exception\PathNotFoundException;
+use Wordless\Exceptions\PathNotFoundException;
 use Wordless\Helpers\ProjectPath;
 
 final class CreateFirstAdminUser implements Script
