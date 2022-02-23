@@ -1,6 +1,7 @@
 <?php
 
 use Wordless\Abstractions\Migrations\Script;
+use Wordless\Commands\WordlessInstall;
 
 class CreateFirstAdminUser implements Script
 {
@@ -10,6 +11,10 @@ class CreateFirstAdminUser implements Script
 
     public function up(): void
     {
+        if (($temp_admin = get_user_by('email', WordlessInstall::TEMP_MAIL)) instanceof WP_User) {
+            wp_delete_user($temp_admin->ID);
+        }
+
         $admin_users_count = (new WP_User_Query(['role' => 'administrator']))->get_total();
 
         if ($admin_users_count <= 0) {
