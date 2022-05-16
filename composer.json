@@ -8,6 +8,11 @@
       "App\\": "app/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Wordless\\Tests\\": "tests/"
+    }
+  },
   "authors": [
     {
       "name": "Thales Nathan",
