@@ -17,7 +17,10 @@
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "composer/installers": true
+    }
   },
   "repositories": [
     {
@@ -33,6 +36,7 @@
   "prefer-stable": true,
   "require": {
     "php": "^7.4",
+    "composer/installers": "^2.1",
     "thbighead/wordless-framework": "^1.3"
   },
   "require-dev": {
@@ -43,6 +47,15 @@
     "post-autoload-dump": [
       "@php console mup:loader",
       "@php console publish:config"
+    ],
+    "post-package-install": [
+      "Wordless\\Abstractions\\Composer::activatePlugin"
+    ],
+    "post-package-update": [
+      "Wordless\\Abstractions\\Composer::activatePlugin"
+    ],
+    "pre-package-uninstall": [
+      "Wordless\\Abstractions\\Composer::deactivatePlugin"
     ]
   },
   "extra": {
