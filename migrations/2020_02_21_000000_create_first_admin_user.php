@@ -4,6 +4,7 @@ use Wordless\Abstractions\Migrations\Script;
 use Wordless\Commands\WordlessInstall;
 use Wordless\Exceptions\PathNotFoundException;
 use Wordless\Helpers\ProjectPath;
+use Wordless\Helpers\Roles;
 
 final class CreateFirstAdminUser implements Script
 {
@@ -25,10 +26,14 @@ final class CreateFirstAdminUser implements Script
             wp_delete_user($temp_admin->ID);
         }
 
-        $admin_users_count = (new WP_User_Query(['role' => 'administrator']))->get_total();
+        $admin_users_count = (new WP_User_Query([Roles::KEY => Roles::ADMIN]))->get_total();
 
         if ($admin_users_count <= 0) {
-            wp_create_user(self::USERNAME, self::PASSWORD, self::EMAIL);
+            $user_id = wp_create_user(self::USERNAME, self::PASSWORD, self::EMAIL);
+
+            $user = get_user_by('id', $user_id);
+            $user->remove_role(Roles::SUBSCRIBER);
+            $user->add_role(Roles::ADMIN);
         }
     }
 
