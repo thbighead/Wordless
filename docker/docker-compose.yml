@@ -1590,18 +1590,6 @@ services:
       networks:
         - backend
 
-### Weaver (Athena PDF) #################################################
-    weaver:
-      image: arachnysdocker/athenapdf-service
-      ports:
-        - "8080:8080"
-      env_file:
-        - ./weaver/conf/sample.env
-      networks:
-        - backend
-      depends_on:
-        - workspace
-
 ### IDE-THEIA ################################################
     ide-theia:
       build:
