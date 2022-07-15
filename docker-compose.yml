@@ -18,7 +18,7 @@ services:
   ### Workspace Utilities ##################################
   workspace:
     build:
-      context: ./workspace
+      context: ./docker/workspace
       args:
         - CHANGE_SOURCE=${CHANGE_SOURCE}
         - SHELL_OH_MY_ZSH=${SHELL_OH_MY_ZSH}
@@ -135,7 +135,7 @@ services:
         - no_proxy
     volumes:
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
-      - ./php-worker/supervisord.d:/etc/supervisord.d
+      - ./docker/php-worker/supervisord.d:/etc/supervisord.d
     extra_hosts:
       - "dockerhost:${DOCKER_HOST_IP}"
     ports:
@@ -159,7 +159,7 @@ services:
   ### PHP-FPM ##############################################
   php-fpm:
     build:
-      context: ./php-fpm
+      context: ./docker/php-fpm
       args:
         - CHANGE_SOURCE=${CHANGE_SOURCE}
         - BASE_IMAGE_TAG_PREFIX=${PHP_FPM_BASE_IMAGE_TAG_PREFIX}
@@ -241,7 +241,7 @@ services:
         - https_proxy
         - no_proxy
     volumes:
-      - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ./docker/php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
     ports:
       - "${PHP_FPM_XDEBUG_PORT}:9003"
@@ -263,7 +263,7 @@ services:
   ### NGINX Server #########################################
   nginx:
     build:
-      context: ./nginx
+      context: ./docker/nginx
       args:
         - CHANGE_SOURCE=${CHANGE_SOURCE}
         - PHP_UPSTREAM_CONTAINER=${NGINX_PHP_UPSTREAM_CONTAINER}
@@ -289,7 +289,7 @@ services:
   ### MariaDB ##############################################
   mariadb:
     build:
-      context: ./mariadb
+      context: ./docker/mariadb
       args:
         - http_proxy
         - https_proxy
@@ -312,7 +312,7 @@ services:
   ### Adminer ###########################################
   adminer:
     build:
-      context: ./adminer
+      context: ./docker/adminer
       args:
         - INSTALL_MSSQL=${ADM_INSTALL_MSSQL}
     environment:
@@ -329,7 +329,7 @@ services:
 
   ### SWAGGER EDITOR ############################################
   swagger-editor:
-    build: ./swagger-editor
+    build: ./docker/swagger-editor
     ports:
       - ${SWAGGER_EDITOR_PORT}:8080
     networks:
@@ -337,7 +337,7 @@ services:
 
   ### SWAGGER UI ################################################
   swagger-ui:
-    build: ./swagger-ui
+    build: ./docker/swagger-ui
     environment:
       - API_URL=${SWAGGER_API_URL}
     ports:
