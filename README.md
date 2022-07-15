@@ -20,12 +20,31 @@ composer create-project thbighead/wordless example-app
 cd example-app
 ```
 
-There you go. Inside this new folder you may install the project using [`wordless:install`](#install-wordless) command.
+### Wordless Docker
+
+> *As you can see, we built these containers based on [Laradock project](https://laradock.io/).*
+
+After download, you should start the default containers available by Wordless. To achieve it, first you should create
+a new `docker/nginx/sites/app.conf` copying from `docker/nginx/sites/app.conf.example`, then, just edit line 11 with
+your desired application URL as the server name. **That should be the same value you'll set as `APP_URL` into your
+`.env` file that you'll discuss later.**
+
+Next, just run `docker compose up -d` (we recommend
+[Docker Compose version 2](https://docs.docker.com/compose/#compose-v2-and-the-new-docker-compose-command)).
+
+Now to continue Wordless installation we recommend use the built in `workspace` container which you may access through
+the following command:
+
+```shell
+docker compose exec --user=laradock workspace bash
+```
+
+There you go. Inside this container you may install the project using [`wordless:install`](#install-wordless) command.
 
 ## About developers and WordPress
 
 > *If you're a WordPress fan make sure you understand WordPress **isn't** any kind of tool made for developers.
-> We'll discuss it further bellow.*
+> We'll discuss it further bellows.*
 
 > *If you're a PHP developer make sure you understand WordPress **is** old and still lives by getting massive
 > updates frequently. You don't should be afraid about old code, you can nail then: you just need your time.*
@@ -39,8 +58,8 @@ WordPress is made upon plugins and themes which don't need to follow any kind of
 is take an adventure through WordPress hooks, sometimes called filters and/or actions and do what you want to do.
 Although WordPress cares to introduce some concepts to organize and name theme files like excerpt, post, pages,
 categories, taxonomies, etc., each theme have a completely different directory organization and project structure.
-Finally, when talking about plugins project organization goes even more complicated, and we realize that even WordPress
-is being constantly updated its code still lacks some refactoring.
+Finally, when talking about plugins, project organization goes even more complicated, and we realize that even
+WordPress is being constantly updated its code still lacks some refactoring.
 
 Well, does WordPress sucks then? ***No***.
 
@@ -71,16 +90,39 @@ client. Also, to prepare the whole WordPress project we count with a console ins
 [WP-CLI](https://developer.wordpress.org/cli/commands/).
 
 Wordless introduces a blank theme which does just... well... nothing. But you may even install any known (or unknown)
-theme and use it to serve your content code through the API. *(which we really do not recommend, if that is your
-solution, just get a normal WordPress installation and be happy)*
+theme and use it to serve your content through web.
+
+### WordPressic Theme
+
+Sometimes you may wish to build projects using Wordless as your backend serving pages just like any WordPress project
+would do, but with all Wordless tools. To achieve this we have another theme which extends the blank theme called SSR
+(just like the well known Server Side Rendering "strategy" from the most known frontend frameworks).
 
 ### Directory and files organization
 
 ```
+| app (Composer initializes everything inside this directory)
+| \
+|  | Commands (Custom project commands to run through console)
+|  | Controllers (Custom project Controllers to add routes to API)
+|  | Hookers (WordPress action/filter done through an easy-to-use class)
+|  | \
+|  |  | Ajax (Wordless hookers for easy defining WordPress AJAX functions)
 | cache (Internal cache files)
-| Commands (Custom project commands to run through console)
 | config (Published project configuration files)
-| Controllers (Custom project Controllers to add routes to API)
+| docker (Easy to use development environment containers based on Laradock)
+| \
+|  | adminer (Adminer container for database access through browser GUI)
+|  | logs (Where all container log files shall be created)
+|  | mariadb (MariaDB container as our default database)
+|  | php-fpm (PHP container as our default programming language)
+|  | workspace (Our developing container which we access to use Composer, NPM, etc.)
+|  | nginx (MariaDB container as our default database)
+|  | \
+|  |  | sites (Where you should place your app config file for NGINX)
+|  |  | \
+|  |  |  | ssl (where your app cresencial for SSL access (HTTPS) shall be generated)
+|  |  |  |>app.conf.example (a good start of NGINX config file for your app)
 | public_html (Websystem entrypoint)
 | \
 |  | wp-cms
@@ -97,9 +139,11 @@ solution, just get a normal WordPress installation and be happy)*
 |  |>.htaccess (Customized against Pingback Exploit and more)
 |  |>index.php (Just like WordPress)
 |  |>robots.txt (auto-generated after wordless:install)
+| migrations (Where we store our migration files)
 |>.env.example (Used to create new .env files)
 |>composer.json (Composer)
 |>console (Wordless CLI file)
+|>docker-compsoe.yml (Docker Compose file to up application containers)
 |>wp-cli.yml (WP-CLI config file)
 ```
 
@@ -222,24 +266,24 @@ https://wpackagist.org/.
 
 #### Must Use Plugins (mu-plugins)
 
-If you need to add some homemade plugins or maybe you want to install a plugin unavailable from WPackagist, you should
+If you need to add some homemade plugins, or maybe you want to install a plugin unavailable from WPackagist, you should
 add it to `public_html/wp-cms/wp-content/mu-plugins` folder. After it, you must remount your `wp-load-mu-plugins.php`
-to load your new plugins correctly. To achieve this you may run `php console mup:loader` command which will load every
-PHP file inside `mu-plugins` path recursively.
+to load your new plugins correctly. To achieve this you may run `php console mup:loader` command which will **load
+every PHP file inside `mu-plugins` path recursively**.
 
-If your Must Use Plugin has any kind of entrypoint and should not get all its PHP files loaded in alphabetical order,
-you may add them to `mu-plugins.json` file. There you must define using the name of plugin directory which files must
-be loaded in what order using relative pathing. Example:
+If your Must-Use Plugin has any kind of entrypoint and should not get all its PHP files loaded in alphabetical order,
+you may add them to `config/mu-plugins.php` file. There you must define using the name of plugin directory which files
+must be loaded in what order using relative pathing. Example:
 
-```json
-{
-  "advanced-custom-fields": "acf.php",
-  "my-awesome-modification-to-advanced-custom-fields-homemade-plugin": [
-    "this-file-first.php",
-    "advanced/something/and-that-file-next.php"
-  ],
-  "1st-plugin": "."
-}
+```php
+return [
+    'advanced-custom-fields' => 'acf.php',
+    'my-awesome-modification-to-advanced-custom-fields-homemade-plugin' => [
+        'this-file-first.php',
+        'advanced/something/and-that-file-next.php'
+    ],
+    '1st-plugin' => '.'
+];
 ```
 
 In the example above, `1st-plugin` PHP scripts will be loaded after `advanced-custom-fields/acf.php`. As we defined a
