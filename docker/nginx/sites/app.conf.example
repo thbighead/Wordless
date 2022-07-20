@@ -80,7 +80,7 @@ server {
     }
 
     location /wp-content/ {
-        alias /var/www/html/public/wp-cms/wp-content/;
+        alias /var/www/public/wp-cms/wp-content/;
     }
     # END Samuel's NGINX config
 
