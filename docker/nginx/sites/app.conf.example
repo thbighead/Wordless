@@ -43,7 +43,7 @@ server {
         text/x-component
         text/x-cross-domain-policy;
     # END Samuel's NGINX config
-    root /var/www/public_html;
+    root /var/www/public;
     index index.php index.html index.htm;
 
     # BEGIN Samuel's NGINX config
@@ -80,7 +80,7 @@ server {
     }
 
     location /wp-content/ {
-        alias /var/www/html/public_html/wp-cms/wp-content/;
+        alias /var/www/public/wp-cms/wp-content/;
     }
     # END Samuel's NGINX config
 

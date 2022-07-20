@@ -1,4 +1,4 @@
 .idea
-/vendor/
+vendor
 .env
-public_html/robots.txt
+wp/.htaccess
