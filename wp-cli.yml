@@ -3,6 +3,6 @@
 apache_modules:
   - mod_rewrite
 
-path: public_html/wp-cms/wp-core
+path: wp/wp-core
 
 #skip-plugins:
