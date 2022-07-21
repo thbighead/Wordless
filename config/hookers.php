@@ -29,10 +29,34 @@ return [
      *              Bootstrapper::HOOKERS_REMOVE_TYPE_PRIORITY_CONFIG_KEY => 5,
      *          ],
      *      ],
-     * You may also define a Wordless\Abstractions\AbstractHooker class here. When doing it,
-     * Wordless is going to avoid the class initialization instead of removing it through any
-     * WordPress function:
-     *      Bootstrapper::HOOKERS_REMOVE_ACTION_CONFIG_KEY => [BootControllers::class],
+     * Maybe you need to remove more than one function from the same hook:
+     *      Bootstrapper::HOOKERS_REMOVE_ACTION_CONFIG_KEY => [
+     *          'wp_head' => [
+     *              [
+     *                  Bootstrapper::HOOKERS_REMOVE_TYPE_FUNCTION_CONFIG_KEY => 'wp_generator',
+     *              ],
+     *              [
+     *                  Bootstrapper::HOOKERS_REMOVE_TYPE_FUNCTION_CONFIG_KEY => 'wp_shortlink_wp_head',
+     *              ],
+     *              [
+     *                  Bootstrapper::HOOKERS_REMOVE_TYPE_FUNCTION_CONFIG_KEY => 'feed_links',
+     *                  Bootstrapper::HOOKERS_REMOVE_TYPE_PRIORITY_CONFIG_KEY => 2,
+     *              ],
+     *              [
+     *                  Bootstrapper::HOOKERS_REMOVE_TYPE_FUNCTION_CONFIG_KEY => 'feed_links_extra',
+     *                  Bootstrapper::HOOKERS_REMOVE_TYPE_PRIORITY_CONFIG_KEY => 3,
+     *              ],
+     *          ],
+     *      ],
+     * You may also define a Wordless\Abstractions\AbstractHooker class here as an array key
+     * with any value. When doing it, Wordless is going to avoid the class initialization
+     * instead of removing it through any WordPress function:
+     *      Bootstrapper::HOOKERS_REMOVE_ACTION_CONFIG_KEY => [
+     *          BootControllers::class => 'anything',
+     *          HideDiagnosticsFromUserRoles::class => false,
+     *          BootHttpRemoteCallsLog::class => null,
+     *          HooksDebugLog::class => 16523,
+     *      ],
      */
     Bootstrapper::HOOKERS_REMOVE_CONFIG_KEY => [
         Bootstrapper::HOOKERS_REMOVE_ACTION_CONFIG_KEY => [],
