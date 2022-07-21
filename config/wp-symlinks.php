@@ -1,6 +1,5 @@
 <?php
 
-use Wordless\Commands\GeneratePublicWordpressSymbolicLinks;
 use Wordless\Helpers\Environment;
 
 $current_wp_theme = Environment::get('WP_THEME', 'wordless');
