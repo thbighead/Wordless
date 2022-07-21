@@ -244,6 +244,7 @@ services:
     volumes:
       - ./docker/php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+      - ${WORDLESS_FRAMEWORK_PATH_HOST:-/dev/null}:/var/wordless-framework
     ports:
       - "${PHP_FPM_XDEBUG_PORT}:9003"
     expose:
@@ -274,6 +275,7 @@ services:
         - no_proxy
     volumes:
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+      - ${WORDLESS_FRAMEWORK_PATH_HOST:-/dev/null}:/var/wordless-framework
       - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
       - ${NGINX_SITES_PATH}:/etc/nginx/sites-available
       - ${NGINX_SSL_PATH}:/etc/nginx/ssl

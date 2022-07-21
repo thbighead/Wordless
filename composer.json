@@ -60,8 +60,8 @@
   },
   "extra": {
     "installer-paths": {
-      "public_html/wp-cms/wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
-      "public_html/wp-cms/wp-content/themes/{$name}/": ["type:wordpress-theme"]
+      "wp/wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
+      "wp/wp-content/themes/{$name}/": ["type:wordpress-theme"]
     }
   }
 }
