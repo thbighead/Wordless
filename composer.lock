@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f650abb723d5c37e098c490f5adba67d",
+    "content-hash": "df994e361167e6db73fb2cc8b371bf63",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2804,16 +2804,16 @@
         },
         {
             "name": "thbighead/wordless-framework",
-            "version": "v3.0.2",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "ead7f4b67b4dd8af8179db98a35dbf7c799c6ddd"
+                "reference": "0d5b47fc2eb9ccea4865897115a642091073113d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/ead7f4b67b4dd8af8179db98a35dbf7c799c6ddd",
-                "reference": "ead7f4b67b4dd8af8179db98a35dbf7c799c6ddd",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/0d5b47fc2eb9ccea4865897115a642091073113d",
+                "reference": "0d5b47fc2eb9ccea4865897115a642091073113d",
                 "shasum": ""
             },
             "require": {
@@ -2849,9 +2849,9 @@
             "description": "Wordless Framework.",
             "support": {
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
-                "source": "https://github.com/thbighead/wordless-framework/tree/v3.0.2"
+                "source": "https://github.com/thbighead/wordless-framework/tree/v3.1.1"
             },
-            "time": "2022-07-20T18:58:21+00:00"
+            "time": "2022-07-25T20:04:23+00:00"
         },
         {
             "name": "wp-cli/cache-command",
@@ -5184,5 +5184,5 @@
         "php": "^7.4"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
