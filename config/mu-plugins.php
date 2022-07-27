@@ -6,5 +6,5 @@ return [
 //        'this-file-first.php',
 //        'advanced/something/and-that-file-next.php'
 //    ],
-//    '1st-plugin' => '.'
+//    '1st-plugin' => '.',
 ];
