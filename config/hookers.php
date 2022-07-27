@@ -3,6 +3,7 @@
 use Wordless\Abstractions\Bootstrapper;
 use Wordless\Hookers\BootControllers;
 use Wordless\Hookers\BootHttpRemoteCallsLog;
+use Wordless\Hookers\EnqueueThemeEnqueueables;
 use Wordless\Hookers\HideDiagnosticsFromUserRoles;
 use Wordless\Hookers\HooksDebugLog;
 
@@ -10,6 +11,7 @@ return [
     Bootstrapper::HOOKERS_BOOT_CONFIG_KEY => [
         BootControllers::class,
         BootHttpRemoteCallsLog::class,
+        EnqueueThemeEnqueueables::class,
         HideDiagnosticsFromUserRoles::class,
         HooksDebugLog::class,
     ],
