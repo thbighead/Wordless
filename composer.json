@@ -49,13 +49,13 @@
       "@php console publish:config"
     ],
     "post-package-install": [
-      "Wordless\\Abstractions\\Composer::activatePlugin"
+      "App\\Abstractions\\Composer::activatePlugin"
     ],
     "post-package-update": [
-      "Wordless\\Abstractions\\Composer::activatePlugin"
+      "App\\Abstractions\\Composer::activatePlugin"
     ],
     "pre-package-uninstall": [
-      "Wordless\\Abstractions\\Composer::deactivatePlugin"
+      "App\\Abstractions\\Composer::deactivatePlugin"
     ]
   },
   "extra": {
