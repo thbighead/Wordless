@@ -32,7 +32,10 @@ trait ManagePlugin
         }
 
         $plugin_name = Str::after($package->getName(), '/');
+        $vendor_path = $composerEvent->getComposer()->getConfig()->get('vendor-dir');
 
-        passthru("php console wp:run \"plugin $plugin_command $plugin_name\"");
+        if (is_file("$vendor_path/autoload.php")) {
+            passthru("php console wp:run \"plugin $plugin_command $plugin_name\"");
+        }
     }
 }
