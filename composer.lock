@@ -3260,16 +3260,16 @@
         },
         {
             "name": "thbighead/wordless-framework",
-            "version": "v3.4.1",
+            "version": "v3.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "29653866ca4b8dde663b6571dbdec4a365a34840"
+                "reference": "dce4c44f70c3c432a6a8f78d98356b3d2355b2d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/29653866ca4b8dde663b6571dbdec4a365a34840",
-                "reference": "29653866ca4b8dde663b6571dbdec4a365a34840",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/dce4c44f70c3c432a6a8f78d98356b3d2355b2d6",
+                "reference": "dce4c44f70c3c432a6a8f78d98356b3d2355b2d6",
                 "shasum": ""
             },
             "require": {
@@ -3306,9 +3306,9 @@
             "description": "Wordless Framework.",
             "support": {
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
-                "source": "https://github.com/thbighead/wordless-framework/tree/v3.4.1"
+                "source": "https://github.com/thbighead/wordless-framework/tree/v3.4.3"
             },
-            "time": "2022-08-29T14:41:40+00:00"
+            "time": "2022-08-29T17:26:46+00:00"
         },
         {
             "name": "wp-cli/cache-command",
