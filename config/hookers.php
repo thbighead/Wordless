@@ -1,12 +1,13 @@
 <?php
 
-use App\Hookers\AllowSvgUpload;
-use App\Hookers\ForceXmlTagToUploadedSvgFiles;
 use Wordless\Abstractions\Bootstrapper;
 use Wordless\Abstractions\WpSpeedUp;
+use Wordless\Hookers\AllowSvgUpload;
 use Wordless\Hookers\BootControllers;
 use Wordless\Hookers\BootHttpRemoteCallsLog;
+use Wordless\Hookers\DeferEnqueuedScripts;
 use Wordless\Hookers\EnqueueThemeEnqueueables;
+use Wordless\Hookers\ForceXmlTagToUploadedSvgFiles;
 use Wordless\Hookers\HideDiagnosticsFromUserRoles;
 use Wordless\Hookers\HooksDebugLog;
 use Wordless\Hookers\DoNotLoadWpAdminBarOutsidePanel;
@@ -17,6 +18,7 @@ return [
         AllowSvgUpload::class,
         BootControllers::class,
         BootHttpRemoteCallsLog::class,
+        DeferEnqueuedScripts::class,
         DoNotLoadWpAdminBarOutsidePanel::class,
         EnqueueThemeEnqueueables::class,
         ForceXmlTagToUploadedSvgFiles::class,
