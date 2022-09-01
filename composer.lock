@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a3dee4d667514faeac840eedbb61447",
+    "content-hash": "20013e685a4ce477410800b031ae8271",
     "packages": [
         {
             "name": "brick/math",
@@ -1744,16 +1744,16 @@
         },
         {
             "name": "seld/phar-utils",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/phar-utils.git",
-                "reference": "9f3452c93ff423469c0d56450431562ca423dcee"
+                "reference": "ea2f4014f163c1be4c601b9b7bd6af81ba8d701c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/phar-utils/zipball/9f3452c93ff423469c0d56450431562ca423dcee",
-                "reference": "9f3452c93ff423469c0d56450431562ca423dcee",
+                "url": "https://api.github.com/repos/Seldaek/phar-utils/zipball/ea2f4014f163c1be4c601b9b7bd6af81ba8d701c",
+                "reference": "ea2f4014f163c1be4c601b9b7bd6af81ba8d701c",
                 "shasum": ""
             },
             "require": {
@@ -1786,9 +1786,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/phar-utils/issues",
-                "source": "https://github.com/Seldaek/phar-utils/tree/1.2.0"
+                "source": "https://github.com/Seldaek/phar-utils/tree/1.2.1"
             },
-            "time": "2021-12-10T11:20:11+00:00"
+            "time": "2022-08-31T10:31:18+00:00"
         },
         {
             "name": "seld/signal-handler",
@@ -3260,16 +3260,16 @@
         },
         {
             "name": "thbighead/wordless-framework",
-            "version": "v3.4.3",
+            "version": "v4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "dce4c44f70c3c432a6a8f78d98356b3d2355b2d6"
+                "reference": "547be688cf33e0f4742f9e56832eea0b9fec86f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/dce4c44f70c3c432a6a8f78d98356b3d2355b2d6",
-                "reference": "dce4c44f70c3c432a6a8f78d98356b3d2355b2d6",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/547be688cf33e0f4742f9e56832eea0b9fec86f4",
+                "reference": "547be688cf33e0f4742f9e56832eea0b9fec86f4",
                 "shasum": ""
             },
             "require": {
@@ -3306,9 +3306,9 @@
             "description": "Wordless Framework.",
             "support": {
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
-                "source": "https://github.com/thbighead/wordless-framework/tree/v3.4.3"
+                "source": "https://github.com/thbighead/wordless-framework/tree/v4.0.4"
             },
-            "time": "2022-08-29T17:26:46+00:00"
+            "time": "2022-09-01T20:02:37+00:00"
         },
         {
             "name": "wp-cli/cache-command",
