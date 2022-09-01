@@ -5,7 +5,8 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "App\\": "app/"
+      "App\\": "app/",
+      "Packages\\": "packages/"
     }
   },
   "authors": [
@@ -37,7 +38,7 @@
   "require": {
     "php": "^7.4",
     "composer/installers": "^2.1",
-    "thbighead/wordless-framework": "^3.4"
+    "thbighead/wordless-framework": "^4.0"
   },
   "require-dev": {
     "psy/psysh": "^0.10.8",
@@ -45,6 +46,7 @@
   },
   "scripts": {
     "post-autoload-dump": [
+      "Wordless\\Abstractions\\Composer::discover",
       "@php console mup:loader",
       "@php console publish:config"
     ],
@@ -60,8 +62,12 @@
   },
   "extra": {
     "installer-paths": {
-      "wp/wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
-      "wp/wp-content/themes/{$name}/": ["type:wordpress-theme"]
+      "wp/wp-content/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "wp/wp-content/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
     }
   }
 }

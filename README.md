@@ -9,6 +9,7 @@ A Headless WordPress Project **for developers** who are tired of WordPress
 - [Wordless CLI](#wordless-cli)
     - [Running WP-CLI](#running-wp-cli-commands)
 - [WordPress Plugins](#wordpress-plugins)
+- [Common Issues](#common-issues)
 
 ## Download Wordless
 
@@ -301,3 +302,9 @@ This panel maybe annoying users who log in into admin panel with information lik
 "missing default theme". Those messages are useful for users that are managing their own site without developers, but
 for Wordless case it's just annoying or not important. So you may manage what user roles are able to see this widget
 through `config/admin.php`, adding or removing user roles slugs from `show_diagnostics_only_to` array key.
+
+
+## Common Issues
+
+- **Slow internet connection** on WSL (which makes Docker containers also with limited internet connection):
+https://townsyio.medium.com/wsl2-how-to-fix-download-speed-3edb0c348e29#2b4c
