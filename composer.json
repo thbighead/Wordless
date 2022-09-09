@@ -47,6 +47,7 @@
   "scripts": {
     "post-autoload-dump": [
       "Wordless\\Abstractions\\Composer::discover",
+      "Wordless\\Abstractions\\Composer::saveInstalledVersion",
       "@php console mup:loader",
       "@php console publish:config"
     ],
