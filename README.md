@@ -303,8 +303,26 @@ This panel maybe annoying users who log in into admin panel with information lik
 for Wordless case it's just annoying or not important. So you may manage what user roles are able to see this widget
 through `config/admin.php`, adding or removing user roles slugs from `show_diagnostics_only_to` array key.
 
-
 ## Common Issues
 
-- **Slow internet connection** on WSL (which makes Docker containers also with limited internet connection):
-https://townsyio.medium.com/wsl2-how-to-fix-download-speed-3edb0c348e29#2b4c
+- **_Slow_ internet connection** on WSL (which makes Docker containers also with limited internet connection):
+  https://townsyio.medium.com/wsl2-how-to-fix-download-speed-3edb0c348e29#2b4c
+- **_No_ internet connection** on WSL (which makes Docker containers also disconnected from internet):
+  _Based on: https://askubuntu.com/a/1401317_
+    1. Open WSL2 terminal;
+    2. Create or append file at `/etc/wsl.conf`: `sudo vim /etc/wsl.conf`;
+    3. Inside it write the following lines:
+       ```
+       [network]
+       generateResolvConf = false
+       ```
+    4. Close WSL2 terminal and open a PowerShell terminal;
+    5. Run `wsl --shutdown`;
+    6. Open WSL2 terminal again;
+    7. Remove the old `/etc/resolv.conf`: `sudo rm -rf /etc/resolv.conf`;
+    8. Create a new `/etc/resolv.conf`: `sudo vim /etc/resolv.conf`;
+    9. Inside it write the following lines:
+       ```
+       nameserver 8.8.8.8
+       nameserver 1.1.1.1
+       ```
