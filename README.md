@@ -2,6 +2,7 @@
 
 A Headless WordPress Project **for developers** who are tired of WordPress
 
+- [Do It Quick](#do-it-quick)
 - [Download](#download-wordless)
     - [Installation](#install-wordless)
 - [WordPress discussion](#about-developers-and-wordpress)
@@ -9,6 +10,55 @@ A Headless WordPress Project **for developers** who are tired of WordPress
 - [Wordless CLI](#wordless-cli)
     - [Running WP-CLI](#running-wp-cli-commands)
 - [WordPress Plugins](#wordpress-plugins)
+- [Common Issues](#common-issues)
+
+## Do It Quick
+
+### New project
+
+```shell
+composer create-project thbighead/wordless example-app
+cd example-app
+cp .env.example .env
+cp docker/nginx/sites/app.conf.example docker/nginx/sites/app.conf
+```
+
+- _Edit `.env` line 3 with your application host value._
+- _Edit `docker/nginx/sites/app.conf` line 11 exactly as `.env` `APP_HOST` value._
+- _Add your host into your local hosts file (it depends on your OS)._
+
+```shell
+docker compose up -d
+docker compose exec --user=laradock workspace bash
+```
+
+> Now inside your workspace container:
+> ```shell
+> composer install
+> php console wordless:install
+> ```
+
+### Initializing cloned project
+
+```shell
+cp .env.example .env
+cp docker/nginx/sites/app.conf.example docker/nginx/sites/app.conf
+```
+
+- _Edit `.env` line 3 with your application host value._
+- _Edit `docker/nginx/sites/app.conf` line 11 exactly as `.env` `APP_HOST` value._
+- _Add your host into your local hosts file (it depends on your OS)._
+
+```shell
+docker compose up -d
+docker compose exec --user=laradock workspace bash
+```
+
+> Now inside your workspace container:
+> ```shell
+> composer install
+> php console wordless:install
+> ```
 
 ## Download Wordless
 
@@ -16,9 +66,9 @@ Just run the following code:
 
 ```
 composer create-project thbighead/wordless example-app
-
 cd example-app
 ```
+
 
 ### Wordless Docker
 
@@ -26,7 +76,7 @@ cd example-app
 
 After download, you should start the default containers available by Wordless. To achieve it, first you should create
 a new `docker/nginx/sites/app.conf` copying from `docker/nginx/sites/app.conf.example`, then, just edit line 11 with
-your desired application URL as the server name. **That should be the same value you'll set as `APP_URL` into your
+your desired application URL as the server name. **That should be the same value you'll set as `APP_HOST` into your
 `.env` file that you'll discuss later.**
 
 Next, just run `docker compose up -d` (we recommend
@@ -47,7 +97,7 @@ There you go. Inside this container you may install the project using [`wordless
 > We'll discuss it further bellows.*
 
 > *If you're a PHP developer make sure you understand WordPress **is** old and still lives by getting massive
-> updates frequently. You don't should be afraid about old code, you can nail then: you just need your time.*
+> updates frequently. You shouldn't be afraid about old code, you can nail then: you just need your time.*
 
 WordPress is a powerful [CMS](https://en.wikipedia.org/wiki/Content_management_system) which grew up for many years and
 nowadays can give any non-IT person an opportunity to fully create and customize a blog-like website. But more than just
@@ -108,6 +158,9 @@ would do, but with all Wordless tools. To achieve this we have another theme whi
 |  | Hookers (WordPress action/filter done through an easy-to-use class)
 |  | \
 |  |  | Ajax (Wordless hookers for easy defining WordPress AJAX functions)
+|  | Menus (WordPress menu registration classes)
+|  | Scripts (WordPress front-end scripts registration classes)
+|  | Styles (WordPress front-end styles registration classes)
 | cache (Internal cache files)
 | config (Published project configuration files)
 | docker (Easy to use development environment containers based on Laradock)
@@ -123,27 +176,27 @@ would do, but with all Wordless tools. To achieve this we have another theme whi
 |  |  | \
 |  |  |  | ssl (where your app cresencial for SSL access (HTTPS) shall be generated)
 |  |  |  |>app.conf.example (a good start of NGINX config file for your app)
-| public_html (Websystem entrypoint)
-| \
-|  | wp-cms
-|  | \
-|  |  | wp-content
-|  |  | \
-|  |  |  | languages (Just like WordPress. Everything inside is ignored by Git)
-|  |  |  | mu-plugins (Just like WordPress. Place any handmade or modified plugin here)
-|  |  |  | plugins (Just like WordPress. Everything inside is ignored by Git. Installation controlled by Composer)
-|  |  |  | themes (Just like WordPress. Ships with wordless theme)
-|  |  |  | uploads (For built-in WordPress filesystem. Everything inside is ignored by Git)
-|  |  |  |>debug.log (WordPress log file)
-|  |  | wp-core (WordPress core files (anything but wp-content))
-|  |>.htaccess (Customized against Pingback Exploit and more)
-|  |>index.php (Just like WordPress)
-|  |>robots.txt (auto-generated after wordless:install)
 | migrations (Where we store our migration files)
+| packages (Used by Wordless oficial package development)
+| public (Websystem entrypoint where we place some symbolic links to WordPress folders)
+| \
+|  |>robots.txt (auto-generated after wordless:install)
+| wp
+| \
+|  | wp-content
+|  | \
+|  |  | languages (Just like WordPress. Everything inside is ignored by Git)
+|  |  | mu-plugins (Just like WordPress. Place any handmade or modified plugin here)
+|  |  | plugins (Just like WordPress. Everything inside is ignored by Git. Installation controlled by Composer)
+|  |  | themes (Just like WordPress. Ships with wordless theme)
+|  |  | uploads (For built-in WordPress filesystem. Everything inside is ignored by Git)
+|  |  |>debug.log (WordPress log file)
+|  | wp-core (WordPress core files (anything but wp-content))
+|  |>index.php (Just like WordPress)
 |>.env.example (Used to create new .env files)
 |>composer.json (Composer)
 |>console (Wordless CLI file)
-|>docker-compsoe.yml (Docker Compose file to up application containers)
+|>docker-compose.yml (Docker Compose file to up application containers)
 |>wp-cli.yml (WP-CLI config file)
 ```
 
@@ -220,8 +273,7 @@ WordPress version.
 
 ##### .htaccess
 
-To correctly use WordPress REST API we must define the permalink to Post names. So now we do fix `.htaccess` and
-database to ensure it.
+As we use NGINX instead of Apache, those files are all ignored.
 
 ##### Activating Themes and Plugins
 
@@ -301,3 +353,38 @@ This panel maybe annoying users who log in into admin panel with information lik
 "missing default theme". Those messages are useful for users that are managing their own site without developers, but
 for Wordless case it's just annoying or not important. So you may manage what user roles are able to see this widget
 through `config/admin.php`, adding or removing user roles slugs from `show_diagnostics_only_to` array key.
+
+## Common Issues
+
+- **Bash error when entering workspace container (Windows)**: Sometimes your Git for Windows may bypass our
+  `.gitattributes` configuration for `docker` directory and clone their files with CRLF line endings (Windows style).
+  If you build your workspace container with `\r\n` as your line endings the following warning will appear:
+  ```shell
+  bash: $'\r': command not found
+  bash: $'\r': command not found
+  bash: /home/laradock/aliases.sh: line 118: syntax error near unexpected token `$'{\r''
+  'ash: /home/laradock/aliases.sh: line 118: `function mkd() {
+  ```
+  To get rid of it change the line endings of all files inside `docker` to LF (Unix Style) and build your containers
+  again with `docker compose build --no-cache`.
+- **_Slow_ internet connection** on WSL (which makes Docker containers also with limited internet connection):
+  https://townsyio.medium.com/wsl2-how-to-fix-download-speed-3edb0c348e29#2b4c.
+- **_No_ internet connection** on WSL (which makes Docker containers also disconnected from internet):
+  _Based on: https://askubuntu.com/a/1401317_
+    1. Open WSL2 terminal;
+    2. Create or append file at `/etc/wsl.conf`: `sudo vim /etc/wsl.conf`;
+    3. Inside it write the following lines:
+       ```
+       [network]
+       generateResolvConf = false
+       ```
+    4. Close WSL2 terminal and open a PowerShell terminal;
+    5. Run `wsl --shutdown`;
+    6. Open WSL2 terminal again;
+    7. Remove the old `/etc/resolv.conf`: `sudo rm -rf /etc/resolv.conf`;
+    8. Create a new `/etc/resolv.conf`: `sudo vim /etc/resolv.conf`;
+    9. Inside it write the following lines:
+       ```
+       nameserver 8.8.8.8
+       nameserver 1.1.1.1
+       ```

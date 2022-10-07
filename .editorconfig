@@ -8,7 +8,7 @@ indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
 
-[{Dockerfile,*.yml,*.yaml,*.js}]
+[{Dockerfile,*.yml,*.yaml,*.js,*.json}]
 indent_size = 2
 
 [{*.md,.env,.env.example}]

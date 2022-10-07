@@ -1,4 +1,4 @@
 /.idea                                           export-ignore
 /vendor                                          export-ignore
 
-/docker                                         text eol=lf
+/docker                                          text eol=lf

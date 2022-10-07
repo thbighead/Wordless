@@ -11,6 +11,8 @@ use Wordless\Hookers\ForceXmlTagToUploadedSvgFiles;
 use Wordless\Hookers\HideDiagnosticsFromUserRoles;
 use Wordless\Hookers\HooksDebugLog;
 use Wordless\Hookers\DoNotLoadWpAdminBarOutsidePanel;
+use Wordless\Hookers\ChooseImageEditor;
+use Wordless\Hookers\WordlessVersionOnAdmin;
 
 return [
     Bootstrapper::HOOKERS_BOOT_CONFIG_KEY => [
@@ -18,12 +20,14 @@ return [
         AllowSvgUpload::class,
         BootControllers::class,
         BootHttpRemoteCallsLog::class,
+        ChooseImageEditor::class,
         DeferEnqueuedScripts::class,
         DoNotLoadWpAdminBarOutsidePanel::class,
         EnqueueThemeEnqueueables::class,
         ForceXmlTagToUploadedSvgFiles::class,
         HideDiagnosticsFromUserRoles::class,
         HooksDebugLog::class,
+        WordlessVersionOnAdmin::class,
     ],
 
     /**
