@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "20013e685a4ce477410800b031ae8271",
+    "content-hash": "4d2fc38474680abf2af2fcebd9cccb01",
     "packages": [
         {
             "name": "brick/math",
@@ -3260,16 +3260,16 @@
         },
         {
             "name": "thbighead/wordless-framework",
-            "version": "v4.0.4",
+            "version": "v5.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "547be688cf33e0f4742f9e56832eea0b9fec86f4"
+                "reference": "76608979c25e02c4dadd88abb1264101c9f5e1b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/547be688cf33e0f4742f9e56832eea0b9fec86f4",
-                "reference": "547be688cf33e0f4742f9e56832eea0b9fec86f4",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/76608979c25e02c4dadd88abb1264101c9f5e1b5",
+                "reference": "76608979c25e02c4dadd88abb1264101c9f5e1b5",
                 "shasum": ""
             },
             "require": {
@@ -3284,6 +3284,7 @@
                 "wp-cli/wp-cli-bundle": "^2.5"
             },
             "require-dev": {
+                "phpunit/phpunit": "^9.5",
                 "psy/psysh": "^0.10.8",
                 "symfony/var-dumper": "^5.3"
             },
@@ -3306,9 +3307,9 @@
             "description": "Wordless Framework.",
             "support": {
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
-                "source": "https://github.com/thbighead/wordless-framework/tree/v4.0.4"
+                "source": "https://github.com/thbighead/wordless-framework/tree/v5.0.2"
             },
-            "time": "2022-09-01T20:02:37+00:00"
+            "time": "2022-10-07T20:18:39+00:00"
         },
         {
             "name": "wp-cli/cache-command",
