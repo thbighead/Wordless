@@ -29,6 +29,6 @@ class WordPressHookCustomFilter extends AbstractHooker
 
     public static function myCustomFunction($someArgument)
     {
-        // Do something. This is only called if you add this class to config/bootables.php.
+        // Do something. This is only called if you add this class to config/hookers.php.
     }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 
 const ROOT_PROJECT_PATH = __DIR__;
 
@@ -19,7 +19,7 @@ try {
 
 $application = new Application();
 
-// Autoloading Commands
+// Autoload Commands
 function applicationAutoloadCommandsFromDirectoryIntoNamespace(
     Application $application,
     string      $directory_path,
