@@ -29,6 +29,6 @@ class WordPressHookCustomBothAjax extends AbstractAjaxHooker
 
     public static function myCustomFunction()
     {
-        // Do something. This is only called if you add this class to config/bootables.php.
+        // Do something. This is only called if you add this class to config/hookers.php.
     }
 }

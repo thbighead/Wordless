@@ -1,9 +1,10 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 
 use Wordless\Abstractions\Bootstrapper;
 use Wordless\Abstractions\WpSpeedUp;
 use Wordless\Hookers\AllowSvgUpload;
 use Wordless\Hookers\BootControllers;
+use Wordless\Hookers\BootCustomPostTypes;
 use Wordless\Hookers\BootHttpRemoteCallsLog;
 use Wordless\Hookers\DeferEnqueuedScripts;
 use Wordless\Hookers\EnqueueThemeEnqueueables;
@@ -19,6 +20,7 @@ return [
         ...WpSpeedUp::addAdditionalHooks(),
         AllowSvgUpload::class,
         BootControllers::class,
+        BootCustomPostTypes::class,
         BootHttpRemoteCallsLog::class,
         ChooseImageEditor::class,
         DeferEnqueuedScripts::class,

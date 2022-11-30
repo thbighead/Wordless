@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnused */
 
 use Wordless\Abstractions\Migrations\Script;
 use Wordless\Adapters\Role;
