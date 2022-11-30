@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 
 use Wordless\Abstractions\Bootstrapper;
 use Wordless\Abstractions\WpSpeedUp;
