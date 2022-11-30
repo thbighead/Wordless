@@ -38,7 +38,7 @@
   "require": {
     "php": "^7.4",
     "composer/installers": "^2.1",
-    "thbighead/wordless-framework": "^5.0"
+    "thbighead/wordless-framework": "^6.0"
   },
   "require-dev": {
     "psy/psysh": "^0.10.8",
