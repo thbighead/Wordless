@@ -162,7 +162,6 @@ services:
       - frontend
       - backend
 
-
   ### PHP-FPM ##############################################
   php-fpm:
     build:
@@ -261,7 +260,7 @@ services:
       - "9000"
     extra_hosts:
       - "dockerhost:${DOCKER_HOST_IP}"
-#      - "${APP_HOST}:${DOCKER_HOST_IP}"
+    #      - "${APP_HOST}:${DOCKER_HOST_IP}"
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
       - DOCKER_TLS_VERIFY=1
