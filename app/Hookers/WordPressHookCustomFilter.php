@@ -2,9 +2,9 @@
 
 namespace App\Hookers;
 
-use Wordless\Abstractions\AbstractHooker;
+use Wordless\Abstractions\Hooker;
 
-class WordPressHookCustomFilter extends AbstractHooker
+class WordPressHookCustomFilter extends Hooker
 {
     /**
      * WordPress action|filter number of arguments accepted by function

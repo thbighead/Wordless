@@ -3,9 +3,9 @@
 namespace App\Commands;
 
 use Symfony\Component\Console\Command\Command;
-use Wordless\Adapters\WordlessCommand;
+use Wordless\Adapters\ConsoleCommand;
 
-class CustomCommand extends WordlessCommand
+class CustomCommand extends ConsoleCommand
 {
     protected static $defaultName = 'custom:command';
 
