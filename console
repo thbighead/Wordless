@@ -9,6 +9,7 @@ use Symfony\Component\Dotenv\Dotenv;
 use Wordless\Exceptions\PathNotFoundException;
 use Wordless\Helpers\DirectoryFiles;
 use Wordless\Helpers\ProjectPath;
+use Wordless\Helpers\Str;
 
 try {
     (new Dotenv)->load(ProjectPath::root('.env'));
@@ -27,11 +28,11 @@ function applicationAutoloadCommandsFromDirectoryIntoNamespace(
 )
 {
     foreach (DirectoryFiles::listFromDirectory($directory_path) as $command_filename) {
-        if (!str_ends_with($command_filename, '.php')) {
+        if (!Str::endsWith($command_filename, $suffix = '.php')) {
             continue;
         }
 
-        $command_class_namespace = $namespace . substr($command_filename, 0, -4);
+        $command_class_namespace = $namespace . Str::removeSuffix($command_filename, $suffix);
 
         $application->add(new $command_class_namespace);
     }
@@ -42,6 +43,19 @@ applicationAutoloadCommandsFromDirectoryIntoNamespace(
     ProjectPath::app('Commands'),
     'App\Commands\\'
 );
+
+foreach (DirectoryFiles::listFromDirectory(ProjectPath::packages()) as $pascal_cased_package_name) {
+    try {
+        applicationAutoloadCommandsFromDirectoryIntoNamespace(
+            $application,
+            ProjectPath::packages("$pascal_cased_package_name/Commands"),
+            "Packages\\$pascal_cased_package_name\Commands\\"
+        );
+    } catch (PathNotFoundException $exception) {
+        continue;
+    }
+}
+
 applicationAutoloadCommandsFromDirectoryIntoNamespace(
     $application,
     ProjectPath::commands(),

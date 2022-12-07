@@ -2,10 +2,10 @@
 
 namespace App\Controllers;
 
-use Wordless\Adapters\WordlessController;
+use Wordless\Adapters\ApiController;
 use Wordless\Contracts\Controller\Guesser;
 
-class CustomResourceController extends WordlessController
+class CustomResourceController extends ApiController
 {
     use Guesser;
 
