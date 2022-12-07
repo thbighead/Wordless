@@ -3,7 +3,7 @@
 use Wordless\Abstractions\Bootstrapper;
 use Wordless\Abstractions\WpSpeedUp;
 use Wordless\Hookers\AllowSvgUpload;
-use Wordless\Hookers\BootControllers;
+use Wordless\Hookers\BootApiControllers;
 use Wordless\Hookers\BootCustomPostTypes;
 use Wordless\Hookers\BootHttpRemoteCallsLog;
 use Wordless\Hookers\DeferEnqueuedScripts;
@@ -19,7 +19,7 @@ return [
     Bootstrapper::HOOKERS_BOOT_CONFIG_KEY => [
         ...WpSpeedUp::addAdditionalHooks(),
         AllowSvgUpload::class,
-        BootControllers::class,
+        BootApiControllers::class,
         BootCustomPostTypes::class,
         BootHttpRemoteCallsLog::class,
         ChooseImageEditor::class,

@@ -2,9 +2,9 @@
 
 namespace App\Hookers\Ajax;
 
-use Wordless\Abstractions\AbstractAjaxHooker;
+use Wordless\Abstractions\AjaxHooker;
 
-class WordPressHookCustomFrontendAjax extends AbstractAjaxHooker
+class WordPressHookCustomFrontendAjax extends AjaxHooker
 {
     /**
      * WordPress action|filter number of arguments accepted by function
