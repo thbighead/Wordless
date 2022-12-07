@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f25dffdc5ae07d1d151c7234b5cbb40d",
+    "content-hash": "a68d9f8cd876569f135d92b6c06690fa",
     "packages": [
         {
             "name": "brick/math",
@@ -3530,16 +3530,16 @@
         },
         {
             "name": "thbighead/wordless-framework",
-            "version": "v6.0.2",
+            "version": "v6.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "8b60ef0023810137e3ee5288e1f8bf620f4cd7b9"
+                "reference": "2ce2f274227b72a35def42aa2cf284ad2f1ffa7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/8b60ef0023810137e3ee5288e1f8bf620f4cd7b9",
-                "reference": "8b60ef0023810137e3ee5288e1f8bf620f4cd7b9",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/2ce2f274227b72a35def42aa2cf284ad2f1ffa7d",
+                "reference": "2ce2f274227b72a35def42aa2cf284ad2f1ffa7d",
                 "shasum": ""
             },
             "require": {
@@ -3580,9 +3580,9 @@
             "description": "Wordless Framework.",
             "support": {
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
-                "source": "https://github.com/thbighead/wordless-framework/tree/v6.0.2"
+                "source": "https://github.com/thbighead/wordless-framework/tree/v6.1.0"
             },
-            "time": "2022-11-30T19:58:10+00:00"
+            "time": "2022-12-07T19:06:58+00:00"
         },
         {
             "name": "wp-cli/cache-command",
@@ -5917,5 +5917,5 @@
         "php": "^7.4"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
