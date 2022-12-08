@@ -2,7 +2,7 @@
 
 use Wordless\Abstractions\Migrations\Script;
 use Wordless\Adapters\Role;
-use Wordless\Commands\ConsoleInstall;
+use Wordless\Commands\WordlessInstall;
 use Wordless\Exceptions\PathNotFoundException;
 use Wordless\Helpers\ProjectPath;
 
@@ -22,7 +22,7 @@ final class CreateFirstAdminUser implements Script
 
     public function up(): void
     {
-        if (($temp_admin = get_user_by('email', ConsoleInstall::TEMP_MAIL)) instanceof WP_User) {
+        if (($temp_admin = get_user_by('email', WordlessInstall::TEMP_MAIL)) instanceof WP_User) {
             wp_delete_user($temp_admin->ID);
         }
 

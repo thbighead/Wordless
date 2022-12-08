@@ -904,16 +904,16 @@
         },
         {
             "name": "gettext/gettext",
-            "version": "v4.8.7",
+            "version": "v4.8.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-gettext/Gettext.git",
-                "reference": "3f7bc5ef23302a9059e64934f3d59e454516bec0"
+                "reference": "302a00aa9d6762c92c884d879c15d3ed05d6a37d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-gettext/Gettext/zipball/3f7bc5ef23302a9059e64934f3d59e454516bec0",
-                "reference": "3f7bc5ef23302a9059e64934f3d59e454516bec0",
+                "url": "https://api.github.com/repos/php-gettext/Gettext/zipball/302a00aa9d6762c92c884d879c15d3ed05d6a37d",
+                "reference": "302a00aa9d6762c92c884d879c15d3ed05d6a37d",
                 "shasum": ""
             },
             "require": {
@@ -965,7 +965,7 @@
             "support": {
                 "email": "oom@oscarotero.com",
                 "issues": "https://github.com/oscarotero/Gettext/issues",
-                "source": "https://github.com/php-gettext/Gettext/tree/v4.8.7"
+                "source": "https://github.com/php-gettext/Gettext/tree/v4.8.8"
             },
             "funding": [
                 {
@@ -981,7 +981,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-08-02T09:42:10+00:00"
+            "time": "2022-12-08T11:59:50+00:00"
         },
         {
             "name": "gettext/languages",
@@ -3530,16 +3530,16 @@
         },
         {
             "name": "thbighead/wordless-framework",
-            "version": "v6.1.0",
+            "version": "v6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "2ce2f274227b72a35def42aa2cf284ad2f1ffa7d"
+                "reference": "43d309a4755f1bfa2c80a51a37fe7d6044434eea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/2ce2f274227b72a35def42aa2cf284ad2f1ffa7d",
-                "reference": "2ce2f274227b72a35def42aa2cf284ad2f1ffa7d",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/43d309a4755f1bfa2c80a51a37fe7d6044434eea",
+                "reference": "43d309a4755f1bfa2c80a51a37fe7d6044434eea",
                 "shasum": ""
             },
             "require": {
@@ -3580,9 +3580,9 @@
             "description": "Wordless Framework.",
             "support": {
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
-                "source": "https://github.com/thbighead/wordless-framework/tree/v6.1.0"
+                "source": "https://github.com/thbighead/wordless-framework/tree/v6.1.1"
             },
-            "time": "2022-12-07T19:06:58+00:00"
+            "time": "2022-12-08T19:03:33+00:00"
         },
         {
             "name": "wp-cli/cache-command",
