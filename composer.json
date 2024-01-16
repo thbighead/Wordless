@@ -5,8 +5,7 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "App\\": "app/",
-      "Packages\\": "packages/"
+      "App\\": "app/"
     }
   },
   "authors": [
@@ -21,7 +20,7 @@
     "sort-packages": true,
     "allow-plugins": {
       "composer/installers": true,
-      "roots/wordpress-core-installer": true
+      "roots/wordpress-core-installer": false
     }
   },
   "repositories": [
@@ -48,19 +47,18 @@
   },
   "scripts": {
     "post-autoload-dump": [
-      "Wordless\\Abstractions\\Composer::setHost",
-      "Wordless\\Abstractions\\Composer::discover",
-      "Wordless\\Abstractions\\Composer::saveInstalledVersion",
+      "Wordless\\Core\\Composer\\Main::setHost",
+      "Wordless\\Core\\Composer\\Main::saveInstalledVersion",
       "@php console publish:config"
     ],
     "post-package-install": [
-      "Wordless\\Abstractions\\Composer::activatePlugin"
+      "Wordless\\Core\\Composer\\Main::activatePlugin"
     ],
     "post-package-update": [
-      "Wordless\\Abstractions\\Composer::activatePlugin"
+      "Wordless\\Core\\Composer\\Main::activatePlugin"
     ],
     "pre-package-uninstall": [
-      "Wordless\\Abstractions\\Composer::deactivatePlugin"
+      "Wordless\\Core\\Composer\\Main::deactivatePlugin"
     ]
   },
   "extra": {
