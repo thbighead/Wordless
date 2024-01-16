@@ -20,7 +20,8 @@
     "preferred-install": "dist",
     "sort-packages": true,
     "allow-plugins": {
-      "composer/installers": true
+      "composer/installers": true,
+      "roots/wordpress-core-installer": true
     }
   },
   "repositories": [
@@ -36,20 +37,20 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": "^7.4",
+    "php": "~8.2.0",
     "composer/installers": "^2.1",
-    "thbighead/wordless-framework": "^6.1"
+    "thbighead/wordless-framework": "dev-feature/php8.2"
   },
   "require-dev": {
-    "psy/psysh": "^0.10.8",
-    "symfony/var-dumper": "^5.3"
+    "phpunit/phpunit": "^10.4",
+    "psy/psysh": "^0.11.22",
+    "symfony/var-dumper": "^6.3"
   },
   "scripts": {
     "post-autoload-dump": [
       "Wordless\\Abstractions\\Composer::setHost",
       "Wordless\\Abstractions\\Composer::discover",
       "Wordless\\Abstractions\\Composer::saveInstalledVersion",
-      "@php console mup:loader",
       "@php console publish:config"
     ],
     "post-package-install": [
