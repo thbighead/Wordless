@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use App\Providers\AppProvider;
 use Wordless\Application\Commands\Utility\DatabaseOverwrite\DTO\UserDTO;
 use Wordless\Application\Helpers\Config;
 use Wordless\Application\Helpers\Environment;
@@ -20,12 +21,32 @@ $providers = [
     RemoveEmojiProvider::class,
     MigrationsProvider::class,
 //    SeedersProvider::class,
+    AppProvider::class,
 ];
 
 return [
     Config::KEY_CSP => [
         'default-src' => ['self' => true],
+        'font-src' => [
+            'self' => true,
+            'data' => true,
+        ],
         'frame-ancestors' => [],
+        'img-src' => [
+            'data' => true,
+            'allow'=>[
+                'https://secure.gravatar.com',
+            ]
+        ],
+        'script-src' => [
+            'blob' => true,
+            'self' => true,
+            'unsafe-inline' => true,
+        ],
+        'style-src' => [
+            'self' => true,
+            'unsafe-inline' => true,
+        ],
         'upgrade-insecure-requests' => true,
     ],
     'database' => [

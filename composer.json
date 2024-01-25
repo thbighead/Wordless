@@ -20,7 +20,7 @@
     "sort-packages": true,
     "allow-plugins": {
       "composer/installers": true,
-      "roots/wordpress-core-installer": false
+      "roots/wordpress-core-installer": true
     }
   },
   "repositories": [
@@ -38,7 +38,8 @@
   "require": {
     "php": "~8.2.0",
     "composer/installers": "^2.1",
-    "thbighead/wordless-framework": "dev-feature/php8.2"
+    "thbighead/wordless-framework": "dev-feature/php8.2",
+    "roots/wordpress": "^6.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^10.4",
@@ -62,6 +63,7 @@
     ]
   },
   "extra": {
+    "wordpress-install-dir": "wp/wp-core",
     "installer-paths": {
       "wp/wp-content/plugins/{$name}/": [
         "type:wordpress-plugin"

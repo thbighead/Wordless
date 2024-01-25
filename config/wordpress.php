@@ -40,15 +40,11 @@ return [
         ],
     ],
     'permissions' => [
-//        'custom-admin' => [
-//            'custom_cap_1' => true,
-//            'custom_cap_2' => true,
+//        'custom-role' => [
+//            'custom_cap'=>true
 //        ],
 //        DefaultRole::editor->value => [
-//            'moderate_comments' => true,
-//            'upload_files' => false,
-//            'custom_capability' => true,
-//            'another_custom_capability' => false,
+//            'custom_cap'=>false
 //        ],
     ],
     'rest-api' => [

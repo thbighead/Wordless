@@ -1,20 +1,15 @@
-<?php /** @noinspection PhpUnused */
+<?php declare(strict_types=1);
 
-use Wordless\Abstractions\Migrations\Script;
-use Wordless\Adapters\Role;
-use Wordless\Commands\WordlessInstall;
-use Wordless\Exceptions\PathNotFoundException;
-use Wordless\Helpers\ProjectPath;
+use Wordless\Application\Commands\WordlessInstall;
+use Wordless\Application\Helpers\ProjectPath;
+use Wordless\Infrastructure\Migration;
+use Wordless\Wordpress\Models\Role\Enums\DefaultRole;
 
-final class CreateFirstAdminUser implements Script
-{
+return new class extends Migration {
     private const USERNAME = 'admin';
     private const PASSWORD = 'wordless_admin';
     private const EMAIL = 'admin@mail.com';
 
-    /**
-     * @throws PathNotFoundException
-     */
     public function __construct()
     {
         require_once ProjectPath::wpCore('wp-admin/includes/user.php');
@@ -26,14 +21,14 @@ final class CreateFirstAdminUser implements Script
             wp_delete_user($temp_admin->ID);
         }
 
-        $admin_users_count = (new WP_User_Query([Role::KEY => Role::ADMIN]))->get_total();
+        $admin_users_count = (new WP_User_Query(['role' => DefaultRole::admin->name]))->get_total();
 
         if ($admin_users_count <= 0) {
             $user_id = wp_create_user(self::USERNAME, self::PASSWORD, self::EMAIL);
 
             $user = get_user_by('id', $user_id);
-            $user->remove_role(Role::SUBSCRIBER);
-            $user->add_role(Role::ADMIN);
+            $user->remove_role(DefaultRole::subscriber->name);
+            $user->add_role(DefaultRole::admin->name);
         }
     }
 
@@ -43,4 +38,4 @@ final class CreateFirstAdminUser implements Script
             wp_delete_user($admin_created->ID);
         }
     }
-}
+};

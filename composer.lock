@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "918b93c486ab0251cab6ff7e0076f173",
+    "content-hash": "e558adcda54574f9e521544d6763229b",
     "packages": [
         {
             "name": "brick/math",
@@ -4500,12 +4500,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "b14338f1eb0513d7da2beaab59fa4acc6949c20d"
+                "reference": "7a4169840570982e5b491dd7313b5ef17dccd71e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/b14338f1eb0513d7da2beaab59fa4acc6949c20d",
-                "reference": "b14338f1eb0513d7da2beaab59fa4acc6949c20d",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/7a4169840570982e5b491dd7313b5ef17dccd71e",
+                "reference": "7a4169840570982e5b491dd7313b5ef17dccd71e",
                 "shasum": ""
             },
             "require": {
@@ -4556,7 +4556,7 @@
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
                 "source": "https://github.com/thbighead/wordless-framework/tree/feature/php8.2"
             },
-            "time": "2024-01-16T14:28:54+00:00"
+            "time": "2024-01-25T19:39:49+00:00"
         },
         {
             "name": "wp-cli/cache-command",
