@@ -15,7 +15,6 @@ use Wordless\Wordpress\Models\Role\Enums\DefaultRole;
 return [
     'languages' => [],
     'theme' => 'wordless',
-    'version' => 'latest',
     'permalink' => '/%postname%/',
     'admin' => [
         RemoveEmojiProvider::CONFIG_KEY_REMOVE_WP_EMOJIS => false,
@@ -26,8 +25,7 @@ return [
             DefaultRole::admin->value => true,
             DefaultRole::author->value => false,
         ],
-        CustomAdminUrlListener::REDIRECT_FROM_DEFAULTS_TO_URL_KEY => null,
-        CustomAdminUrlListener::CUSTOM_ADMIN_URL_KEY => null,
+        'custom_admin_uri' => 'jose',
         'enable_comments' => false,
         Bootstrapper::ERROR_REPORTING_KEY => Environment::isProduction()
             ? E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED

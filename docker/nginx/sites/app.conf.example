@@ -63,19 +63,6 @@ server {
         try_files $uri $uri/ /index.php$is_args$args;
     }
 
-    location /wp-core {
-        try_files $uri $uri/ /wp-core/index.php?$args;
-    }
-
-    location /wp-admin {
-        rewrite ^/wp-admin/?$ /wp-core/wp-admin/index.php redirect;
-        rewrite ^/wp-admin/?(.*)?$ /wp-core/wp-admin/$1 redirect;
-    }
-
-    location /wp-content {
-        alias /var/www/public/wp-content/;
-    }
-
     location ~ \.php$ {
         try_files $uri /index.php =404;
         fastcgi_pass php-upstream;

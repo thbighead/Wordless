@@ -21,14 +21,14 @@ return new class extends Migration {
             wp_delete_user($temp_admin->ID);
         }
 
-        $admin_users_count = (new WP_User_Query(['role' => DefaultRole::admin->name]))->get_total();
+        $admin_users_count = (new WP_User_Query(['role' => DefaultRole::admin->value]))->get_total();
 
         if ($admin_users_count <= 0) {
             $user_id = wp_create_user(self::USERNAME, self::PASSWORD, self::EMAIL);
 
             $user = get_user_by('id', $user_id);
             $user->remove_role(DefaultRole::subscriber->name);
-            $user->add_role(DefaultRole::admin->name);
+            $user->add_role(DefaultRole::admin->value);
         }
     }
 
