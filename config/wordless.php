@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php /** @noinspection PhpUnhandledExceptionInspection */
+
+declare(strict_types=1);
 
 use App\Providers\AppProvider;
 use Wordless\Application\Commands\GeneratePublicWordpressSymbolicLinks;
@@ -9,20 +11,22 @@ use Wordless\Application\Libraries\JWT\Enums\CryptoAlgorithm;
 use Wordless\Application\Libraries\JWT\Token;
 use Wordless\Application\Libraries\LogManager\Logger;
 use Wordless\Application\Libraries\LogManager\Logger\LogFormatter;
+use Wordless\Application\Providers\AdminCustomUrlProvider;
 use Wordless\Application\Providers\CommentsProvider;
 use Wordless\Application\Providers\CoreProvider;
 use Wordless\Application\Providers\MigrationsProvider;
 use Wordless\Application\Providers\RemoveEmojiProvider;
+use Wordless\Application\Providers\SeedersProvider;
 use Wordless\Infrastructure\Provider;
 
-$current_wp_theme = Config::get('wordpress.theme', 'wordless');
+$current_wp_theme = Config::wordpressTheme()->get(default: 'wordless');
 /** @var Provider[] $providers */
 $providers = [
     CoreProvider::class,
     CommentsProvider::class,
     RemoveEmojiProvider::class,
     MigrationsProvider::class,
-//    SeedersProvider::class,
+    SeedersProvider::class,
     AppProvider::class,
 ];
 
@@ -63,11 +67,11 @@ return [
         ],
         'upgrade-insecure-requests' => true,
     ],
-    'database' => [
-        UserDTO::USER_DEFAULT_PASSWORD_KEY => 'password',
+    Config::KEY_DATABASE => [
+        UserDTO::USER_DEFAULT_OVERWRITE_PASSWORD_KEY => 'password',
     ],
-    'jwt' => [
-        Token::CONFIG_DEFAULT_CRYPTO => CryptoAlgorithm::SYMMETRIC_HMAC_SHA256,
+    Token::CONFIG_KEY => [
+        Token::CONFIG_DEFAULT_CRYPTO => CryptoAlgorithm::symmetric_hmac_sha256,
         Token::CONFIG_SIGN_KEY => Environment::get(Token::ENVIRONMENT_SIGN_VARIABLE),
     ],
     Logger::CONFIG_KEY_LOG => [
@@ -78,13 +82,12 @@ return [
         Logger::CONFIG_KEY_WORDLESS_LINE_PREFIX => Environment::get('APP_NAME', 'wordless')
             . '.' . Environment::get('APP_ENV')
     ],
-    'providers' => $providers,
+    Provider::CONFIG_KEY => $providers,
     GeneratePublicWordpressSymbolicLinks::PUBLIC_SYMLINK_KEY => [
         'index.php' => '../wp/index.php',
         'wp-content/plugins' => '../wp/wp-content/plugins!.gitignore',
         "wp-content/themes/$current_wp_theme/public" => "../wp/wp-content/themes/$current_wp_theme/public",
         'wp-content/uploads' => '../wp/wp-content/uploads',
-        Config::get('wordpress.admin.custom_admin_uri', 'wp-core') =>
-            '../wp/wp-core!wp-config.php,wp-cron.php,xmlrpc.php',
+        AdminCustomUrlProvider::getCustomUri() => '../wp/wp-core!wp-config.php,wp-cron.php,xmlrpc.php',
     ],
 ];
