@@ -44,6 +44,10 @@ server {
     root /var/www/public;
     index index.php index.html index.htm;
 
+    location ~ /\. {
+        deny all;
+    }
+
     location = /favicon.ico {
         log_not_found off;
         access_log off;
