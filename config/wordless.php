@@ -28,6 +28,7 @@ $providers = [
     MigrationsProvider::class,
     SeedersProvider::class,
     AppProvider::class,
+    AdminCustomUrlProvider::class,
 ];
 
 return [

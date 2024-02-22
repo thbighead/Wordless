@@ -6,10 +6,10 @@ use Wordless\Application\Helpers\Config;
 use Wordless\Application\Helpers\Environment;
 use Wordless\Application\Helpers\Timezone;
 use Wordless\Application\Listeners\ChooseImageEditor;
-use Wordless\Application\Listeners\CustomAdminUrl\Contracts\BaseListener;
 use Wordless\Application\Listeners\DisableComments\Contracts\DisableCommentsActionListener;
 use Wordless\Application\Listeners\DoNotLoadWpAdminBarOutsidePanel;
 use Wordless\Application\Listeners\HideDiagnosticsFromUserRoles;
+use Wordless\Application\Providers\AdminCustomUrlProvider;
 use Wordless\Application\Providers\RemoveEmojiProvider;
 use Wordless\Application\Providers\RestApiProvider;
 use Wordless\Application\Providers\WpSpeedUpProvider;
@@ -30,7 +30,7 @@ return [
             DefaultRole::admin->value => true,
             DefaultRole::author->value => false,
         ],
-        BaseListener::CONFIG_KEY_CUSTOM_ADMIN_URI => null,
+        AdminCustomUrlProvider::CONFIG_KEY_CUSTOM_ADMIN_URI => 'blastoise',
         DisableCommentsActionListener::CONFIG_KEY_ENABLE_COMMENTS => false,
         Bootstrapper::CONFIG_KEY_ERROR_REPORTING => Environment::isProduction()
             ? E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED
