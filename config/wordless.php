@@ -88,6 +88,6 @@ return [
         'wp-content/plugins' => '../wp/wp-content/plugins!.gitignore',
         "wp-content/themes/$current_wp_theme/public" => "../wp/wp-content/themes/$current_wp_theme/public",
         'wp-content/uploads' => '../wp/wp-content/uploads',
-        AdminCustomUrlProvider::getCustomUri() => '../wp/wp-core!wp-config.php,wp-cron.php,xmlrpc.php',
+        AdminCustomUrlProvider::getCustomUri(false) => '../wp/wp-core!wp-config.php,wp-cron.php,xmlrpc.php',
     ],
 ];
