@@ -55,7 +55,7 @@ RUN set -xe; \
     useradd -l -u ${PUID} -g laradock -m laradock -G docker_env && \
     usermod -p "*" laradock -s /bin/bash && \
     apt-get install -yqq \
-      apt-utils \
+      apt-utils dos2unix \
       #
       #--------------------------------------------------------------------------
       # Mandatory Software's Installation
@@ -1850,18 +1850,6 @@ RUN if [ ${INSTALL_DNSUTILS} = true ]; then \
     apt-get update && apt-get install -y dnsutils \
 ;fi
 
-###########################################################################
-# Java Development Kit:
-###########################################################################
-
-ARG INSTALL_JDK=false
-
-RUN if [ ${INSTALL_JDK} = true ]; then \
-    apt-get update \
-    && apt-get install -y default-jdk ca-certificates-java \
-    && update-ca-certificates -f \
-;fi
-
 #
 #--------------------------------------------------------------------------
 # Final Touch
@@ -1872,6 +1860,8 @@ USER root
 
 # Clean up
 RUN apt-get clean && \
+    dos2unix /root/aliases.sh && \
+    dos2unix /home/laradock/aliases.sh && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm -f /var/log/lastlog /var/log/faillog
 
