@@ -1,1 +1,1 @@
-* * * * * laradock /usr/bin/php /var/www/console schedule:run >> /dev/null 2>&1
+* * * * * laradock cd /var/www && /usr/bin/php console schedule:run >> /dev/null 2>&1
