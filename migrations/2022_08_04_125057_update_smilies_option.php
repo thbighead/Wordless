@@ -1,5 +1,4 @@
-<?php /** @noinspection PhpUnused */
-
+<?php declare(strict_types=1);
 
 use Wordless\Application\Helpers\ProjectPath;
 use Wordless\Application\Providers\RemoveEmojiProvider;
@@ -15,9 +14,6 @@ return new class extends Migration {
         include_once ProjectPath::wpCore('wp-includes/option.php');
     }
 
-    /**
-     * @return void
-     */
     public function up(): void
     {
         if ($this->checkConfig()) {
@@ -43,9 +39,6 @@ return new class extends Migration {
         }
     }
 
-    /**
-     * @return bool
-     */
     private function checkConfig(): bool
     {
         return (include_once ProjectPath::config('wordpress.php'))[RemoveEmojiProvider::CONFIG_KEY_REMOVE_WP_EMOJIS]
