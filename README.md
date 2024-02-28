@@ -5,8 +5,8 @@ A Headless WordPress Project **for developers** who are tired of WordPress
 - [Do It Quick](#do-it-quick)
 - [Download](#download-wordless)
     - [Installation](#install-wordless)
-- [WordPress Version Update](#wordpress-version-update)
 - [WordPress discussion](#about-developers-and-wordpress)
+- [Change WordPress Version](#change-wordpress-version)
 - [Wordless Project Directories](#directory-and-files-organization)
 - [Wordless CLI](#wordless-cli)
     - [Running WP-CLI](#running-wp-cli-commands)
@@ -128,12 +128,6 @@ All that said, a great way to begin working better with WordPress is to define t
 separating the view from business codes. A great way to achieve it is by using it as a
 [**Headless** CMS](https://en.wikipedia.org/wiki/Headless_content_management_system).
 
-## WordPress Version Update
-
-```shell
-composer update roots/wordpress -W
-```
-
 ## Wordless strategy
 
 Our **mantra** here is:
@@ -148,6 +142,15 @@ client. Also, to prepare the whole WordPress project we count with a console ins
 
 Wordless introduces a blank theme which does just... well... nothing. But you may even install any known (or unknown)
 theme and use it to serve your content through web.
+
+## Change WordPress version
+
+To change the WordPress version used by your project you must change the version constraint of `roots/wordpress`
+package into your project `composer.json` file and run the following command:
+
+```shell
+composer update roots/wordpress -W
+```
 
 ### WordPressic Theme
 
@@ -323,35 +326,6 @@ Wordless blocks plugin installation through the environment constant `DISALLOW_F
 your plugins (and also theme) you shall use Composer. You may check for themes and plugins available at
 https://wpackagist.org/.
 
-#### Must Use Plugins (mu-plugins)
-
-If you need to add some homemade plugins, or maybe you want to install a plugin unavailable from WPackagist, you should
-add it to `public_html/wp-cms/wp-content/mu-plugins` folder. After it, you must remount your `wp-load-mu-plugins.php`
-to load your new plugins correctly. To achieve this you may run `php console mup:loader` command which will **load
-every PHP file inside `mu-plugins` path recursively**.
-
-If your Must-Use Plugin has any kind of entrypoint and should not get all its PHP files loaded in alphabetical order,
-you may add them to `config/mu-plugins.php` file. There you must define using the name of plugin directory which files
-must be loaded in what order using relative pathing. Example:
-
-```php
-return [
-    'advanced-custom-fields' => 'acf.php',
-    'my-awesome-modification-to-advanced-custom-fields-homemade-plugin' => [
-        'this-file-first.php',
-        'advanced/something/and-that-file-next.php'
-    ],
-    '1st-plugin' => '.'
-];
-```
-
-In the example above, `1st-plugin` PHP scripts will be loaded after `advanced-custom-fields/acf.php`. As we defined a
-dot ("."), every PHP script inside `1st-plugin` will be loaded in alphabetical order. The plugin
-`my-awesome-modification-to-advanced-custom-fields-homemade-plugin` will load only `this-file-first.php` and
-`advanced/something/and-that-file-next.php` in that specific order. Any other PHP files will be ignored. Also,
-everything defined in `mu-plugins.json` are loaded after all other PHP files found automatically reading `mu-plugins`
-directory.
-
 ### WordPress Admin Panel
 
 #### Diagnostics widget
@@ -359,7 +333,7 @@ directory.
 This panel maybe annoying users who log in into admin panel with information like "auto updating disabled" or
 "missing default theme". Those messages are useful for users that are managing their own site without developers, but
 for Wordless case it's just annoying or not important. So you may manage what user roles are able to see this widget
-through `config/admin.php`, adding or removing user roles slugs from `show_diagnostics_only_to` array key.
+through `config/wordpress.php`, adding or removing user roles slugs from `show_diagnostics_only_to` array key.
 
 ## Common Issues
 
