@@ -38,7 +38,8 @@
   "require": {
     "php": "~8.2.0",
     "composer/installers": "^2.1",
-    "thbighead/wordless-framework": "dev-feature/php8.2"
+    "thbighead/wordless-framework": "dev-feature/php8.2",
+    "roots/wordpress": "~6.4.0"
   },
   "require-dev": {
     "fakerphp/faker": "~1.23.0",
@@ -50,7 +51,8 @@
     "post-autoload-dump": [
       "Wordless\\Core\\Composer\\Main::setHost",
       "Wordless\\Core\\Composer\\Main::saveInstalledVersion",
-      "@php console publish:config"
+      "@php console publish:config",
+      "@php console publish:wp-config.php"
     ],
     "post-package-install": [
       "Wordless\\Core\\Composer\\Main::activatePlugin"

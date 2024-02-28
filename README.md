@@ -5,6 +5,7 @@ A Headless WordPress Project **for developers** who are tired of WordPress
 - [Do It Quick](#do-it-quick)
 - [Download](#download-wordless)
     - [Installation](#install-wordless)
+- [WordPress Version Update](#wordpress-version-update)
 - [WordPress discussion](#about-developers-and-wordpress)
 - [Wordless Project Directories](#directory-and-files-organization)
 - [Wordless CLI](#wordless-cli)
@@ -126,6 +127,12 @@ users which logged in using their Facebook account if they and only if they have
 All that said, a great way to begin working better with WordPress is to define those layers, which we begin by
 separating the view from business codes. A great way to achieve it is by using it as a
 [**Headless** CMS](https://en.wikipedia.org/wiki/Headless_content_management_system).
+
+## WordPress Version Update
+
+```shell
+composer update roots/wordpress -W
+```
 
 ## Wordless strategy
 
