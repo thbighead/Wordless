@@ -1,28 +1,19 @@
-<?php /** @noinspection PhpUnused */
+<?php declare(strict_types=1);
 
-use Wordless\Abstractions\Migrations\Script;
-use Wordless\Abstractions\WpSpeedUp;
-use Wordless\Exceptions\PathNotFoundException;
-use Wordless\Helpers\ProjectPath;
+use Wordless\Application\Helpers\ProjectPath;
+use Wordless\Application\Providers\RemoveEmojiProvider;
+use Wordless\Infrastructure\Migration;
 
-final class UpdateSmiliesOption implements Script
-{
+return new class extends Migration {
     private const OPTION_USE_SMILIES_KEY = 'use_smilies';
     private const OPTION_USE_SMILIES_DEFAULT_VALUE = '1';
     private const OPTION_USE_SMILIES_DESIRED_VALUE = '0';
 
-    /**
-     * @throws PathNotFoundException
-     */
     public function __construct()
     {
         include_once ProjectPath::wpCore('wp-includes/option.php');
     }
 
-    /**
-     * @return void
-     * @throws PathNotFoundException
-     */
     public function up(): void
     {
         if ($this->checkConfig()) {
@@ -36,7 +27,6 @@ final class UpdateSmiliesOption implements Script
 
     /**
      * @return void
-     * @throws PathNotFoundException
      */
     public function down(): void
     {
@@ -49,13 +39,9 @@ final class UpdateSmiliesOption implements Script
         }
     }
 
-    /**
-     * @return bool
-     * @throws PathNotFoundException
-     */
     private function checkConfig(): bool
     {
-        return (include_once ProjectPath::config('admin.php'))[WpSpeedUp::REMOVE_WP_EMOJIS_CONFIG_KEY]
+        return (include_once ProjectPath::config('wordpress.php'))[RemoveEmojiProvider::CONFIG_KEY_REMOVE_WP_EMOJIS]
             ?? false;
     }
-}
+};
