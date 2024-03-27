@@ -44,6 +44,10 @@ server {
     root /var/www/public;
     index index.php index.html index.htm;
 
+    location ~ /\. {
+        deny all;
+    }
+
     location = /favicon.ico {
         log_not_found off;
         access_log off;
@@ -61,19 +65,6 @@ server {
 
     location / {
         try_files $uri $uri/ /index.php$is_args$args;
-    }
-
-    location /wp-core {
-        try_files $uri $uri/ /wp-core/index.php?$args;
-    }
-
-    location /wp-admin {
-        rewrite ^/wp-admin/?$ /wp-core/wp-admin/index.php redirect;
-        rewrite ^/wp-admin/?(.*)?$ /wp-core/wp-admin/$1 redirect;
-    }
-
-    location /wp-content {
-        alias /var/www/public/wp-content/;
     }
 
     location ~ \.php$ {

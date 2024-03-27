@@ -1,65 +1,13 @@
 <?php /** @noinspection PhpUnhandledExceptionInspection */
 
-const ROOT_PROJECT_PATH = __DIR__;
 
 require __DIR__ . '/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
-use Symfony\Component\Dotenv\Dotenv;
-use Wordless\Exceptions\PathNotFoundException;
-use Wordless\Helpers\DirectoryFiles;
-use Wordless\Helpers\ProjectPath;
-use Wordless\Helpers\Str;
+use Wordless\Application\Helpers\Environment;
+use Wordless\Core\Bootstrapper;
 
-try {
-    (new Dotenv)->load(ProjectPath::root('.env'));
-    define('DOT_ENV_NOT_LOADED', false);
-} catch (PathNotFoundException $exception) {
-    define('DOT_ENV_NOT_LOADED', true);
-}
+const ROOT_PROJECT_PATH = __DIR__;
 
-$application = new Application();
-
-// Autoload Commands
-function applicationAutoloadCommandsFromDirectoryIntoNamespace(
-    Application $application,
-    string      $directory_path,
-    string      $namespace
-)
-{
-    foreach (DirectoryFiles::listFromDirectory($directory_path) as $command_filename) {
-        if (!Str::endsWith($command_filename, $suffix = '.php')) {
-            continue;
-        }
-
-        $command_class_namespace = $namespace . Str::removeSuffix($command_filename, $suffix);
-
-        $application->add(new $command_class_namespace);
-    }
-}
-
-applicationAutoloadCommandsFromDirectoryIntoNamespace(
-    $application,
-    ProjectPath::app('Commands'),
-    'App\Commands\\'
-);
-
-foreach (DirectoryFiles::listFromDirectory(ProjectPath::packages()) as $pascal_cased_package_name) {
-    try {
-        applicationAutoloadCommandsFromDirectoryIntoNamespace(
-            $application,
-            ProjectPath::packages("$pascal_cased_package_name/Commands"),
-            "Packages\\$pascal_cased_package_name\Commands\\"
-        );
-    } catch (PathNotFoundException $exception) {
-        continue;
-    }
-}
-
-applicationAutoloadCommandsFromDirectoryIntoNamespace(
-    $application,
-    ProjectPath::commands(),
-    'Wordless\Commands\\'
-);
-
-$application->run();
+Environment::loadDotEnv();
+Bootstrapper::bootConsole(new Application);
