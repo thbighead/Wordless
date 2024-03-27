@@ -38,8 +38,9 @@
   "require": {
     "php": "~8.2.0",
     "composer/installers": "^2.1",
-    "thbighead/wordless-framework": "dev-feature/php8.2",
-    "roots/wordpress": "~6.4.0"
+    "roots/wordpress": "~6.4.0",
+    "thbighead/wordless-framework": "~8.0.0",
+    "wpackagist-plugin/social-pug": "^1.33"
   },
   "require-dev": {
     "fakerphp/faker": "~1.23.0",
