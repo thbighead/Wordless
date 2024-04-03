@@ -4,10 +4,8 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
-use Wordless\Application\Helpers\Environment;
 use Wordless\Core\Bootstrapper;
 
 const ROOT_PROJECT_PATH = __DIR__;
 
-Environment::loadDotEnv();
 Bootstrapper::bootConsole(new Application);
