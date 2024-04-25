@@ -32,7 +32,7 @@ return [
         ],
         AdminCustomUrlProvider::CONFIG_KEY_CUSTOM_ADMIN_URI => null,
         DisableCommentsActionListener::CONFIG_KEY_ENABLE_COMMENTS => false,
-        Bootstrapper::CONFIG_KEY_ERROR_REPORTING => Environment::isProduction()
+        Bootstrapper::CONFIG_KEY_ERROR_REPORTING => Environment::isCli() || Environment::isProduction()
             ? E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED
             : E_ALL,
         ConfigureDateOptions::CONFIG_KEY_ADMIN_DATETIME => [
