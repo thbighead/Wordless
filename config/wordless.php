@@ -22,13 +22,13 @@ use Wordless\Infrastructure\Provider;
 $current_wp_theme = Config::wordpressTheme()->get(default: 'wordless');
 /** @var Provider[] $providers */
 $providers = [
+    AdminCustomUrlProvider::class,
+    AppProvider::class,
     CoreProvider::class,
     CommentsProvider::class,
     RemoveEmojiProvider::class,
     MigrationsProvider::class,
     SeedersProvider::class,
-    AppProvider::class,
-    AdminCustomUrlProvider::class,
 ];
 
 return [
