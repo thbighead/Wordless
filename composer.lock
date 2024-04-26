@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f9be9f008d6837eea813d07b381ecaf",
+    "content-hash": "0b685961bcad4c83c70ba6607e63ef5e",
     "packages": [
         {
             "name": "brick/math",
@@ -4573,16 +4573,16 @@
         },
         {
             "name": "thbighead/wordless-framework",
-            "version": "v8.0.16",
+            "version": "v8.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "d78c7a8245b3ef75239a661e702bcd02ccdcdf82"
+                "reference": "d7e114eaffefe447f468a393f95437c9dc8f4fb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/d78c7a8245b3ef75239a661e702bcd02ccdcdf82",
-                "reference": "d78c7a8245b3ef75239a661e702bcd02ccdcdf82",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/d7e114eaffefe447f468a393f95437c9dc8f4fb5",
+                "reference": "d7e114eaffefe447f468a393f95437c9dc8f4fb5",
                 "shasum": ""
             },
             "require": {
@@ -4633,9 +4633,9 @@
             "description": "Wordless Framework.",
             "support": {
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
-                "source": "https://github.com/thbighead/wordless-framework/tree/v8.0.16"
+                "source": "https://github.com/thbighead/wordless-framework/tree/v8.0.17"
             },
-            "time": "2024-04-25T19:50:44+00:00"
+            "time": "2024-04-26T19:39:08+00:00"
         },
         {
             "name": "wp-cli/cache-command",
@@ -6751,24 +6751,6 @@
                 "source": "https://github.com/wp-cli/wp-config-transformer/tree/v1.3.5"
             },
             "time": "2023-11-10T14:28:03+00:00"
-        },
-        {
-            "name": "wpackagist-plugin/social-pug",
-            "version": "1.33.2",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/social-pug/",
-                "reference": "tags/1.33.2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/social-pug.1.33.2.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/social-pug/"
         }
     ],
     "packages-dev": [
