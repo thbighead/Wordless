@@ -2,3 +2,4 @@
 vendor
 .env
 wp/.htaccess
+/wp/wp-core
