@@ -471,7 +471,46 @@ relative path from `public` directory to the respective accessible file/director
 
 #### Configuring `public-symlinks`
 
-To do.
+As said before, to include a symbolic link inside `public` directory you only need to map the relative symbolic link
+path inside `public` to a given file/directory relative path also from `public` just like follows:
+
+```php
+use Wordless\Application\Commands\GeneratePublicWordpressSymbolicLinks;
+
+return [
+    // ...
+    GeneratePublicWordpressSymbolicLinks::PUBLIC_SYMLINK_KEY => [
+        // ...
+        'index.php' => '../wp/index.php',
+        // ...
+    ],
+    // ...
+];
+```
+
+The code above will create a symbolic link called `index.php` to `public/../wp/index.php` (which means `wp/index.php`)
+file. Note that as we made our `public` directory as entrypoint to NGINX server `index.php` becomes a valid URI
+(`https://example.test/` **index.php**) to your site.
+
+Let's see another example, this time using a directory as symbolic link target:
+
+```php
+use Wordless\Application\Commands\GeneratePublicWordpressSymbolicLinks;
+
+return [
+    // ...
+    GeneratePublicWordpressSymbolicLinks::PUBLIC_SYMLINK_KEY => [
+        // ...
+        'wp-content/uploads' => '../wp/wp-content/uploads',
+        // ...
+    ],
+    // ...
+];
+```
+
+The code above will create a symbolic link called `uploads` to `public/../wp/wp-content/uploads` (which means `wp/index.php`)
+file. Note that as we made our `public` directory as entrypoint to NGINX server `index.php` becomes a valid URI
+(`https://example.test/` **index.php**) to your site.
 
 #### The `.wlsymlinks` file
 
@@ -499,6 +538,8 @@ To do.
 To do.
 
 #### Users Roles Synchronization
+
+To do.
 
 ### WordPress Admin Panel
 
