@@ -1,5 +1,16 @@
-.idea
-vendor
-.env
-wp/.htaccess
+### PHPSTORM ###
+/.idea
+
+### VSCODE ###
+/.vscode
+
+### WORDPRESS ###
 /wp/wp-core
+/wp/.htaccess
+
+### COMPOSER ###
+/vendor
+/auth.json
+
+### WORDLESS ###
+/.env
