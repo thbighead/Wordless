@@ -24,6 +24,21 @@ RUN if [ ${INSTALL_MSSQL} = true ]; then \
   && rm -rf /var/cache/apk/* \
 ;fi
 
+RUN rm /etc/php/7.4/fpm/conf.d/0-upload_large_dumps.ini \
+&& rm /etc/php/7.4/cli/conf.d/0-upload_large_dumps.ini
+
+RUN	echo "upload_max_filesize = 500M" >> /etc/php/7.4/fpm/conf.d/0-upload_large_dumps.ini \
+&&	echo "post_max_size = 500M" >> /etc/php/7.4/fpm/conf.d/0-upload_large_dumps.ini \
+&&	echo "memory_limit = 1G" >> /etc/php/7.4/fpm/conf.d/0-upload_large_dumps.ini \
+&&	echo "max_execution_time = 0" >> /etc/php/7.4/fpm/conf.d/0-upload_large_dumps.ini \
+&&	echo "max_input_vars = 5000" >> /etc/php/7.4/fpm/conf.d/0-upload_large_dumps.ini
+
+RUN	echo "upload_max_filesize = 500M" >> /etc/php/7.4/cli/conf.d/0-upload_large_dumps.ini \
+&&	echo "post_max_size = 500M" >> /etc/php/7.4/cli/conf.d/0-upload_large_dumps.ini \
+&&	echo "memory_limit = 1G" >> /etc/php/7.4/cli/conf.d/0-upload_large_dumps.ini \
+&&	echo "max_execution_time = 0" >> /etc/php/7.4/cli/conf.d/0-upload_large_dumps.ini \
+&&	echo "max_input_vars = 5000" >> /etc/php/7.4/cli/conf.d/0-upload_large_dumps.ini
+
 USER adminer
 
 # We expose Adminer on port 8080 (Adminer's default)
