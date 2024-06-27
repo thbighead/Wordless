@@ -1,3 +1,6 @@
+### MAC ###
+.DS_Store
+
 ### PHPSTORM ###
 /.idea
 
@@ -5,8 +8,8 @@
 /.vscode
 
 ### WORDPRESS ###
+.htaccess
 /wp/wp-core
-/wp/.htaccess
 
 ### COMPOSER ###
 /vendor
