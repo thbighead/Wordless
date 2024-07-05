@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "297f98b7eb6f9bba5f85927829dd44f9",
+    "content-hash": "edffec400b227841edf7856264d0f523",
     "packages": [
         {
             "name": "brick/math",
@@ -1058,6 +1058,77 @@
                 "source": "https://github.com/EFTEC/BladeOne/tree/3.52"
             },
             "time": "2021-04-17T13:49:01+00:00"
+        },
+        {
+            "name": "fruitcake/php-cors",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fruitcake/php-cors.git",
+                "reference": "3d158f36e7875e2f040f37bc0573956240a5a38b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fruitcake/php-cors/zipball/3d158f36e7875e2f040f37bc0573956240a5a38b",
+                "reference": "3d158f36e7875e2f040f37bc0573956240a5a38b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0",
+                "symfony/http-foundation": "^4.4|^5.4|^6|^7"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.4",
+                "phpunit/phpunit": "^9",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fruitcake\\Cors\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fruitcake",
+                    "homepage": "https://fruitcake.nl"
+                },
+                {
+                    "name": "Barryvdh",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "Cross-origin resource sharing library for the Symfony HttpFoundation",
+            "homepage": "https://github.com/fruitcake/php-cors",
+            "keywords": [
+                "cors",
+                "laravel",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/fruitcake/php-cors/issues",
+                "source": "https://github.com/fruitcake/php-cors/tree/v1.3.0"
+            },
+            "funding": [
+                {
+                    "url": "https://fruitcake.nl",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/barryvdh",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-10-12T05:21:21+00:00"
         },
         {
             "name": "gettext/gettext",
@@ -4584,16 +4655,16 @@
         },
         {
             "name": "thbighead/wordless-framework",
-            "version": "v8.0.36",
+            "version": "dev-feature/cors",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "2fba25cedd1395953611e237199c432d4e723592"
+                "reference": "58b179d50055cbe2eb9a8b3787534cf50b903f0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/2fba25cedd1395953611e237199c432d4e723592",
-                "reference": "2fba25cedd1395953611e237199c432d4e723592",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/58b179d50055cbe2eb9a8b3787534cf50b903f0e",
+                "reference": "58b179d50055cbe2eb9a8b3787534cf50b903f0e",
                 "shasum": ""
             },
             "require": {
@@ -4602,6 +4673,7 @@
                 "ext-json": "*",
                 "ext-openssl": "*",
                 "ext-pcntl": "*",
+                "fruitcake/php-cors": "^1.3",
                 "lcobucci/jwt": "^5.2",
                 "monolog/monolog": "^3.5",
                 "nesbot/carbon": "^2.72",
@@ -4645,9 +4717,9 @@
             "description": "Wordless Framework.",
             "support": {
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
-                "source": "https://github.com/thbighead/wordless-framework/tree/v8.0.36"
+                "source": "https://github.com/thbighead/wordless-framework/tree/feature/cors"
             },
-            "time": "2024-07-31T18:42:52+00:00"
+            "time": "2024-07-05T13:25:05+00:00"
         },
         {
             "name": "wp-cli/cache-command",
@@ -8636,7 +8708,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "thbighead/wordless-framework": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
