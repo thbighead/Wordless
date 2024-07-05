@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Providers;
 
@@ -9,6 +9,7 @@ use Wordless\Infrastructure\Provider;
 class AppProvider extends Provider
 {
     /**
+     * @return string[]
      * @throws PathNotFoundException
      */
     public function registerMigrations(): array
