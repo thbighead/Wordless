@@ -4659,12 +4659,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "58b179d50055cbe2eb9a8b3787534cf50b903f0e"
+                "reference": "2d30d9a2d3c1b61746dee8f46ee753a57031af73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/58b179d50055cbe2eb9a8b3787534cf50b903f0e",
-                "reference": "58b179d50055cbe2eb9a8b3787534cf50b903f0e",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/2d30d9a2d3c1b61746dee8f46ee753a57031af73",
+                "reference": "2d30d9a2d3c1b61746dee8f46ee753a57031af73",
                 "shasum": ""
             },
             "require": {
@@ -4719,7 +4719,7 @@
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
                 "source": "https://github.com/thbighead/wordless-framework/tree/feature/cors"
             },
-            "time": "2024-07-05T13:25:05+00:00"
+            "time": "2024-08-02T12:23:44+00:00"
         },
         {
             "name": "wp-cli/cache-command",
