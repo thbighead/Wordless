@@ -16,4 +16,6 @@ $wp_home = rtrim(WP_HOME, URL_ROUTE_SEPARATOR);
     <script type="text/javascript">
         window.location = '<?= $front_end_url ?>';
     </script>
+<?php else: ?>
+    <span>Hello World!</span>
 <?php endif; ?>
