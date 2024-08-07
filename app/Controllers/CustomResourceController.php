@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controllers;
 
-use Wordless\Adapters\ApiController;
-use Wordless\Contracts\Controller\Guesser;
+use Wordless\Infrastructure\Wordpress\ApiController;
+use Wordless\Infrastructure\Wordpress\ApiController\Traits\Guesser;
 
 class CustomResourceController extends ApiController
 {
