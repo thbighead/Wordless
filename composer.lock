@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edffec400b227841edf7856264d0f523",
+    "content-hash": "f5146df00e53854402b104abb1dc6c9b",
     "packages": [
         {
             "name": "brick/math",
@@ -4655,16 +4655,16 @@
         },
         {
             "name": "thbighead/wordless-framework",
-            "version": "dev-feature/cors",
+            "version": "dev-feature/show-environment-in-admin-bar",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "6bfa1a380036c1bbc1fd3a07e47b7e2aa4adf7a4"
+                "reference": "68a08a1a0476309fa93c84ed583ad9056334458c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/6bfa1a380036c1bbc1fd3a07e47b7e2aa4adf7a4",
-                "reference": "6bfa1a380036c1bbc1fd3a07e47b7e2aa4adf7a4",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/68a08a1a0476309fa93c84ed583ad9056334458c",
+                "reference": "68a08a1a0476309fa93c84ed583ad9056334458c",
                 "shasum": ""
             },
             "require": {
@@ -4717,9 +4717,9 @@
             "description": "Wordless Framework.",
             "support": {
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
-                "source": "https://github.com/thbighead/wordless-framework/tree/feature/cors"
+                "source": "https://github.com/thbighead/wordless-framework/tree/development"
             },
-            "time": "2024-08-07T17:06:26+00:00"
+            "time": "2024-08-08T19:25:13+00:00"
         },
         {
             "name": "wp-cli/cache-command",
