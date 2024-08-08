@@ -1,6 +1,5 @@
 <?php
 
-
 use Wordless\Application\Helpers\Environment;
 
 const URL_ROUTE_SEPARATOR = '/';
