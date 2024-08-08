@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Providers\AppProvider;
 use Wordless\Application\Commands\GeneratePublicWordpressSymbolicLinks;
 use Wordless\Application\Commands\Utility\DatabaseOverwrite\DTO\UserDTO;
 use Wordless\Application\Helpers\Config;
@@ -21,6 +22,7 @@ use Wordless\Infrastructure\Provider;
 $current_wp_theme = Config::wordpressTheme()->get(default: 'wordless');
 /** @var Provider[] $providers */
 $providers = [
+    AppProvider::class,
     AdminCustomUrlProvider::class,
     CoreProvider::class,
     CommentsProvider::class,
