@@ -39,7 +39,7 @@
     "php": "~8.2.0",
     "composer/installers": "^2.1",
     "roots/wordpress": "~6.4.0",
-    "thbighead/wordless-framework": "dev-feature/show-environment-in-admin-bar"
+    "thbighead/wordless-framework": "dev-feature/diagnostics-command"
   },
   "require-dev": {
     "fakerphp/faker": "~1.23.0",
