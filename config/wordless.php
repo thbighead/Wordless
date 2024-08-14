@@ -17,6 +17,7 @@ use Wordless\Application\Providers\CoreProvider;
 use Wordless\Application\Providers\MigrationsProvider;
 use Wordless\Application\Providers\RemoveEmojiProvider;
 use Wordless\Application\Providers\SeedersProvider;
+use Wordless\Application\Styles\AdminBarEnvironmentFlagStyle;
 use Wordless\Infrastructure\Http\Security\Cors;
 use Wordless\Infrastructure\Http\Security\Csp;
 use Wordless\Infrastructure\Provider;
@@ -72,13 +73,13 @@ return [
     ],
     // https://github.com/fruitcake/php-cors/tree/v1.3.0?tab=readme-ov-file#options
     Cors::CONFIG_KEY => [
-        'allowedHeaders'         => ['*'],
-        'allowedMethods'         => ['*'],
-        'allowedOrigins'         => ['*'],
+        'allowedHeaders' => ['*'],
+        'allowedMethods' => ['*'],
+        'allowedOrigins' => ['*'],
         'allowedOriginsPatterns' => [],
-        'exposedHeaders'         => [],
-        'maxAge'                 => 0,
-        'supportsCredentials'    => false,
+        'exposedHeaders' => [],
+        'maxAge' => 0,
+        'supportsCredentials' => false,
     ],
     Config::KEY_DATABASE => [
         UserDTO::USER_DEFAULT_OVERWRITE_PASSWORD_KEY => 'password',
@@ -101,6 +102,7 @@ return [
         'wp-content/plugins' => '../wp/wp-content/plugins!.gitignore',
         "wp-content/themes/$current_wp_theme/public" => "../wp/wp-content/themes/$current_wp_theme/public",
         'wp-content/uploads' => '../wp/wp-content/uploads',
+        'vendor/wordless/dist' => AdminBarEnvironmentFlagStyle::mountSymlinkTargetRelativePath(),
         AdminCustomUrlProvider::getCustomUri(false) => '../wp/wp-core!.htaccess,.htaccess.bk,.maintenance,license.txt,readme.html,wp-config.php,wp-cron.php,xmlrpc.php',
     ],
 ];
