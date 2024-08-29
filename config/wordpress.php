@@ -6,6 +6,7 @@ use Wordless\Application\Helpers\Config;
 use Wordless\Application\Helpers\Environment;
 use Wordless\Application\Helpers\Timezone;
 use Wordless\Application\Listeners\ChooseImageEditor;
+use Wordless\Application\Listeners\ConfigureUrlGuessing;
 use Wordless\Application\Listeners\DisableComments\Contracts\DisableCommentsActionListener;
 use Wordless\Application\Listeners\DoNotLoadWpAdminBarOutsidePanel;
 use Wordless\Application\Listeners\HideDiagnosticsFromUserRoles;
@@ -21,6 +22,7 @@ return [
     Config::KEY_LANGUAGES => [],
     Config::KEY_THEME => 'wordless',
     Config::KEY_PERMALINK => '/%postname%/',
+    ConfigureUrlGuessing::CONFIG_KEY_STOP_URL_GUESSING => true,
     Config::KEY_ADMIN => [
         RemoveEmojiProvider::CONFIG_KEY_REMOVE_WP_EMOJIS => false,
         WpSpeedUpProvider::CONFIG_KEY_SPEED_UP_WP => true,
