@@ -17,6 +17,9 @@ use Wordless\Application\Providers\CoreProvider;
 use Wordless\Application\Providers\MigrationsProvider;
 use Wordless\Application\Providers\RemoveEmojiProvider;
 use Wordless\Application\Providers\SeedersProvider;
+use Wordless\Application\Styles\AdminBarEnvironmentFlagStyle;
+use Wordless\Infrastructure\Http\Security\Cors;
+use Wordless\Infrastructure\Http\Security\Csp;
 use Wordless\Infrastructure\Provider;
 
 $current_wp_theme = Config::wordpressTheme()->get(default: 'wordless');
@@ -32,7 +35,7 @@ $providers = [
 ];
 
 return [
-    Config::KEY_CSP => [
+    Csp::CONFIG_KEY => [
         'default-src' => ['self' => true],
         'font-src' => [
             'self' => true,
@@ -51,7 +54,7 @@ return [
             'allow' => [
                 'https://secure.gravatar.com',
                 'https://s.w.org',
-            ]
+            ],
         ],
         'script-src' => [
             'blob' => true,
@@ -68,6 +71,16 @@ return [
         ],
         'upgrade-insecure-requests' => true,
     ],
+    // https://github.com/fruitcake/php-cors/tree/v1.3.0?tab=readme-ov-file#options
+    Cors::CONFIG_KEY => [
+        'allowedHeaders' => ['*'],
+        'allowedMethods' => ['*'],
+        'allowedOrigins' => ['*'],
+        'allowedOriginsPatterns' => [],
+        'exposedHeaders' => [],
+        'maxAge' => 0,
+        'supportsCredentials' => false,
+    ],
     Config::KEY_DATABASE => [
         UserDTO::USER_DEFAULT_OVERWRITE_PASSWORD_KEY => 'password',
     ],
@@ -81,7 +94,7 @@ return [
         LogFormatter::CONFIG_KEY_LINE_FORMAT => '[%datetime%] %channel%.%level_name%: %message% %context% %extra%',
         Logger::CONFIG_KEY_MAX_FILES_LIMIT => 10,
         Logger::CONFIG_KEY_WORDLESS_LINE_PREFIX => Environment::get('APP_NAME', 'wordless')
-            . '.' . Environment::get('APP_ENV')
+            . '.' . Environment::get('APP_ENV'),
     ],
     Provider::CONFIG_KEY => $providers,
     GeneratePublicWordpressSymbolicLinks::PUBLIC_SYMLINK_KEY => [
@@ -89,6 +102,7 @@ return [
         'wp-content/plugins' => '../wp/wp-content/plugins!.gitignore',
         "wp-content/themes/$current_wp_theme/public" => "../wp/wp-content/themes/$current_wp_theme/public",
         'wp-content/uploads' => '../wp/wp-content/uploads',
+        'vendor/wordless/dist' => AdminBarEnvironmentFlagStyle::mountSymlinkTargetRelativePath(),
         AdminCustomUrlProvider::getCustomUri(false) => '../wp/wp-core!.htaccess,.htaccess.bk,.maintenance,license.txt,readme.html,wp-config.php,wp-cron.php,xmlrpc.php',
     ],
 ];
