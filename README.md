@@ -280,6 +280,11 @@ The WordPress Salts are kept in `.env` variables and, if they aren't already eva
 evaluate them. Also, the process already loads all environment variable in memory after this step. You can see more
 [here](#env).
 
+##### Generate internal caches
+
+Through the command `php console cache:create` all configured caches are created at `cache` directory. You can see
+more about Caches [here](#caches).
+
 ###### Load languages
 
 Wordless will try to `explode` the `languages` key at `config/wordpress.php` returns through `,` character and install
@@ -417,11 +422,6 @@ migrations [here](#database-migrations).
 
 Synchronizes your application admin User Roles as in `permissions` configuration key at `config/wordpress.php`. See
 more about Users Roles Synchronization [here](#users-roles-synchronization).
-
-##### Generate internal caches
-
-Through the command `php console cache:create` all configured caches are created at `cache` directory. You can see
-more about Caches [here](#caches).
 
 ##### WordPress Configuration File Permissions
 
@@ -584,3 +584,16 @@ through `config/wordpress.php`, adding or removing user roles slugs from `show_d
        nameserver 8.8.8.8
        nameserver 1.1.1.1
        ```
+  - **Failed to create Docker network**: If ran into an error similar to "_failed to create network your_network_name:
+  Error response from daemon: could not find an available, non-overlapping IPv4 address pool among the defaults to
+  assign to the network_" during your `docekr compose up -d` or similar command, maybe docker has reached the maximum of
+  networks available to coexist. Just run `docker network prune` and answer `y`. Don't worry, any network needed by
+  other container should be raised again when you turn them up (if they don't, maybe your docker containers
+  configuration are just a mess). _Based on:
+  https://stackoverflow.com/questions/43720339/docker-error-could-not-find-an-available-non-overlapping-ipv4-address-pool-am#comment100438100_43720339_
+  - **Daemon failed to find network**: if you pruned your network with a `docker network prune` or similar, you need
+  to build your containers again, to achieve it, run the following commands in order:
+    ```shell
+    docker compose down
+    docker compose build
+    ```
