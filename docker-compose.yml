@@ -1,13 +1,19 @@
+version: '3.5'
+
 networks:
   frontend:
+    name: wordless-frontend-network
     driver: ${NETWORKS_DRIVER}
   backend:
+    name: wordless-backend-network
     driver: ${NETWORKS_DRIVER}
+
 volumes:
   mariadb:
     driver: ${VOLUMES_DRIVER}
   adminer:
     driver: ${VOLUMES_DRIVER}
+
 services:
   ### Workspace Utilities ##################################
   workspace:
