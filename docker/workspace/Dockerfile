@@ -1862,6 +1862,7 @@ USER root
 RUN apt-get clean && \
     dos2unix /root/aliases.sh && \
     dos2unix /home/laradock/aliases.sh && \
+    shopt -s globstar && dos2unix /etc/cron.d/** && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm -f /var/log/lastlog /var/log/faillog
 
