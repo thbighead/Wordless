@@ -309,12 +309,8 @@ services:
     depends_on:
       - php-fpm
     networks:
-      frontend:
-        aliases:
-          - ${APP_HOST}
-      backend:
-        aliases:
-          - ${APP_HOST}
+      - frontend
+      - backend
 
   ### MariaDB ##############################################
   mariadb:
