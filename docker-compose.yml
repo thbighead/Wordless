@@ -2,11 +2,9 @@ networks:
   frontend:
     name: wordless-frontend-network
     driver: ${NETWORKS_DRIVER}
-    external: true
   backend:
     name: wordless-backend-network
     driver: ${NETWORKS_DRIVER}
-    external: true
 
 volumes:
   mariadb:
