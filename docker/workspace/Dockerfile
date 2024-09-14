@@ -21,7 +21,7 @@ LABEL maintainer="Mahmoud Zalt <mahmoud@zalt.me>"
 ARG LARADOCK_PHP_VERSION
 
 # Set Environment Variables
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Start as root
 USER root
@@ -43,9 +43,9 @@ RUN if [ ${CHANGE_SOURCE} = true ]; then \
 
 # Add a non-root user to prevent files being created with root permissions on host machine.
 ARG PUID=1000
-ENV PUID ${PUID}
+ENV PUID=${PUID}
 ARG PGID=1000
-ENV PGID ${PGID}
+ENV PGID=${PGID}
 
 # always run apt update when start and after add new source list, then clean up at end.
 RUN set -xe; \
@@ -91,7 +91,7 @@ RUN set -xe; \
 ###########################################################################
 
 ARG TZ=UTC
-ENV TZ ${TZ}
+ENV TZ=${TZ}
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
@@ -140,9 +140,9 @@ RUN echo "" >> ~/.bashrc && \
 
 # Update composer
 ARG COMPOSER_VERSION=2
-ENV COMPOSER_VERSION ${COMPOSER_VERSION}
+ENV COMPOSER_VERSION=${COMPOSER_VERSION}
 RUN set -eux; \
-      if [ "$COMPOSER_VERSION" = "1" ] || [ "$COMPOSER_VERSION" = "2" ]; then \
+      if [ "$COMPOSER_VERSION" = "1" ] || [ "$COMPOSER_VERSION" = "2" ] || [ "$COMPOSER_VERSION" = "2.2" ]; then \
           composer self-update --${COMPOSER_VERSION}; \
       else \
           composer self-update ${COMPOSER_VERSION}; \
@@ -152,7 +152,7 @@ USER laradock
 
 # Check if global install need to be ran
 ARG COMPOSER_GLOBAL_INSTALL=false
-ENV COMPOSER_GLOBAL_INSTALL ${COMPOSER_GLOBAL_INSTALL}
+ENV COMPOSER_GLOBAL_INSTALL=${COMPOSER_GLOBAL_INSTALL}
 
 RUN if [ ${COMPOSER_GLOBAL_INSTALL} = true ]; then \
     # run the install
@@ -161,7 +161,7 @@ RUN if [ ${COMPOSER_GLOBAL_INSTALL} = true ]; then \
 
 # Check if auth file is disabled
 ARG COMPOSER_AUTH_JSON=false
-ENV COMPOSER_AUTH_JSON ${COMPOSER_AUTH_JSON}
+ENV COMPOSER_AUTH_JSON=${COMPOSER_AUTH_JSON}
 
 RUN if [ ${COMPOSER_AUTH_JSON} = false ]; then \
     # remove the file
@@ -169,7 +169,7 @@ RUN if [ ${COMPOSER_AUTH_JSON} = false ]; then \
 ;fi
 
 ARG COMPOSER_REPO_PACKAGIST
-ENV COMPOSER_REPO_PACKAGIST ${COMPOSER_REPO_PACKAGIST}
+ENV COMPOSER_REPO_PACKAGIST=${COMPOSER_REPO_PACKAGIST}
 
 RUN if [ ${COMPOSER_REPO_PACKAGIST} ]; then \
     composer config -g repo.packagist composer ${COMPOSER_REPO_PACKAGIST} \
@@ -219,7 +219,7 @@ USER root
 
 ARG INSTALL_DRUSH=false
 ARG DRUSH_VERSION
-ENV DRUSH_VERSION ${DRUSH_VERSION}
+ENV DRUSH_VERSION=${DRUSH_VERSION}
 
 RUN if [ ${INSTALL_DRUSH} = true ]; then \
     apt-get -qq -y install mysql-client && \
@@ -345,7 +345,7 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
   apt-get install -yqq pkg-config php-xml php${LARADOCK_PHP_VERSION}-xml && \
   if [ $(php -r "echo PHP_MAJOR_VERSION;") = "8" ] || { [ $(php -r "echo PHP_MAJOR_VERSION;") = "7" ] && { [ $(php -r "echo PHP_MINOR_VERSION;") = "4" ] || [ $(php -r "echo PHP_MINOR_VERSION;") = "3" ] ;} ;}; then \
     if [ $(php -r "echo PHP_MAJOR_VERSION;") = "8" ]; then \
-      pecl install xdebug-3.2.1; \
+      pecl install xdebug-3.3.0; \
     else \
       pecl install xdebug-3.1.6; \
     fi; \
@@ -417,9 +417,9 @@ RUN if [ ${INSTALL_PHPDBG} = true ]; then \
 
 ARG INSTALL_BLACKFIRE=false
 ARG BLACKFIRE_CLIENT_ID
-ENV BLACKFIRE_CLIENT_ID ${BLACKFIRE_CLIENT_ID}
+ENV BLACKFIRE_CLIENT_ID=${BLACKFIRE_CLIENT_ID}
 ARG BLACKFIRE_CLIENT_TOKEN
-ENV BLACKFIRE_CLIENT_TOKEN ${BLACKFIRE_CLIENT_TOKEN}
+ENV BLACKFIRE_CLIENT_TOKEN=${BLACKFIRE_CLIENT_TOKEN}
 
 RUN if [ ${INSTALL_XDEBUG} = false -a ${INSTALL_BLACKFIRE} = true ]; then \
     curl -L https://packages.blackfire.io/gpg.key | apt-key add - && \
@@ -464,8 +464,12 @@ RUN if [ ${INSTALL_MONGO} = true ]; then \
       ln -s /etc/php/${LARADOCK_PHP_VERSION}/mods-available/mongo.ini /etc/php/${LARADOCK_PHP_VERSION}/cli/conf.d/30-mongo.ini; \
       php -m | grep -oiE '^mongo$'; \
     else \
-      if [ $(php -r "echo PHP_MAJOR_VERSION;") = "7" ] && { [ $(php -r "echo PHP_MINOR_VERSION;") = "0" ] || [ $(php -r "echo PHP_MINOR_VERSION;") = "1" ] ;}; then \
-        pecl install mongodb-1.9.2; \
+      if [ $(php -r "echo PHP_MAJOR_VERSION;") = "7" ] && [ $(php -r "echo PHP_MINOR_VERSION;") != "4" ]; then \
+        if [ $(php -r "echo PHP_MINOR_VERSION;") = "0" ] || [ $(php -r "echo PHP_MINOR_VERSION;") = "1" ]; then \
+          pecl install mongodb-1.9.2; \
+        else \
+          pecl install mongodb-1.16.2; \
+        fi; \
       else \
         pecl install mongodb; \
       fi; \
@@ -576,6 +580,8 @@ RUN set -eux; \
         echo '' | pecl -q install swoole-4.5.11; \
       elif [ $(php -r "echo PHP_MAJOR_VERSION;") = "7" ]; then \
         echo '' | pecl -q install swoole-4.8.12; \
+      elif [ $(php -r "echo PHP_MAJOR_VERSION;") = "8" ]; then \
+        echo '' | pecl -q install swoole-5.1.2; \
       else \
         echo '' | pecl -q install swoole; \
       fi; \
@@ -655,7 +661,7 @@ RUN if [ ${INSTALL_INOTIFY} = true ]; then \
 
 ARG INSTALL_AST=false
 ARG AST_VERSION=1.0.10
-ENV AST_VERSION ${AST_VERSION}
+ENV AST_VERSION=${AST_VERSION}
 
 RUN if [ ${INSTALL_AST} = true ]; then \
     # AST extension requires PHP 7.0.0 or newer
@@ -697,13 +703,8 @@ RUN if [ ${INSTALL_GRAPHVIZ} = true ]; then \
 ARG INSTALL_IONCUBE=false
 
 RUN if [ ${INSTALL_IONCUBE} = true ]; then \
-    if [ ${LARADOCK_PHP_VERSION} = "8.1" ] \
-      || [ ${LARADOCK_PHP_VERSION} = "7.4" ] \
-      || [ ${LARADOCK_PHP_VERSION} = "7.3" ] \
-      || [ ${LARADOCK_PHP_VERSION} = "7.2" ] \
-      || [ ${LARADOCK_PHP_VERSION} = "7.1" ] \
-      || [ ${LARADOCK_PHP_VERSION} = "7.0" ] \
-      || [ ${LARADOCK_PHP_VERSION} = "5.6" ]; then \
+    if [ ${LARADOCK_PHP_VERSION} != "8.3" ] \
+      && [ ${LARADOCK_PHP_VERSION} != "8.0" ]; then \
       # Install the php ioncube loader
       curl -L -o /tmp/ioncube_loaders_lin_x86-64.tar.gz https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz \
       && tar zxpf /tmp/ioncube_loaders_lin_x86-64.tar.gz -C /tmp \
@@ -725,7 +726,7 @@ ARG INSTALL_DRUPAL_CONSOLE=false
 
 RUN if [ ${INSTALL_DRUPAL_CONSOLE} = true ]; then \
     apt-get -y install mysql-client && \
-    curl https://drupalconsole.com/installer -L -o drupal.phar && \
+    curl https://github.com/hechoendrupal/drupal-console-launcher/releases/download/1.9.7/drupal.phar -L -o drupal.phar && \
     mv drupal.phar /usr/local/bin/drupal && \
     chmod +x /usr/local/bin/drupal \
 ;fi
@@ -738,7 +739,7 @@ USER laradock
 
 # Check if NVM needs to be installed
 ARG NODE_VERSION=node
-ENV NODE_VERSION ${NODE_VERSION}
+ENV NODE_VERSION=${NODE_VERSION}
 ARG INSTALL_NODE=false
 ARG INSTALL_NPM_GULP=false
 ARG INSTALL_NPM_BOWER=false
@@ -746,18 +747,18 @@ ARG INSTALL_NPM_VUE_CLI=false
 ARG INSTALL_NPM_ANGULAR_CLI=false
 ARG INSTALL_NPM_CHECK_UPDATES_CLI=false
 ARG NPM_REGISTRY
-ENV NPM_REGISTRY ${NPM_REGISTRY}
+ENV NPM_REGISTRY=${NPM_REGISTRY}
 ARG NPM_FETCH_RETRIES
-ENV NPM_FETCH_RETRIES ${NPM_FETCH_RETRIES}
+ENV NPM_FETCH_RETRIES=${NPM_FETCH_RETRIES}
 ARG NPM_FETCH_RETRY_FACTOR
-ENV NPM_FETCH_RETRY_FACTOR ${NPM_FETCH_RETRY_FACTOR}
+ENV NPM_FETCH_RETRY_FACTOR=${NPM_FETCH_RETRY_FACTOR}
 ARG NPM_FETCH_RETRY_MINTIMEOUT
-ENV NPM_FETCH_RETRY_MINTIMEOUT ${NPM_FETCH_RETRY_MINTIMEOUT}
+ENV NPM_FETCH_RETRY_MINTIMEOUT=${NPM_FETCH_RETRY_MINTIMEOUT}
 ARG NPM_FETCH_RETRY_MAXTIMEOUT
-ENV NPM_FETCH_RETRY_MAXTIMEOUT ${NPM_FETCH_RETRY_MAXTIMEOUT}
-ENV NVM_DIR /home/laradock/.nvm
+ENV NPM_FETCH_RETRY_MAXTIMEOUT=${NPM_FETCH_RETRY_MAXTIMEOUT}
+ENV NVM_DIR=/home/laradock/.nvm
 ARG NVM_NODEJS_ORG_MIRROR
-ENV NVM_NODEJS_ORG_MIRROR ${NVM_NODEJS_ORG_MIRROR}
+ENV NVM_NODEJS_ORG_MIRROR=${NVM_NODEJS_ORG_MIRROR}
 
 RUN if [ ${INSTALL_NODE} = true ]; then \
     # Install nvm (A Node Version Manager)
@@ -840,7 +841,7 @@ USER root
 
 ARG INSTALL_PNPM=false
 ENV PNPM_HOME="/home/laradock/.local/share/pnpm"
-ENV PATH $PATH:/home/laradock/.local/share/pnpm
+ENV PATH=$PATH:/home/laradock/.local/share/pnpm
 
 RUN if [ ${INSTALL_PNPM} = true ]; then \
     echo "" >> ~/.bashrc && \
@@ -858,7 +859,7 @@ USER laradock
 
 ARG INSTALL_YARN=false
 ARG YARN_VERSION=latest
-ENV YARN_VERSION ${YARN_VERSION}
+ENV YARN_VERSION=${YARN_VERSION}
 
 RUN if [ ${INSTALL_YARN} = true ]; then \
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
@@ -881,7 +882,7 @@ RUN if [ ${INSTALL_YARN} = true ]; then \
 ;fi
 
 # Add PATH for YARN
-ENV PATH $PATH:/home/laradock/.yarn/bin
+ENV PATH=$PATH:/home/laradock/.yarn/bin
 
 ###########################################################################
 # PHP Aerospike:
@@ -1033,7 +1034,7 @@ RUN if [ ${INSTALL_LARAVEL_INSTALLER} = true ]; then \
 USER root
 
 ARG COMPOSER_REPO_PACKAGIST
-ENV COMPOSER_REPO_PACKAGIST ${COMPOSER_REPO_PACKAGIST}
+ENV COMPOSER_REPO_PACKAGIST=${COMPOSER_REPO_PACKAGIST}
 
 RUN if [ ${COMPOSER_REPO_PACKAGIST} ]; then \
     composer config -g repo.packagist composer ${COMPOSER_REPO_PACKAGIST} \
@@ -1131,6 +1132,8 @@ RUN set -eux; \
         pecl install pdo_sqlsrv-5.9.0 sqlsrv-5.9.0 \
       ;elif [ $(php -r "echo PHP_VERSION_ID - PHP_RELEASE_VERSION;") = "70400" ]; then \
         pecl install pdo_sqlsrv-5.10.1 sqlsrv-5.10.1 \
+      ;elif [ $(php -r "echo PHP_VERSION_ID - PHP_RELEASE_VERSION;") = "80000" ]; then \
+        pecl install pdo_sqlsrv-5.11.1 sqlsrv-5.11.1 \
       ;else \
         pecl install pdo_sqlsrv sqlsrv \
       ;fi && \
@@ -1258,7 +1261,7 @@ USER root
 
 ARG INSTALL_IMAGEMAGICK=false
 ARG IMAGEMAGICK_VERSION=latest
-ENV IMAGEMAGICK_VERSION ${IMAGEMAGICK_VERSION}
+ENV IMAGEMAGICK_VERSION=${IMAGEMAGICK_VERSION}
 
 RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
     apt-get install -y libmagickwand-dev imagemagick && \
@@ -1336,7 +1339,7 @@ RUN if [ ${INSTALL_PG_CLIENT} = true ]; then \
 USER root
 
 ARG CHROME_DRIVER_VERSION=stable
-ENV CHROME_DRIVER_VERSION ${CHROME_DRIVER_VERSION}
+ENV CHROME_DRIVER_VERSION=${CHROME_DRIVER_VERSION}
 ARG INSTALL_DUSK_DEPS=false
 
 RUN if [ ${INSTALL_DUSK_DEPS} = true ]; then \
@@ -1362,7 +1365,7 @@ RUN if [ ${INSTALL_DUSK_DEPS} = true ]; then \
 
 ARG INSTALL_PHALCON=false
 ARG LARADOCK_PHALCON_VERSION
-ENV LARADOCK_PHALCON_VERSION ${LARADOCK_PHALCON_VERSION}
+ENV LARADOCK_PHALCON_VERSION=${LARADOCK_PHALCON_VERSION}
 
 RUN if [ $INSTALL_PHALCON = true ]; then \
       apt-get update -yqq \
@@ -1849,6 +1852,33 @@ ARG INSTALL_DNSUTILS=false
 RUN if [ ${INSTALL_DNSUTILS} = true ]; then \
     apt-get update && apt-get install -y dnsutils \
 ;fi
+
+###########################################################################
+# Java Development Kit:
+###########################################################################
+
+ARG INSTALL_JDK=false
+
+RUN if [ ${INSTALL_JDK} = true ]; then \
+    apt-get update \
+    && apt-get install -y default-jdk ca-certificates-java \
+    && update-ca-certificates -f \
+;fi
+
+###########################################################################
+# Github CLI:
+###########################################################################
+
+ARG INSTALL_GITHUB_CLI=false
+
+RUN if [ ${INSTALL_GITHUB_CLI} = true ]; then \
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+    && apt update \
+    && apt install gh -y \
+;fi
+
 
 #
 #--------------------------------------------------------------------------

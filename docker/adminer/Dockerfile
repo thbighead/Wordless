@@ -11,7 +11,7 @@ VOLUME /sessions
 USER root
 
 ARG INSTALL_MSSQL=false
-ENV INSTALL_MSSQL ${INSTALL_MSSQL}
+ENV INSTALL_MSSQL=${INSTALL_MSSQL}
 
 RUN if [ ${INSTALL_MSSQL} = true ]; then \
   set -xe \
