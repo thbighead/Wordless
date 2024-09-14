@@ -58,7 +58,7 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-alias art="php artisan"
+alias console="php console"
 alias artisan="php artisan"
 alias cdump="composer dump-autoload -o"
 alias composer:dump="composer dump-autoload -o"
@@ -70,6 +70,11 @@ alias refresh="php artisan migrate:refresh"
 alias rollback="php artisan migrate:rollback"
 alias seed="php artisan db:seed"
 alias serve="php artisan serve --quiet &"
+
+alias pint="./vendor/bin/pint"
+alias pest="./vendor/bin/pest"
+alias phpstan="./vendor/bin/phpstan"
+alias php-cs-fixer="./vendor/bin/php-cs-fixer"
 
 alias phpunit="./vendor/bin/phpunit"
 alias pu="phpunit"
@@ -149,13 +154,12 @@ function fs() {
 	fi;
 }
 
-# Add artisan autocomplete
-function _artisan()
+# Add console autocomplete
+function _console()
 {
 	COMP_WORDBREAKS=${COMP_WORDBREAKS//:}
-	COMMANDS=`php artisan --raw --no-ansi list | sed "s/[[:space:]].*//g"`
+	COMMANDS=`php console --raw --no-ansi list | sed "s/[[:space:]].*//g"`
 	COMPREPLY=(`compgen -W "$COMMANDS" -- "${COMP_WORDS[COMP_CWORD]}"`)
 	return 0
 }
-complete -F _artisan art
-complete -F _artisan artisan
+complete -F _console console
