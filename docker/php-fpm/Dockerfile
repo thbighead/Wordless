@@ -21,7 +21,7 @@ LABEL maintainer="Mahmoud Zalt <mahmoud@zalt.me>"
 ARG LARADOCK_PHP_VERSION
 
 # Set Environment Variables
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 # If you're in China, or you need to change sources, will be set CHANGE_SOURCE to true in .env.
 
@@ -816,7 +816,7 @@ USER root
 
 ARG INSTALL_IMAGEMAGICK=false
 ARG IMAGEMAGICK_VERSION=latest
-ENV IMAGEMAGICK_VERSION ${IMAGEMAGICK_VERSION}
+ENV IMAGEMAGICK_VERSION=${IMAGEMAGICK_VERSION}
 
 RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
     apt-get update && \
@@ -884,7 +884,7 @@ RUN if [ ${INSTALL_CALENDAR} = true ]; then \
 
 ARG INSTALL_PHALCON=false
 ARG LARADOCK_PHALCON_VERSION
-ENV LARADOCK_PHALCON_VERSION ${LARADOCK_PHALCON_VERSION}
+ENV LARADOCK_PHALCON_VERSION=${LARADOCK_PHALCON_VERSION}
 
 RUN if [ $INSTALL_PHALCON = true ]; then \
       apt-get update -yqq \
@@ -1380,9 +1380,9 @@ RUN apt-get clean && \
 
 # Configure non-root user.
 ARG PUID=1000
-ENV PUID ${PUID}
+ENV PUID=${PUID}
 ARG PGID=1000
-ENV PGID ${PGID}
+ENV PGID=${PGID}
 
 RUN groupmod -o -g ${PGID} www-data && \
     usermod -o -u ${PUID} -g www-data www-data
@@ -1395,7 +1395,7 @@ RUN if [ ${INSTALL_FAKETIME} = true ]; then \
 
 # Configure locale.
 ARG LOCALE=POSIX
-ENV LC_ALL ${LOCALE}
+ENV LC_ALL=${LOCALE}
 
 WORKDIR /var/www
 

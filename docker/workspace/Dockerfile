@@ -21,7 +21,7 @@ LABEL maintainer="Mahmoud Zalt <mahmoud@zalt.me>"
 ARG LARADOCK_PHP_VERSION
 
 # Set Environment Variables
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Start as root
 USER root
@@ -43,9 +43,9 @@ RUN if [ ${CHANGE_SOURCE} = true ]; then \
 
 # Add a non-root user to prevent files being created with root permissions on host machine.
 ARG PUID=1000
-ENV PUID ${PUID}
+ENV PUID=${PUID}
 ARG PGID=1000
-ENV PGID ${PGID}
+ENV PGID=${PGID}
 
 # always run apt update when start and after add new source list, then clean up at end.
 RUN set -xe; \
@@ -91,7 +91,7 @@ RUN set -xe; \
 ###########################################################################
 
 ARG TZ=UTC
-ENV TZ ${TZ}
+ENV TZ=${TZ}
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
@@ -140,7 +140,7 @@ RUN echo "" >> ~/.bashrc && \
 
 # Update composer
 ARG COMPOSER_VERSION=2
-ENV COMPOSER_VERSION ${COMPOSER_VERSION}
+ENV COMPOSER_VERSION=${COMPOSER_VERSION}
 RUN set -eux; \
       if [ "$COMPOSER_VERSION" = "1" ] || [ "$COMPOSER_VERSION" = "2" ] || [ "$COMPOSER_VERSION" = "2.2" ]; then \
           composer self-update --${COMPOSER_VERSION}; \
@@ -152,7 +152,7 @@ USER laradock
 
 # Check if global install need to be ran
 ARG COMPOSER_GLOBAL_INSTALL=false
-ENV COMPOSER_GLOBAL_INSTALL ${COMPOSER_GLOBAL_INSTALL}
+ENV COMPOSER_GLOBAL_INSTALL=${COMPOSER_GLOBAL_INSTALL}
 
 RUN if [ ${COMPOSER_GLOBAL_INSTALL} = true ]; then \
     # run the install
@@ -161,7 +161,7 @@ RUN if [ ${COMPOSER_GLOBAL_INSTALL} = true ]; then \
 
 # Check if auth file is disabled
 ARG COMPOSER_AUTH_JSON=false
-ENV COMPOSER_AUTH_JSON ${COMPOSER_AUTH_JSON}
+ENV COMPOSER_AUTH_JSON=${COMPOSER_AUTH_JSON}
 
 RUN if [ ${COMPOSER_AUTH_JSON} = false ]; then \
     # remove the file
@@ -169,7 +169,7 @@ RUN if [ ${COMPOSER_AUTH_JSON} = false ]; then \
 ;fi
 
 ARG COMPOSER_REPO_PACKAGIST
-ENV COMPOSER_REPO_PACKAGIST ${COMPOSER_REPO_PACKAGIST}
+ENV COMPOSER_REPO_PACKAGIST=${COMPOSER_REPO_PACKAGIST}
 
 RUN if [ ${COMPOSER_REPO_PACKAGIST} ]; then \
     composer config -g repo.packagist composer ${COMPOSER_REPO_PACKAGIST} \
@@ -219,7 +219,7 @@ USER root
 
 ARG INSTALL_DRUSH=false
 ARG DRUSH_VERSION
-ENV DRUSH_VERSION ${DRUSH_VERSION}
+ENV DRUSH_VERSION=${DRUSH_VERSION}
 
 RUN if [ ${INSTALL_DRUSH} = true ]; then \
     apt-get -qq -y install mysql-client && \
@@ -417,9 +417,9 @@ RUN if [ ${INSTALL_PHPDBG} = true ]; then \
 
 ARG INSTALL_BLACKFIRE=false
 ARG BLACKFIRE_CLIENT_ID
-ENV BLACKFIRE_CLIENT_ID ${BLACKFIRE_CLIENT_ID}
+ENV BLACKFIRE_CLIENT_ID=${BLACKFIRE_CLIENT_ID}
 ARG BLACKFIRE_CLIENT_TOKEN
-ENV BLACKFIRE_CLIENT_TOKEN ${BLACKFIRE_CLIENT_TOKEN}
+ENV BLACKFIRE_CLIENT_TOKEN=${BLACKFIRE_CLIENT_TOKEN}
 
 RUN if [ ${INSTALL_XDEBUG} = false -a ${INSTALL_BLACKFIRE} = true ]; then \
     curl -L https://packages.blackfire.io/gpg.key | apt-key add - && \
@@ -661,7 +661,7 @@ RUN if [ ${INSTALL_INOTIFY} = true ]; then \
 
 ARG INSTALL_AST=false
 ARG AST_VERSION=1.0.10
-ENV AST_VERSION ${AST_VERSION}
+ENV AST_VERSION=${AST_VERSION}
 
 RUN if [ ${INSTALL_AST} = true ]; then \
     # AST extension requires PHP 7.0.0 or newer
@@ -739,7 +739,7 @@ USER laradock
 
 # Check if NVM needs to be installed
 ARG NODE_VERSION=node
-ENV NODE_VERSION ${NODE_VERSION}
+ENV NODE_VERSION=${NODE_VERSION}
 ARG INSTALL_NODE=false
 ARG INSTALL_NPM_GULP=false
 ARG INSTALL_NPM_BOWER=false
@@ -747,18 +747,18 @@ ARG INSTALL_NPM_VUE_CLI=false
 ARG INSTALL_NPM_ANGULAR_CLI=false
 ARG INSTALL_NPM_CHECK_UPDATES_CLI=false
 ARG NPM_REGISTRY
-ENV NPM_REGISTRY ${NPM_REGISTRY}
+ENV NPM_REGISTRY=${NPM_REGISTRY}
 ARG NPM_FETCH_RETRIES
-ENV NPM_FETCH_RETRIES ${NPM_FETCH_RETRIES}
+ENV NPM_FETCH_RETRIES=${NPM_FETCH_RETRIES}
 ARG NPM_FETCH_RETRY_FACTOR
-ENV NPM_FETCH_RETRY_FACTOR ${NPM_FETCH_RETRY_FACTOR}
+ENV NPM_FETCH_RETRY_FACTOR=${NPM_FETCH_RETRY_FACTOR}
 ARG NPM_FETCH_RETRY_MINTIMEOUT
-ENV NPM_FETCH_RETRY_MINTIMEOUT ${NPM_FETCH_RETRY_MINTIMEOUT}
+ENV NPM_FETCH_RETRY_MINTIMEOUT=${NPM_FETCH_RETRY_MINTIMEOUT}
 ARG NPM_FETCH_RETRY_MAXTIMEOUT
-ENV NPM_FETCH_RETRY_MAXTIMEOUT ${NPM_FETCH_RETRY_MAXTIMEOUT}
-ENV NVM_DIR /home/laradock/.nvm
+ENV NPM_FETCH_RETRY_MAXTIMEOUT=${NPM_FETCH_RETRY_MAXTIMEOUT}
+ENV NVM_DIR=/home/laradock/.nvm
 ARG NVM_NODEJS_ORG_MIRROR
-ENV NVM_NODEJS_ORG_MIRROR ${NVM_NODEJS_ORG_MIRROR}
+ENV NVM_NODEJS_ORG_MIRROR=${NVM_NODEJS_ORG_MIRROR}
 
 RUN if [ ${INSTALL_NODE} = true ]; then \
     # Install nvm (A Node Version Manager)
@@ -841,7 +841,7 @@ USER root
 
 ARG INSTALL_PNPM=false
 ENV PNPM_HOME="/home/laradock/.local/share/pnpm"
-ENV PATH $PATH:/home/laradock/.local/share/pnpm
+ENV PATH=$PATH:/home/laradock/.local/share/pnpm
 
 RUN if [ ${INSTALL_PNPM} = true ]; then \
     echo "" >> ~/.bashrc && \
@@ -859,7 +859,7 @@ USER laradock
 
 ARG INSTALL_YARN=false
 ARG YARN_VERSION=latest
-ENV YARN_VERSION ${YARN_VERSION}
+ENV YARN_VERSION=${YARN_VERSION}
 
 RUN if [ ${INSTALL_YARN} = true ]; then \
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
@@ -882,7 +882,7 @@ RUN if [ ${INSTALL_YARN} = true ]; then \
 ;fi
 
 # Add PATH for YARN
-ENV PATH $PATH:/home/laradock/.yarn/bin
+ENV PATH=$PATH:/home/laradock/.yarn/bin
 
 ###########################################################################
 # PHP Aerospike:
@@ -1034,7 +1034,7 @@ RUN if [ ${INSTALL_LARAVEL_INSTALLER} = true ]; then \
 USER root
 
 ARG COMPOSER_REPO_PACKAGIST
-ENV COMPOSER_REPO_PACKAGIST ${COMPOSER_REPO_PACKAGIST}
+ENV COMPOSER_REPO_PACKAGIST=${COMPOSER_REPO_PACKAGIST}
 
 RUN if [ ${COMPOSER_REPO_PACKAGIST} ]; then \
     composer config -g repo.packagist composer ${COMPOSER_REPO_PACKAGIST} \
@@ -1261,7 +1261,7 @@ USER root
 
 ARG INSTALL_IMAGEMAGICK=false
 ARG IMAGEMAGICK_VERSION=latest
-ENV IMAGEMAGICK_VERSION ${IMAGEMAGICK_VERSION}
+ENV IMAGEMAGICK_VERSION=${IMAGEMAGICK_VERSION}
 
 RUN if [ ${INSTALL_IMAGEMAGICK} = true ]; then \
     apt-get install -y libmagickwand-dev imagemagick && \
@@ -1339,7 +1339,7 @@ RUN if [ ${INSTALL_PG_CLIENT} = true ]; then \
 USER root
 
 ARG CHROME_DRIVER_VERSION=stable
-ENV CHROME_DRIVER_VERSION ${CHROME_DRIVER_VERSION}
+ENV CHROME_DRIVER_VERSION=${CHROME_DRIVER_VERSION}
 ARG INSTALL_DUSK_DEPS=false
 
 RUN if [ ${INSTALL_DUSK_DEPS} = true ]; then \
@@ -1365,7 +1365,7 @@ RUN if [ ${INSTALL_DUSK_DEPS} = true ]; then \
 
 ARG INSTALL_PHALCON=false
 ARG LARADOCK_PHALCON_VERSION
-ENV LARADOCK_PHALCON_VERSION ${LARADOCK_PHALCON_VERSION}
+ENV LARADOCK_PHALCON_VERSION=${LARADOCK_PHALCON_VERSION}
 
 RUN if [ $INSTALL_PHALCON = true ]; then \
       apt-get update -yqq \
