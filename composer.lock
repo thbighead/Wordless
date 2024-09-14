@@ -4809,16 +4809,16 @@
         },
         {
             "name": "thbighead/wordless-framework",
-            "version": "v8.1.14",
+            "version": "v8.1.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thbighead/wordless-framework.git",
-                "reference": "e3dd965a37fdc61fb2d9e6ce12e4f6c6686a96ae"
+                "reference": "33cd6a3094d1a4fb28a02b68b21ec1ea22f5e3e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/e3dd965a37fdc61fb2d9e6ce12e4f6c6686a96ae",
-                "reference": "e3dd965a37fdc61fb2d9e6ce12e4f6c6686a96ae",
+                "url": "https://api.github.com/repos/thbighead/wordless-framework/zipball/33cd6a3094d1a4fb28a02b68b21ec1ea22f5e3e4",
+                "reference": "33cd6a3094d1a4fb28a02b68b21ec1ea22f5e3e4",
                 "shasum": ""
             },
             "require": {
@@ -4895,9 +4895,9 @@
             "description": "Wordless Framework.",
             "support": {
                 "issues": "https://github.com/thbighead/wordless-framework/issues",
-                "source": "https://github.com/thbighead/wordless-framework/tree/v8.1.14"
+                "source": "https://github.com/thbighead/wordless-framework/tree/v8.1.16"
             },
-            "time": "2024-09-12T16:14:29+00:00"
+            "time": "2024-09-13T23:54:36+00:00"
         },
         {
             "name": "wp-cli/cache-command",
@@ -7732,16 +7732,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.33",
+            "version": "10.5.34",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "4def7a9cda75af9c2bc179ed53a8e41313e7f7cf"
+                "reference": "3c69d315bdf79080c8e115b69d1961c6905b0e18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4def7a9cda75af9c2bc179ed53a8e41313e7f7cf",
-                "reference": "4def7a9cda75af9c2bc179ed53a8e41313e7f7cf",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3c69d315bdf79080c8e115b69d1961c6905b0e18",
+                "reference": "3c69d315bdf79080c8e115b69d1961c6905b0e18",
                 "shasum": ""
             },
             "require": {
@@ -7813,7 +7813,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.33"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.34"
             },
             "funding": [
                 {
@@ -7829,7 +7829,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-09T06:06:56+00:00"
+            "time": "2024-09-13T05:19:38+00:00"
         },
         {
             "name": "psy/psysh",
