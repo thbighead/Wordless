@@ -70,7 +70,6 @@ composer create-project thbighead/wordless example-app
 cd example-app
 ```
 
-
 ### Wordless Docker
 
 > *As you can see, we built these containers based on [Laradock project](https://laradock.io/).*
@@ -300,7 +299,7 @@ The process calls the `php console publish:wp-config.php` command to insert a ne
 If the file is already present, this step is skipped.
 
 > ###### Custom `wp-config.php`
-> 
+>
 > By default, this file shall be created based in `vendor/thbighead/wordless-framework/assets/stubs/wp-config.php`. If
 > you want to change the `wp-config.php` behavior, create your customized one at `stubs/wp-config.php` and it shall be
 > used instead by this process step.
@@ -333,7 +332,7 @@ Everything here is done by a WP-CLI command, the following commands are/maybe us
 - [`db create`](https://developer.wordpress.org/cli/commands/db/create/);
 - [`core is-installed`](https://developer.wordpress.org/cli/commands/core/is-installed/);
 - [`core install --url={As in .env APP_URL} --locale={First language listed} --title={As in .env APP_NAME} --admin_email={An invalid known e-mail} --admin_user=temp --skip-email`](https://developer.wordpress.org/cli/commands/core/install/)
-according to your application configurations;
+  according to your application configurations;
 
 ##### Core steps
 
@@ -385,13 +384,14 @@ Again, everything is controlled via WP-CLI commands as follows in order:
 - [`language core update`](https://developer.wordpress.org/cli/commands/language/core/update/)
 - [`site switch-language {The very first locale listed in languages config key}`](https://developer.wordpress.org/cli/commands/site/switch-language/)
 - For each _language_ listed in `languages` configuration key:
-  - [`language plugin install {language} --all`](https://developer.wordpress.org/cli/commands/language/plugin/install/)
-  - [`language plugin update {language} --all`](https://developer.wordpress.org/cli/commands/language/plugin/update/)
+    - [`language plugin install {language} --all`](https://developer.wordpress.org/cli/commands/language/plugin/install/)
+    - [`language plugin update {language} --all`](https://developer.wordpress.org/cli/commands/language/plugin/update/)
 
 ###### Making WordPress Blog Public
 
 If your `.env` variable `APP_ENV` goes for `production` we set `blog_public` database value to `true`, otherwise we set
-it to `false`. This is done by the [`option update blog_public {As explained previously}` WP-CLI command](https://developer.wordpress.org/cli/commands/option/update/)
+it to `false`. This is done by
+the [`option update blog_public {As explained previously}` WP-CLI command](https://developer.wordpress.org/cli/commands/option/update/)
 
 ###### Updating WordPress database
 
@@ -406,7 +406,7 @@ This step generates the symbolic links inside `public` directory as configured b
 
 The Admin Panel configurations are preconfigured here as follows:
 
-- Configure date using `php console options:date` command. 
+- Configure date using `php console options:date` command.
 
 ##### Registering Schedules
 
@@ -508,7 +508,8 @@ return [
 ];
 ```
 
-The code above will create a symbolic link called `uploads` to `public/../wp/wp-content/uploads` (which means `wp/index.php`)
+The code above will create a symbolic link called `uploads` to `public/../wp/wp-content/uploads` (which
+means `wp/index.php`)
 file. Note that as we made our `public` directory as entrypoint to NGINX server `index.php` becomes a valid URI
 (`https://example.test/` **index.php**) to your site.
 
@@ -584,16 +585,30 @@ through `config/wordpress.php`, adding or removing user roles slugs from `show_d
        nameserver 8.8.8.8
        nameserver 1.1.1.1
        ```
-  - **Failed to create Docker network**: If ran into an error similar to "_failed to create network your_network_name:
+- **Failed to create Docker network**: If ran into an error similar to "_failed to create network your_network_name:
   Error response from daemon: could not find an available, non-overlapping IPv4 address pool among the defaults to
-  assign to the network_" during your `docekr compose up -d` or similar command, maybe docker has reached the maximum of
-  networks available to coexist. Just run `docker network prune` and answer `y`. Don't worry, any network needed by
+  assign to the network_" during your `docker compose up -d` or similar command, maybe docker has reached the maximum
+  of networks available to coexist. Just run `docker network prune` and answer `y`. Don't worry, any network needed by
   other container should be raised again when you turn them up (if they don't, maybe your docker containers
   configuration are just a mess). _Based on:
   https://stackoverflow.com/questions/43720339/docker-error-could-not-find-an-available-non-overlapping-ipv4-address-pool-am#comment100438100_43720339_
-  - **Daemon failed to find network**: if you pruned your network with a `docker network prune` or similar, you need
-  to build your containers again, to achieve it, run the following commands in order:
-    ```shell
-    docker compose down
-    docker compose build
-    ```
+- **Daemon failed to find network**: If you pruned your network with a `docker network prune` or similar, you need
+  to mount your containers again, to achieve it, run the following commands in order:
+  ```shell
+  docker compose down
+  docker compose up -d
+  ```
+- **Network warn when starting containers**: Just ignore warnings like the following:
+  ```shell
+  WARN[0000] a network with name wordless-frontend-network exists but was not created for project "your-project-name".
+  Set 'external: true' to use an existing network`
+  ```
+  Docker Compose team seems to don't like the idea of sharing network between projects like we do, but it just works
+  like a charm.
+- **Sensitive data warning on build**: You may ignore warnings like the following when building your development
+  environment:
+  ```shell
+  WARN: SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data
+  ```
+  This is a development environment, if you're using it for staging/production, feel free to customize it as you wish
+  to improve its security, but you're at your own.
