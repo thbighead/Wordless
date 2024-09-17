@@ -7,7 +7,7 @@ A Headless WordPress Project **for developers** who are tired of WordPress
     - [Installation](#install-wordless)
 - [WordPress discussion](#about-developers-and-wordpress)
 - [Change WordPress Version](#change-wordpress-version)
-- [Wordless Project Directories](#directory-and-files-organization)
+- [Wordless Project Directories](#directories-and-files-organization)
 - [Wordless CLI](#wordless-cli)
     - [Running WP-CLI](#running-wp-cli-commands)
 - [WordPress Plugins](#wordpress-plugins)
