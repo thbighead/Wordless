@@ -26,13 +26,13 @@ use Wordless\Infrastructure\Provider;
 $current_wp_theme = Config::wordpressTheme()->get(default: 'wordless');
 /** @var Provider[] $providers */
 $providers = [
-    AppProvider::class,
     AdminCustomUrlProvider::class,
     CoreProvider::class,
     CommentsProvider::class,
     RemoveEmojiProvider::class,
     MigrationsProvider::class,
     SeedersProvider::class,
+    AppProvider::class,
 ];
 $wp_core_link_reference = '../wp/wp-core!.htaccess,.htaccess.bk,.maintenance,license.txt,readme.html,wp-config.php,wp-cron.php,xmlrpc.php';
 
