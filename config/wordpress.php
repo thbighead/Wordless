@@ -24,7 +24,7 @@ return [
     Config::KEY_PERMALINK => '/%postname%/',
     ConfigureUrlGuessing::CONFIG_KEY_STOP_URL_GUESSING => true,
     Config::KEY_ADMIN => [
-        RemoveEmojiProvider::CONFIG_KEY_REMOVE_WP_EMOJIS => false,
+        RemoveEmojiProvider::CONFIG_KEY_REMOVE_WP_EMOJIS => true,
         WpSpeedUpProvider::CONFIG_KEY_SPEED_UP_WP => true,
         DoNotLoadWpAdminBarOutsidePanel::SHOW_WP_ADMIN_BAR_OUTSIDE_PANEL_CONFIG_KEY => true,
         ChooseImageEditor::CONFIG_KEY_IMAGE_LIBRARY => ChooseImageEditor::IMAGE_LIBRARY_CONFIG_VALUE_IMAGICK,
