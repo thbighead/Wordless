@@ -111,4 +111,5 @@ return [
         'vendor/wordless/dist' => AdminBarEnvironmentFlagStyle::mountSymlinkTargetRelativePath(),
         AdminCustomUrlProvider::getCustomUri(false) => $wp_core_link_reference,
     ],
+    Config::KEY_PLUGINS_ORDER => [],
 ];
