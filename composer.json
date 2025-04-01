@@ -39,7 +39,7 @@
     "php": "~8.2.0",
     "composer/installers": "^2.1",
     "roots/wordpress": "~6.6.2",
-    "thbighead/wordless-framework": "^8.10.0"
+    "thbighead/wordless-framework": "^8.26.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^10.4",
@@ -53,6 +53,9 @@
       "Wordless\\Core\\Composer\\Main::setHost",
       "Wordless\\Core\\Composer\\Main::saveInstalledVersion",
       "@php console publish:config"
+    ],
+    "post-create-project-cmd": [
+      "@php console publish:config -f"
     ],
     "post-package-install": [
       "Wordless\\Core\\Composer\\Main::activatePlugin"
