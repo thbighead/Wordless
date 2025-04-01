@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Providers\AppProvider;
 use Wordless\Application\Commands\GeneratePublicWordpressSymbolicLinks;
 use Wordless\Application\Commands\Utility\DatabaseOverwrite\DTO\UserDTO;
 use Wordless\Application\Helpers\Config;
@@ -31,6 +32,7 @@ $providers = [
     RemoveEmojiProvider::class,
     MigrationsProvider::class,
     SeedersProvider::class,
+    AppProvider::class,
 ];
 $wp_core_link_reference = '../wp/wp-core!.htaccess,.htaccess.bk,.maintenance,license.txt,readme.html,wp-config.php,wp-cron.php,xmlrpc.php';
 
