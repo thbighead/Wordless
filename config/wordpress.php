@@ -19,7 +19,7 @@ use Wordless\Wordpress\Enums\StartOfWeek;
 use Wordless\Wordpress\Models\Role\Enums\DefaultRole;
 
 return [
-    Config::KEY_LANGUAGES => [],
+    Config::KEY_LANGUAGES => ['en_US'],
     Config::KEY_THEME => 'wordless',
     Config::KEY_PERMALINK => '/%postname%/',
     ConfigureUrlGuessing::CONFIG_KEY_STOP_URL_GUESSING => true,
