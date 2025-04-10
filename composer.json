@@ -52,6 +52,7 @@
       "cp -n .env.example .env",
       "@php console publish:wp-config.php",
       "Wordless\\Core\\Composer\\Main::setHost",
+      "Wordless\\Core\\Composer\\Main::discover",
       "Wordless\\Core\\Composer\\Main::saveInstalledVersion",
       "@php console publish:config"
     ],
