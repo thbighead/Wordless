@@ -9,8 +9,6 @@ networks:
 volumes:
   mariadb:
     driver: ${VOLUMES_DRIVER}
-  adminer:
-    driver: ${VOLUMES_DRIVER}
 
 services:
   ### Workspace Utilities ##################################
@@ -325,20 +323,4 @@ services:
       - MYSQL_PASSWORD=${MARIADB_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
     networks:
-      - backend
-
-  ### Adminer ###########################################
-  adminer:
-    build:
-      context: ./docker/adminer
-      args:
-        - INSTALL_MSSQL=${ADM_INSTALL_MSSQL}
-    environment:
-      - ADMINER_PLUGINS=${ADM_PLUGINS}
-      - ADMINER_DESIGN=${ADM_DESIGN}
-      - ADMINER_DEFAULT_SERVER=${ADM_DEFAULT_SERVER}
-    ports:
-      - "${ADM_PORT}:8080"
-    networks:
-      - frontend
       - backend
