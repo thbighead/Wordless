@@ -1134,7 +1134,11 @@ RUN set -eux; \
       #  The following steps were taken from
       #  https://github.com/Microsoft/msphpsql/wiki/Install-and-configuration
       ###########################################################################
-      curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+      if [ $(php -r "echo PHP_MAJOR_VERSION;") = "8" ] && [ ${LARADOCK_PHP_VERSION} != "8.0" ]; then \
+        curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg \
+      ;else \
+        curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+      ;fi && \
       curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
       apt-get update -yqq && \
       ACCEPT_EULA=Y apt-get install -yqq msodbcsql18 mssql-tools18 unixodbc unixodbc-dev libgss3 odbcinst locales && \
